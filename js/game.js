@@ -1,6 +1,8 @@
 let username = 'Placeholder';
 let money = 0;
 let upgrade1lvl = 0;
+let upgrade2lvl = 0;
+let upgrade3lvl = 0;
 let elapsedTime = 0;
 
 

@@ -1,34 +1,50 @@
+//Vérification de l'existence d'une session selon la page dans laquelle l'utilisateur est.
 let currentWebpage = window.location.pathname;
-
-function createSession(username){
-    localStorage.setItem('username', username);
-    localStorage.setItem('money', 0);
-    localStorage.setItem('upgrade1', 0);
+if (currentWebpage.includes("index.html") || currentWebpage.match(/\/$/)) {
+    //Page de connexion
+    if (localStorage.getItem("username") == null) {
+        //On s'assure que le localStorage est bien vide
+        deleteSave();
+        //TODO Choisir son nom
+        console.log("Premiere connexion");
+    } else {
+        //TODO Popup "session déjà existante !"
+    }
+} else if (currentWebpage.includes("game.html")) {
+    //Page de jeu
+} else {
+    //Page autre
+    console.log("Page inconnue");
 }
 
-function resetSession(){
+function createSession(username) {
+    localStorage.setItem("username", username);
+    localStorage.setItem("money", 0);
+    localStorage.setItem("upgrade1lvl", 0);
+    localStorage.setItem("upgrade2lvl", 0);
+    localStorage.setItem("upgrade3lvl", 0);
+    localStorage.setItem("elapsedTime", 0);
+}
+
+function deleteSave() {
     localStorage.clear();
 }
 
-function saveMoney(money){
-    localStorage.setItem('money', money);
+function save() {
+    localStorage.setItem("username", username);
+    localStorage.setItem("money", money);
+    localStorage.setItem("upgrade1lvl", upgrade1lvl);
+    localStorage.setItem("upgrade2lvl", 0);
+    localStorage.setItem("upgrade3lvl", 0);
+    localStorage.setItem("elapsedTime", 0);
 }
-function saveUpgrade1(level){
-    localStorage.setItem('upgrade1lvl', level);
-}
 
-
-
-if(currentWebpage.includes("index.html") || currentWebpage.match(/\/$/)){ //Page de connexion
-    if(localStorage.getItem('username') == null){
-        //TODO Premiere connexion / Reset
-        //TODO Choisir son nom
-        console.log("Premiere connexion");
-    }else{
-        //TODO Popup "session déjà existante !"
+function validateUsername() {
+    let username = document.getElementById("username_field").value;
+    if (username != "") {
+        createSession(username);
+        window.location.href = "scoreboard.html";
+    } else {
+        alert("Veuillez entrer un nom d'utilisateur");
     }
-} else if(currentWebpage.includes("game.html")){ //Page de jeu
-
-} else { //Page autre
-    console.log('Page inconnue');
 }
