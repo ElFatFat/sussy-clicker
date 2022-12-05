@@ -21,3 +21,11 @@ function loadSaveData(){
         }
     }
 }
+
+function test(){
+    console.warn("AHAHAHAHAHAHAHA");
+    console.error("ENCULE DE TA MERE LA PUTE");
+    console.info("C'est moi le plus fort");
+    console.debug("Je suis un debug");
+    console.assert(1 == 2, "1 n'est pas égal à 2");
+}

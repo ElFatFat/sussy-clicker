@@ -1,4 +1,4 @@
-//Vérification de l'existence d'une session selon la page dans laquelle l'utilisateur est.
+//Vérification de l'existence d'une sauvegarde selon la page dans laquelle l'utilisateur est.
 let currentWebpage = window.location.pathname;
 if (currentWebpage.includes("index.html") || currentWebpage.match(/\/$/)) {
     //Page de connexion
@@ -11,19 +11,21 @@ if (currentWebpage.includes("index.html") || currentWebpage.match(/\/$/)) {
         //TODO Popup "session déjà existante !"
     }
 } else if (currentWebpage.includes("game.html")) {
+    test();
     //Page de jeu
 } else {
     //Page autre
     console.log("Page inconnue");
 }
 
-function createSession(username) {
+function createSave(username) {
     localStorage.setItem("username", username);
     localStorage.setItem("money", 0);
     localStorage.setItem("upgrade1lvl", 0);
     localStorage.setItem("upgrade2lvl", 0);
     localStorage.setItem("upgrade3lvl", 0);
     localStorage.setItem("elapsedTime", 0);
+    localStorage.setItem("")
 }
 
 function deleteSave() {

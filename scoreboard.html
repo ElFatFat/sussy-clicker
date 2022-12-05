@@ -7,13 +7,23 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/scoreboard.css">
     </head>
     <body>
 
         <input type="text" id="search_field" placeholder="Cherchez un nom...">
-        <div id="leaderboard"> <!--Le leaderboard est implementé dedans directement en JS. Elles ont toute la classe "leaderboardLine". La ligne de l'utilisateur posséde la classe "you". -->
+        <div id="leaderboard"> <!--Le leaderboard est implementé directement en JS. Elles ont toute la classe "leaderboardLine". La ligne de l'utilisateur posséde la classe "you". -->
+            <!--Exemple du format avec réponse JS-->
+            <!-- <div class="leaderboardLine you">
+                <div class="leaderboardPosition">1</div>
+                <div class="leaderboardLineUsername">Username</div>
+                <div class="leaderboardLineScore">Score</div>
+            </div> -->
+
+        
         </div>
         
         <script src="js/scoreboard.js"></script>
+        <script src="js/sendData.js"></script>
     </body>
 </html>
