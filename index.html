@@ -7,11 +7,22 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/index.css">
     </head>
     <body>
         
-        <input type="text" id="username_field" placeholder="username_field">
-        <button id="validation_Username" onclick="validateUsername()"></button>
-        <script src="js/manageSessions.js"></script>
+        <input type="text" id="username_field" placeholder="Entrez votre nom">
+        <button id="validation_Username" onclick="validateUsername()">Valider</button>
+
+        <div id="popupSaveDataFound" class="hidden">
+            <div id="popupSaveDataFoundContent">
+                <p>Vous avez des données sauvegardées. Voulez-vous les charger ?</p>
+                <p id="usernameFound">Placeholder</p>
+                <p id="moneyFound">Placeholder</p>
+                <p id="debugData">Placeholder</p>
+                <button id="popupSaveDataFoundYes" onclick="loadSaveData()">Oui</button>
+                <button id="popupSaveDataFoundNo" onclick="deleteSave()">Non</button>
+            </div>
+        <script src="js/manageData.js"></script>
     </body>
 </html>

@@ -16,5 +16,3 @@ function responseSendScoreToDatabase(){
         }
     }
 }
-
-// sendScoreToDatabase("FatFat", 100);
