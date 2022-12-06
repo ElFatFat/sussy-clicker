@@ -8,10 +8,10 @@ let upgrade1lvl: number;
 let upgrade2lvl: number;
 let upgrade3lvl: number;
 let elapsedTime: number;
-let allTimeClicks: number;
-let allTimeMoney: number;
-let allTimeSpent: number;
-let allTimeUpgrades: number;
+let alltimeClicks: number;
+let alltimeMoney: number;
+let alltimeSpent: number;
+let alltimeHighscore: number;
 
 //Nom de la page actuelle
 let currentWebpage = window.location.pathname;
@@ -59,13 +59,6 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
             }
         }
     }
-} else if (currentWebpage.match("game.html")) {
-    //Vérification que l'utilisateur possède toutes les données nécessaires pour jouer.
-    if (!checkSaveValidity()) {
-        window.location.href = "index.html";
-    } else {
-        loadSave();
-    }
 }
 
 function validateUsername(): void {
@@ -81,20 +74,13 @@ function validateUsername(): void {
 }
 
 // ################### CODE JUSTE POUR MANAGE LES DONNEES DE SAUVEGARDES ###################
-function createSave(username, firstTime):void {
+function createSave(username, firstTime) {
     localStorage.setItem("username", username);
     localStorage.setItem("money", '0');
     localStorage.setItem("upgrade1lvl", '0');
     localStorage.setItem("upgrade2lvl", '0');
     localStorage.setItem("upgrade3lvl", '0');
     localStorage.setItem("elapsedTime", '0');
-
-    if (firstTime) {
-        localStorage.setItem("allTimeClicks", '0');
-        localStorage.setItem("allTimeMoney", '0');
-        localStorage.setItem("allTimeSpent", '0');
-        localStorage.setItem("allTimeUpgrades", '0');
-    }
 }
 
 function deleteSave():void {
@@ -107,10 +93,11 @@ function deleteSave():void {
     window.location.href = "index.html";
 }
 function deleteStatistics():void {
-    localStorage.removeItem("alltimeClicks");
-    localStorage.removeItem("alltimeMoney");
-    localStorage.removeItem("alltimeSpent");
-    localStorage.removeItem("alltimeUpgrades");
+    localStorage.setItem("alltimeClicks", '0');
+    localStorage.setItem("alltimeMoney", '0');
+    localStorage.setItem("alltimeSpent", '0');
+    localStorage.setItem("alltimeHighscore", '0');
+    deleteSave();
 }
 
 function save():void {
@@ -120,25 +107,25 @@ function save():void {
     localStorage.setItem("upgrade2lvl", upgrade2lvl.toString());
     localStorage.setItem("upgrade3lvl", upgrade3lvl.toString());
     localStorage.setItem("elapsedTime", elapsedTime.toString());
-    localStorage.setItem("allTimeClicks", allTimeClicks.toString());
-    localStorage.setItem("allTimeMoney", allTimeMoney.toString());
-    localStorage.setItem("allTimeSpent", allTimeSpent.toString());
-    localStorage.setItem("allTimeUpgrades", allTimeUpgrades.toString());
+    localStorage.setItem("alltimeClicks", alltimeClicks.toString());
+    localStorage.setItem("alltimeMoney", alltimeMoney.toString());
+    localStorage.setItem("alltimeSpent", alltimeSpent.toString());
+    localStorage.setItem("alltimeHighscore", alltimeHighscore.toString());
     console.debug("Sauvegarde effectuée !");
 }
 
 function loadSave():void {
-    //Le 'as string' est nécessaire car il alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
+    //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username") as string;
     money = parseInt(localStorage.getItem("money") as string);
     upgrade1lvl = parseInt(localStorage.getItem("upgrade1lvl") as string);
     upgrade2lvl = parseInt(localStorage.getItem("upgrade2lvl") as string);
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl") as string);
     elapsedTime = parseInt(localStorage.getItem("elapsedTime") as string);
-    allTimeClicks = parseInt(localStorage.getItem("allTimeClicks") as string);
-    allTimeMoney = parseInt(localStorage.getItem("allTimeMoney") as string);
-    allTimeSpent = parseInt(localStorage.getItem("allTimeSpent") as string);
-    allTimeUpgrades = parseInt(localStorage.getItem("allTimeUpgrades") as string);
+    alltimeClicks = parseInt(localStorage.getItem("alltimeClicks") as string);
+    alltimeMoney = parseInt(localStorage.getItem("alltimeMoney") as string);
+    alltimeSpent = parseInt(localStorage.getItem("alltimeSpent") as string);
+    alltimeHighscore = parseInt(localStorage.getItem("alltimeHighscore") as string);
 }
 
 function checkSaveValidity():boolean {
@@ -155,4 +142,8 @@ function checkSaveValidity():boolean {
     } else {
         return true;
     }
+}
+
+function goToGame():void {
+    window.location.href = "game.html";
 }

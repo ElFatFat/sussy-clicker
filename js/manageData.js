@@ -7,10 +7,10 @@ var upgrade1lvl;
 var upgrade2lvl;
 var upgrade3lvl;
 var elapsedTime;
-var allTimeClicks;
-var allTimeMoney;
-var allTimeSpent;
-var allTimeUpgrades;
+var alltimeClicks;
+var alltimeMoney;
+var alltimeSpent;
+var alltimeHighscore;
 //Nom de la page actuelle
 var currentWebpage = window.location.pathname;
 //Référence pour afficher le popup sur la page index.html lorsque qu'une sauvegarde est trouvée
@@ -53,15 +53,6 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
         }
     }
 }
-else if (currentWebpage.match("game.html")) {
-    //Vérification que l'utilisateur possède toutes les données nécessaires pour jouer.
-    if (!checkSaveValidity()) {
-        window.location.href = "index.html";
-    }
-    else {
-        loadSave();
-    }
-}
 function validateUsername() {
     if (usernameFieldElement != null) {
         var usernameFromField = usernameFieldElement.value;
@@ -82,12 +73,6 @@ function createSave(username, firstTime) {
     localStorage.setItem("upgrade2lvl", '0');
     localStorage.setItem("upgrade3lvl", '0');
     localStorage.setItem("elapsedTime", '0');
-    if (firstTime) {
-        localStorage.setItem("allTimeClicks", '0');
-        localStorage.setItem("allTimeMoney", '0');
-        localStorage.setItem("allTimeSpent", '0');
-        localStorage.setItem("allTimeUpgrades", '0');
-    }
 }
 function deleteSave() {
     localStorage.removeItem("username");
@@ -99,10 +84,11 @@ function deleteSave() {
     window.location.href = "index.html";
 }
 function deleteStatistics() {
-    localStorage.removeItem("alltimeClicks");
-    localStorage.removeItem("alltimeMoney");
-    localStorage.removeItem("alltimeSpent");
-    localStorage.removeItem("alltimeUpgrades");
+    localStorage.setItem("alltimeClicks", '0');
+    localStorage.setItem("alltimeMoney", '0');
+    localStorage.setItem("alltimeSpent", '0');
+    localStorage.setItem("alltimeHighscore", '0');
+    deleteSave();
 }
 function save() {
     localStorage.setItem("username", username);
@@ -111,24 +97,24 @@ function save() {
     localStorage.setItem("upgrade2lvl", upgrade2lvl.toString());
     localStorage.setItem("upgrade3lvl", upgrade3lvl.toString());
     localStorage.setItem("elapsedTime", elapsedTime.toString());
-    localStorage.setItem("allTimeClicks", allTimeClicks.toString());
-    localStorage.setItem("allTimeMoney", allTimeMoney.toString());
-    localStorage.setItem("allTimeSpent", allTimeSpent.toString());
-    localStorage.setItem("allTimeUpgrades", allTimeUpgrades.toString());
+    localStorage.setItem("alltimeClicks", alltimeClicks.toString());
+    localStorage.setItem("alltimeMoney", alltimeMoney.toString());
+    localStorage.setItem("alltimeSpent", alltimeSpent.toString());
+    localStorage.setItem("alltimeHighscore", alltimeHighscore.toString());
     console.debug("Sauvegarde effectuée !");
 }
 function loadSave() {
-    //Le 'as string' est nécessaire car il alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
+    //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username");
     money = parseInt(localStorage.getItem("money"));
     upgrade1lvl = parseInt(localStorage.getItem("upgrade1lvl"));
     upgrade2lvl = parseInt(localStorage.getItem("upgrade2lvl"));
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl"));
     elapsedTime = parseInt(localStorage.getItem("elapsedTime"));
-    allTimeClicks = parseInt(localStorage.getItem("allTimeClicks"));
-    allTimeMoney = parseInt(localStorage.getItem("allTimeMoney"));
-    allTimeSpent = parseInt(localStorage.getItem("allTimeSpent"));
-    allTimeUpgrades = parseInt(localStorage.getItem("allTimeUpgrades"));
+    alltimeClicks = parseInt(localStorage.getItem("alltimeClicks"));
+    alltimeMoney = parseInt(localStorage.getItem("alltimeMoney"));
+    alltimeSpent = parseInt(localStorage.getItem("alltimeSpent"));
+    alltimeHighscore = parseInt(localStorage.getItem("alltimeHighscore"));
 }
 function checkSaveValidity() {
     //Condition élargie sur plusieurs lignes pour plus de lisibilité
@@ -143,5 +129,8 @@ function checkSaveValidity() {
     else {
         return true;
     }
+}
+function goToGame() {
+    window.location.href = "game.html";
 }
 //# sourceMappingURL=manageData.js.map
