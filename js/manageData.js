@@ -96,6 +96,7 @@ function deleteStatistics() {
     localStorage.setItem("alltimeHighscore", '0');
     deleteSave();
 }
+console.time('endSave');
 function save() {
     localStorage.setItem("username", username);
     localStorage.setItem("money", money.toString());
@@ -109,6 +110,7 @@ function save() {
     localStorage.setItem("alltimeHighscore", alltimeHighscore.toString());
     console.debug("Sauvegarde effectuée !");
 }
+console.timeEnd('endSave');
 function loadSave() {
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username");

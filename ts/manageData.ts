@@ -106,7 +106,7 @@ function deleteStatistics():void {
     localStorage.setItem("alltimeHighscore", '0');
     deleteSave();
 }
-
+    
 function save():void {
     localStorage.setItem("username", username);
     localStorage.setItem("money", money.toString());

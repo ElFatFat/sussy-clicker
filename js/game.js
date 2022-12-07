@@ -1,7 +1,8 @@
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
-//Sauvegarde automatique toutes les 53 secondes
+//Sauvegarde automatique toutes les secondes
+//Les performances le permettent, car après vérification sur un ordinateur relativement puissant la fonction save() prend moins de 0.005ms à s'exécuter.
 //(Si vous cherchez où est save(), c'est dans le fichier manageData.js.)
-setInterval(save, 3000);
+setInterval(save, 1000);
 //Fonction de timer qui s'écoule
 setInterval(updateElapsedTime, 1000);
 //Gain de points automatique toutes les secondes
