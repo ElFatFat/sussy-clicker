@@ -11,6 +11,12 @@ var alltimeClicks;
 var alltimeMoney;
 var alltimeSpent;
 var alltimeHighscore;
+var upgrade1DefaultPrice = 100;
+var upgrade2DefaultPrice = 100;
+var upgrade3DefaultPrice = 10000;
+var upgrade1Price;
+var upgrade2Price;
+var upgrade3Price;
 //Nom de la page actuelle
 var currentWebpage = window.location.pathname;
 //Référence pour afficher le popup sur la page index.html lorsque qu'une sauvegarde est trouvée

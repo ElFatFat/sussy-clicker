@@ -13,6 +13,13 @@ let alltimeMoney: number;
 let alltimeSpent: number;
 let alltimeHighscore: number;
 
+let upgrade1DefaultPrice: number = 100;
+let upgrade2DefaultPrice: number = 100;
+let upgrade3DefaultPrice: number = 10000;
+let upgrade1Price: number;
+let upgrade2Price: number;
+let upgrade3Price: number;
+
 //Nom de la page actuelle
 let currentWebpage = window.location.pathname;
 

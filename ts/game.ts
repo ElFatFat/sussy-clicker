@@ -5,6 +5,8 @@
 setInterval(save, 3000);
 //Fonction de timer qui s'écoule
 setInterval(updateElapsedTime, 1000);
+//Gain de points automatique toutes les secondes
+setInterval(automaticClick, 1000);
 
 //Référeces aux éléments HTML
 let playerNameElement = document.getElementById("playerName");
@@ -19,21 +21,33 @@ let clicksPerSecondElement = document.getElementById("clicksPerSecond");
 let moneyPerSecondElement = document.getElementById("moneyPerSecond");
 let alltimeHighscoreElement = document.getElementById("alltimeHighscore");
 
+let upgrade1LevelElement = document.getElementById("upgrade1Level");
+let upgrade1PriceElement = document.getElementById("upgrade1Price");
+let upgrade2LevelElement = document.getElementById("upgrade2Level");
+let upgrade2PriceElement = document.getElementById("upgrade2Price");
+let upgrade3LevelElement = document.getElementById("upgrade3Level");
+let upgrade3PriceElement = document.getElementById("upgrade3Price");
+
+//Variable pour choisir la quantité d'upgrade à acheter
+type upgradeQuantitySelector = 1 | 10 | 100;
+let upgradeQuantitySelector: upgradeQuantitySelector = 1;
+
 
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
-window.onload = function() {
-    if(!checkSaveValidity()) {
+window.onload = function () {
+    if (!checkSaveValidity()) {
         window.location.href = "index.html";
     } else {
         init();
     }
-}
+};
 
 //Fonction principale
-function init(){
+function init() {
     loadSave();
     updatePlayerName();
     updateMoney();
+    updateUpgrades();
     updateElapsedTime();
     updateAlltimeClicks();
     updateAlltimeMoney();
@@ -41,63 +55,143 @@ function init(){
     updateAlltimeHighscore(alltimeHighscore);
 }
 
-
-
-function updateElapsedTime(): void{
-    elapsedTime += 1;
-    if(timeElapsedElementH != null && timeElapsedElementM != null && timeElapsedElementS != null){
-        timeElapsedElementH.innerHTML = Math.floor(elapsedTime / 3600).toString() + " : ";
-        timeElapsedElementM.innerHTML = Math.floor((elapsedTime % 3600) / 60).toString() + " : ";
+function updateElapsedTime(): void {
+    if (
+        timeElapsedElementH != null &&
+        timeElapsedElementM != null &&
+        timeElapsedElementS != null
+    ) {
+        timeElapsedElementH.innerHTML =
+            Math.floor(elapsedTime / 3600).toString() + " : ";
+        timeElapsedElementM.innerHTML =
+            Math.floor((elapsedTime % 3600) / 60).toString() + " : ";
         timeElapsedElementS.innerHTML = (elapsedTime % 60).toString();
     }
+    elapsedTime += 1;
 }
 
-function manualClick(): void{
+function manualClick(): void {
     alltimeClicks++;
     updateAlltimeClicks();
-    
-    money += 1;
+    money += 1 + 10 * upgrade1lvl + 1000 * upgrade3lvl;
     updateMoney();
 }
 
-function automaticClick(): void{
-    // money += 1;
-    // updateMoney();
+function automaticClick(): void {
+    money += 1 + 10 * upgrade2lvl + 1000 * upgrade3lvl;
+    updateMoney();
 }
 
 // ################### FICHIERS NULLES DE MISES A JOUR D'AFFICHAGE ###################
-function updatePlayerName(): void{
-    if(playerNameElement != null){
+function updatePlayerName(): void {
+    if (playerNameElement != null) {
         playerNameElement.innerHTML = username;
     }
 }
-function updateMoney(): void{
-    if(moneyElement != null){
+function updateMoney(): void {
+    if (moneyElement != null) {
         moneyElement.innerHTML = money + " $";
     }
-    if(money>alltimeHighscore){
+    if (money > alltimeHighscore) {
         updateAlltimeHighscore(money);
     }
 }
-function updateAlltimeClicks(): void{
-    if(alltimeClicksElement != null){
-        alltimeClicksElement.innerHTML = "AlltimeClicks : " + alltimeClicks + " clics";
+function updateAlltimeClicks(): void {
+    if (alltimeClicksElement != null) {
+        alltimeClicksElement.innerHTML =
+            "AlltimeClicks : " + alltimeClicks + " clics";
     }
 }
-function updateAlltimeMoney(): void{
-    if(alltimeMoneyElement != null){
+function updateAlltimeMoney(): void {
+    if (alltimeMoneyElement != null) {
         alltimeMoneyElement.innerHTML = "AlltimeMoney : " + alltimeMoney + " $";
     }
 }
-function updateAlltimeSpent(): void{
-    if(alltimeSpentElement != null){
+function updateAlltimeSpent(): void {
+    if (alltimeSpentElement != null) {
         alltimeSpentElement.innerHTML = "AlltimeSpent : " + alltimeSpent + " $";
     }
 }
-function updateAlltimeHighscore(newHighscore:number): void{
+function updateAlltimeHighscore(newHighscore: number): void {
     alltimeHighscore = newHighscore;
-    if(alltimeHighscoreElement != null){
-        alltimeHighscoreElement.innerHTML = "AlltimeHighscore : " + newHighscore + " $";
+    if (alltimeHighscoreElement != null) {
+        alltimeHighscoreElement.innerHTML =
+            "AlltimeHighscore : " + newHighscore + " $";
+    }
+}
+
+function setUpgradeQuantitySelector(quantity): void {
+    if (quantity == 1) {
+        upgradeQuantitySelector = 1;
+        updateUpgrades();
+    } else if (quantity == 10) {
+        upgradeQuantitySelector = 10;
+        updateUpgrades();
+    } else if (quantity == 100) {
+        upgradeQuantitySelector = 100;
+        updateUpgrades();
+    }
+}
+
+function buyUpgrade(whichOne): void {
+    switch (whichOne) {
+        case 1:
+            if (canAfford(upgrade1Price)) {
+                money -= upgrade1Price;
+                upgrade1lvl += upgradeQuantitySelector;
+                updateMoney();
+                updateUpgrades();
+            }
+            break;
+        case 2:
+            if (canAfford(upgrade2Price)) {
+                money -= upgrade2Price;
+                upgrade2lvl += upgradeQuantitySelector;
+                updateMoney();
+                updateUpgrades();
+            }
+            break;
+        case 3:
+            if (canAfford(upgrade3Price)) {
+                money -= upgrade3Price;
+                upgrade3lvl += upgradeQuantitySelector;
+                updateMoney();
+                updateUpgrades();
+            }
+            break;
+    }
+}
+
+//Fonction qui actualise les prix et le level de l'interface.
+function updateUpgrades(): void {
+    upgrade1Price = Math.floor(upgrade1DefaultPrice * Math.pow(1.5, (upgrade1lvl+upgradeQuantitySelector-1)));
+    upgrade2Price = Math.floor(upgrade2DefaultPrice * Math.pow(1.5, (upgrade2lvl+upgradeQuantitySelector-1)));
+    upgrade3Price = Math.floor(upgrade3DefaultPrice * Math.pow(3, (upgrade3lvl+upgradeQuantitySelector-1)));
+
+    if (
+        upgrade1PriceElement != null &&
+        upgrade2PriceElement != null &&
+        upgrade3PriceElement != null &&
+        upgrade1LevelElement != null &&
+        upgrade2LevelElement != null &&
+        upgrade3LevelElement != null
+    ) {
+        upgrade1PriceElement.innerHTML = upgrade1Price + " $";
+        upgrade2PriceElement.innerHTML = upgrade2Price + " $";
+        upgrade3PriceElement.innerHTML = upgrade3Price + " $";
+        upgrade1LevelElement.innerHTML = upgrade1lvl + " lvl";
+        upgrade2LevelElement.innerHTML = upgrade2lvl + " lvl";
+        upgrade3LevelElement.innerHTML = upgrade3lvl + " lvl";
+    }
+}
+
+//Fonction qui retourne true si le joueur à + d'argent que 'price'
+function canAfford(price): boolean {
+    if (money > price) {
+        return true;
+    } else {
+        console.warn("Not enough money to buy this upgrade !")
+        return true;
     }
 }
 //Juste par curiosité, quelqu'un lit vraiment le code jusqu'ici ?
