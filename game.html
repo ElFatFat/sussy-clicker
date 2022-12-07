@@ -9,7 +9,44 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
+        <p id="playerName"></p>
+        <p id="money"></p>
+        <p id="timeElapsedH"></p>
+        <p id="timeElapsedM"></p>
+        <p id="timeElapsedS"></p>
+        <p id="alltimeClicks"></p>
+        <p id="alltimeMoney"></p>
+        <p id="alltimeSpent"></p>
+        <p id="clicksPerSecond"></p>
+        <p id="moneyPerSecond"></p>
+        <p id="alltimeHighscore"></p>
+
+        <div>
+            <button id="one" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(1)">x1</button>
+            <button id="ten" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(10)">x10</button>
+            <button id="hundred" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(100)">x100</button>
+        </div>
+        <div>
+            <button id="upgrade1" class="upgrade" onclick="buyUpgrade(1)">Upgrade 1</button>
+            <p id="upgrade1Level">0</p>
+            <p id="upgrade1Title">Hache</p>
+            <p id="upgrade1Price">Placeholder</p>
+            <button id="upgrade2" class="upgrade" onclick="buyUpgrade(2)">Upgrade 2</button>
+            <p id="upgrade2Level">0</p>
+            <p id="upgrade2Title">Tronconneuse</p>
+            <p id="upgrade2Price">Placeholder</p>
+            <button id="upgrade3" class="upgrade" onclick="buyUpgrade(3)">Upgrade 3</button>
+            <p id="upgrade3Level">0</p>
+            <p id="upgrade3Title">Scierie</p>
+            <p id="upgrade3Price">Placeholder</p>
+        </div>
         
-        <script src="script.js"></script>
+
+        <button id="manualClick" onclick="manualClick()">Couper un arbre !</button>
+
+        <script src="js/manageData.js"></script>
+        <script src="js/game.js"></script>
+        <script src="js/sendData.js"></script>
+
     </body>
 </html>
