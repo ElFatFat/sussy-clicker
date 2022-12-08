@@ -98,9 +98,7 @@ function deleteStatistics() {
     deleteSave();
 }
 function save() {
-    console.debug("Valeur actuelle de username :" + username);
     localStorage.setItem("username", username);
-    console.debug("Valeur du localStorage après définition :" + localStorage.getItem('username'));
     localStorage.setItem("money", money.toString());
     localStorage.setItem("upgrade1lvl", upgrade1lvl.toString());
     localStorage.setItem("upgrade2lvl", upgrade2lvl.toString());

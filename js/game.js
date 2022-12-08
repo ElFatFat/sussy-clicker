@@ -36,7 +36,7 @@ function init() {
     updateElapsedTime();
     updateAlltimeClicks();
     updateAlltimeMoney();
-    updateAlltimeSpent();
+    updateAlltimeSpent(0);
     updateAlltimeHighscore(alltimeHighscore);
     initializeTimers();
 }
@@ -97,7 +97,8 @@ function updateAlltimeMoney() {
         alltimeMoneyElement.innerHTML = "AlltimeMoney : " + alltimeMoney + " $";
     }
 }
-function updateAlltimeSpent() {
+function updateAlltimeSpent(price) {
+    alltimeSpent += price;
     if (alltimeSpentElement != null) {
         alltimeSpentElement.innerHTML = "AlltimeSpent : " + alltimeSpent + " $";
     }
@@ -129,27 +130,18 @@ function setUpgradeQuantitySelector(quantity) {
 function buyUpgrade(whichOne) {
     switch (whichOne) {
         case 1:
-            if (canAfford(upgrade1Price)) {
-                money -= upgrade1Price;
+            if (canBuyUpgrade(upgrade1Price)) {
                 upgrade1lvl += upgradeQuantitySelector;
-                updateMoney();
-                updateUpgrades();
             }
             break;
         case 2:
-            if (canAfford(upgrade2Price)) {
-                money -= upgrade2Price;
+            if (canBuyUpgrade(upgrade2Price)) {
                 upgrade2lvl += upgradeQuantitySelector;
-                updateMoney();
-                updateUpgrades();
             }
             break;
         case 3:
-            if (canAfford(upgrade3Price)) {
-                money -= upgrade3Price;
+            if (canBuyUpgrade(upgrade3Price)) {
                 upgrade3lvl += upgradeQuantitySelector;
-                updateMoney();
-                updateUpgrades();
             }
             break;
     }
@@ -174,8 +166,12 @@ function updateUpgrades() {
     }
 }
 //Fonction qui retourne true si le joueur à + d'argent que 'price'
-function canAfford(price) {
+function canBuyUpgrade(price) {
     if (money > price) {
+        money -= price;
+        updateAlltimeSpent(price);
+        updateMoney();
+        updateUpgrades();
         return true;
     }
     else {
