@@ -11,8 +11,14 @@
     </head>
     <body>
         
-        <input type="text" id="username_field" placeholder="Entrez votre nom">
-        <button id="validation_Username" onclick="validateUsername()">Valider</button>
+        <div class="centerStuff">
+            <div id="inputContainer">
+                <input type="text" id="username_field" placeholder="Entrez votre nom" maxlength="15">
+                <div class="centerButtonWithinDiv">
+                    <button id="validation_Username" class="hide" onclick="validateUsername()">Jouer</button>
+                </div>
+            </div>
+        </div>
 
         <div id="popupSaveDataFound" class="hidden">
             <div id="popupSaveDataFoundContent">
@@ -26,5 +32,6 @@
 
             </div>
         <script src="js/manageData.js"></script>
+        <script src="js/test.js"></script>
     </body>
 </html>
