@@ -1,6 +1,57 @@
+body {
+    background : url(../img/bg.png);
+    background-size: cover;
+}
+
 #validation_Username{
-    color: red;
-    font-size: 12px;
+    color: white;
     font-weight: bold;
-    margin-left: 10px;
+    width: 15vw;
+    height: 10vh;
+    font-size: x-large;
+    margin-top: 5vh;
+    border-radius: 15px;
+    font-weight: 900;
+    background-color: indianred;
+    border: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.show {
+   opacity: 1!important;
+}
+
+#username_field{
+    width: 30vw;
+    height: 10vh;
+    border-radius: 15px;
+    border: none;
+    background-color: #DEB887;
+    font-size: x-large;
+    padding-left: 2rem;
+    font-size: x-large;
+}
+
+::placeholder{
+    color: black;
+}
+
+.centerStuff {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#inputContainer{
+    width: fit-content;
+    height: 10vh;
+}
+
+.centerButtonWithinDiv {
+    display: flex;
+    justify-content: center;
 }
