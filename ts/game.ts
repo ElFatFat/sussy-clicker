@@ -1,14 +1,5 @@
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
 
-//Sauvegarde automatique toutes les secondes
-//Les performances le permettent, car après vérification sur un ordinateur relativement puissant la fonction save() prend moins de 0.005ms à s'exécuter.
-//(Si vous cherchez où est save(), c'est dans le fichier manageData.js.)
-setInterval(save, 1000);
-//Fonction de timer qui s'écoule
-setInterval(updateElapsedTime, 1000);
-//Gain de points automatique toutes les secondes
-setInterval(automaticClick, 1000);
-
 //Référeces aux éléments HTML
 let playerNameElement = document.getElementById("playerName");
 let moneyElement = document.getElementById("money");
@@ -52,8 +43,20 @@ function init() {
     updateElapsedTime();
     updateAlltimeClicks();
     updateAlltimeMoney();
-    updateAlltimeSpent();
+    updateAlltimeSpent(0);
     updateAlltimeHighscore(alltimeHighscore);
+    initializeTimers();
+}
+
+function initializeTimers():void{
+    //Sauvegarde automatique toutes les secondes
+    //Les performances le permettent, car après vérification sur un ordinateur relativement puissant la fonction save() prend moins de 0.005ms à s'exécuter.
+    //(Si vous cherchez où est save(), c'est dans le fichier manageData.js.)
+    setInterval(save, 1000);
+    //Fonction de timer qui s'écoule
+    setInterval(updateElapsedTime, 1000);
+    //Gain de points automatique toutes les secondes
+    setInterval(automaticClick, 1000);
 }
 
 function updateElapsedTime(): void {
@@ -108,7 +111,8 @@ function updateAlltimeMoney(): void {
         alltimeMoneyElement.innerHTML = "AlltimeMoney : " + alltimeMoney + " $";
     }
 }
-function updateAlltimeSpent(): void {
+function updateAlltimeSpent(price: number): void {
+    alltimeSpent += price;
     if (alltimeSpentElement != null) {
         alltimeSpentElement.innerHTML = "AlltimeSpent : " + alltimeSpent + " $";
     }
@@ -119,6 +123,9 @@ function updateAlltimeHighscore(newHighscore: number): void {
         alltimeHighscoreElement.innerHTML =
             "AlltimeHighscore : " + newHighscore + " $";
     }
+    //how to tell typescript to ignore issue
+    //@ts-ignore
+    sendScoreToDatabase(username, newHighscore);
 }
 
 function setUpgradeQuantitySelector(quantity): void {
@@ -137,27 +144,18 @@ function setUpgradeQuantitySelector(quantity): void {
 function buyUpgrade(whichOne): void {
     switch (whichOne) {
         case 1:
-            if (canAfford(upgrade1Price)) {
-                money -= upgrade1Price;
+            if (canBuyUpgrade(upgrade1Price)) {
                 upgrade1lvl += upgradeQuantitySelector;
-                updateMoney();
-                updateUpgrades();
             }
             break;
         case 2:
-            if (canAfford(upgrade2Price)) {
-                money -= upgrade2Price;
+            if (canBuyUpgrade(upgrade2Price)) {
                 upgrade2lvl += upgradeQuantitySelector;
-                updateMoney();
-                updateUpgrades();
             }
             break;
         case 3:
-            if (canAfford(upgrade3Price)) {
-                money -= upgrade3Price;
+            if (canBuyUpgrade(upgrade3Price)) {
                 upgrade3lvl += upgradeQuantitySelector;
-                updateMoney();
-                updateUpgrades();
             }
             break;
     }
@@ -187,12 +185,16 @@ function updateUpgrades(): void {
 }
 
 //Fonction qui retourne true si le joueur à + d'argent que 'price'
-function canAfford(price): boolean {
+function canBuyUpgrade(price): boolean {
     if (money > price) {
+        money -= price;
+        updateAlltimeSpent(price);
+        updateMoney();
+        updateUpgrades();
         return true;
     } else {
         console.warn("Not enough money to buy this upgrade !")
-        return true;
+        return false;
     }
 }
 //Juste par curiosité, quelqu'un lit vraiment le code jusqu'ici ?

@@ -63,7 +63,7 @@ function validateUsername() {
     if (usernameFieldElement != null) {
         var usernameFromField = usernameFieldElement.value;
         if (usernameFromField != "") {
-            createSave(usernameFromField, true);
+            createSave(usernameFromField);
             window.location.href = "game.html";
         }
         else {
@@ -72,13 +72,14 @@ function validateUsername() {
     }
 }
 // ################### CODE JUSTE POUR MANAGE LES DONNEES DE SAUVEGARDES ###################
-function createSave(username, firstTime) {
+function createSave(username) {
     localStorage.setItem("username", username);
     localStorage.setItem("money", '0');
     localStorage.setItem("upgrade1lvl", '0');
     localStorage.setItem("upgrade2lvl", '0');
     localStorage.setItem("upgrade3lvl", '0');
     localStorage.setItem("elapsedTime", '0');
+    console.debug("Sauvegarde créée !");
 }
 function deleteSave() {
     localStorage.removeItem("username");
@@ -96,7 +97,6 @@ function deleteStatistics() {
     localStorage.setItem("alltimeHighscore", '0');
     deleteSave();
 }
-console.time('endSave');
 function save() {
     localStorage.setItem("username", username);
     localStorage.setItem("money", money.toString());
@@ -110,8 +110,8 @@ function save() {
     localStorage.setItem("alltimeHighscore", alltimeHighscore.toString());
     console.debug("Sauvegarde effectuée !");
 }
-console.timeEnd('endSave');
 function loadSave() {
+    console.debug("Valeur du localStorage pendant loadSave() :" + localStorage.getItem('username'));
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username");
     money = parseInt(localStorage.getItem("money"));
