@@ -27,7 +27,6 @@ var currentWebpage = window.location.pathname;
 //Référence pour afficher le popup sur la page index.html lorsque qu'une sauvegarde est trouvée
 var usernameFoundElement = document.getElementById("usernameFound");
 var moneyFoundElement = document.getElementById("moneyFound");
-var debugDataElement = document.getElementById("debugData");
 var popupSaveDataFoundElement = document.getElementById("popupSaveDataFound");
 //Référence pour récupérer le nom d'utilisateur entré dans le champ de texte
 var usernameFieldElement = document.getElementById("username_field");
@@ -39,7 +38,6 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
         //Vérifie que les éléments sont bien chargés (exigé par Typescript)
         if (usernameFoundElement != null &&
             moneyFoundElement != null &&
-            debugDataElement != null &&
             popupSaveDataFoundElement != null) {
             {
                 //On met à jour les informations du popup pour indiquer les données de la sauvegarde.

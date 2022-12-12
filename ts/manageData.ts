@@ -32,7 +32,6 @@ let currentWebpage = window.location.pathname;
 //Référence pour afficher le popup sur la page index.html lorsque qu'une sauvegarde est trouvée
 let usernameFoundElement = document.getElementById("usernameFound");
 let moneyFoundElement = document.getElementById("moneyFound");
-let debugDataElement = document.getElementById("debugData");
 let popupSaveDataFoundElement = document.getElementById("popupSaveDataFound");
 
 //Référence pour récupérer le nom d'utilisateur entré dans le champ de texte
@@ -48,7 +47,6 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
         if (
             usernameFoundElement != null &&
             moneyFoundElement != null &&
-            debugDataElement != null &&
             popupSaveDataFoundElement != null
         ) {
             {
