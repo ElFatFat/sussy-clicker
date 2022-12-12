@@ -90,10 +90,10 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    
+    height: 50vh;
 }
 
-#upgrade1 {
+.upgrade {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -106,28 +106,38 @@ body {
     user-select: none;
 }
 
-#upgrade2 {
+#quantitySelectorContainer {
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #A58760;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    cursor: pointer;
-    height: 7.5vh;
-    border-radius: 0.5rem;
-    user-select: none;
+    justify-content: space-evenly;
 }
 
-#upgrade3 {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    background-color: #A58760;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    cursor: pointer;
-    height: 7.5vh;
+.upgradeQuantitySelector {
+    width: 5vw;
+    height: 5vh;
     border-radius: 0.5rem;
-    user-select: none;
+    border: none;
+    cursor: pointer;
+}
+
+#achievementAndLeaderboardContainer {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+}
+
+.gameIcon {
+    width: 4vw;
+    height: auto;
+    margin-left: 1vw;
+    margin-top: 4vh;
+}
+
+#logImg {
+    width: 30vw;
+    height: auto;
+}
+
+#gros {
+    flex-grow: 1;
 }

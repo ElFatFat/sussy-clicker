@@ -21,24 +21,22 @@
             <div id="popupSaveDataFound" class="hidden">
                 <div id="popupSaveDataFoundContent">
                     <p>Vous avez des données sauvegardées. Voulez-vous les charger ?</p>
-                    <p id="usernameFound">Placeholder</p>
-                    <p id="moneyFound">Placeholder</p>
-                    <button id="popupSaveDataFoundYes" onclick="goToGame()">Oui</button>
-                    <button id="popupSaveDataFoundNo" onclick="deleteSave()">Non</button>
-                    <button id="popupSaveDataFoundDelete" onclick="deleteStatistics()">Non, et supprimer toutes mes statistiques</button>
+                    <div id="nameMoneyContainer">
+                        <p id="usernameFound">Placeholder</p>
+                        <p id="moneyFound">Placeholder</p>
+                    </div>
+                    <div id="yesNoContainer">
+                        <button id="popupSaveDataFoundYes" onclick="goToGame()">Oui</button>
+                        <button id="popupSaveDataFoundNo" onclick="deleteSave()">Non</button>
+                    </div>
+                    <div class="centerButtonWithinDiv">
+                        <button id="popupSaveDataFoundDelete" onclick="deleteStatistics()">Non, et supprimer toutes mes statistiques</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="popupSaveDataFound" class="hidden">
-            <div id="popupSaveDataFoundContent">
-                <p>Vous avez des données sauvegardées. Voulez-vous les charger ?</p>
-                <p id="usernameFound">Placeholder</p>
-                <p id="moneyFound">Placeholder</p>
-                <button id="popupSaveDataFoundYes" onclick="goToGame()">Oui</button>
-                <button id="popupSaveDataFoundNo" onclick="deleteSave()">Non</button>
-                <button id="popupSaveDataFoundDelete" onclick="deleteStatistics()">Non, et supprimer toutes mes statistiques</button>
-
-            </div>
+        
         <script src="js/manageData.js"></script>
         <script src="js/test.js"></script>
     </body>

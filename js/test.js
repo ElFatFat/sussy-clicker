@@ -13,3 +13,15 @@ input.addEventListener('input', function() {
     function longueur(chaine) {
         return chaine.length;
     }
+
+/*change src of the image on click*/
+
+function changeImage() {
+    var logImage = document.getElementById('logImg');
+    if (logImage.src = "log1.png") {
+        logImage.src = "log2.png";
+    } else {
+        logImage.src = "log1.png";
+    }
+}
+
