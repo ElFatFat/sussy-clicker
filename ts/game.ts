@@ -251,11 +251,24 @@ function updateElapsedTime(): void {
         timeElapsedElementM != null &&
         timeElapsedElementS != null
     ) {
-        timeElapsedElementH.innerHTML =
-            Math.floor(elapsedTime / 3600).toString() + ":";
-        timeElapsedElementM.innerHTML =
-            Math.floor((elapsedTime % 3600) / 60).toString() + ":";
-        timeElapsedElementS.innerHTML = (elapsedTime % 60).toString();
+        let h:number = Math.floor(elapsedTime / 3600);
+        let m:number = Math.floor((elapsedTime % 3600) / 60);
+        let s:number = (elapsedTime % 60);
+        if(h < 10){
+            timeElapsedElementH.innerHTML = "0" + h.toString() + ":";
+        }else{
+            timeElapsedElementH.innerHTML = h.toString() + ":";
+        }
+        if(m < 10){
+            timeElapsedElementM.innerHTML = "0" + m.toString() + ":";
+        }else{
+            timeElapsedElementM.innerHTML = m.toString() + ":";
+        }
+        if(s < 10){
+            timeElapsedElementS.innerHTML = "0" + s.toString();
+        }else{
+            timeElapsedElementS.innerHTML = s.toString();
+        }
     }
     elapsedTime += 1;
 }
