@@ -12,9 +12,14 @@
 
 <body>
     <div class="gameContainer">
+        <div id="achievementAndLeaderboardContainer">
+            <a href="scoreboard.html"><img class="gameIcon"src="img/trophy-pngrepo-com.png" alt=""></a>
+        </div>
         <div id="clicker">
             <p id="money"></p>
-            <button id="manualClick" onclick="manualClick()">Couper un arbre !</button>
+            <div id="gros"></div>
+            <img id="logImg" src="img/Hachelevée 1.png" onclick="manualClick()" alt="">
+            <!-- <button id="manualClick" >Couper un arbre !</button> -->
         </div>
         <div id="panel">
             <div class="nameAndTimer">
@@ -31,32 +36,30 @@
                 <p id="alltimeClicks"></p>
                 <p id="alltimeMoney"></p>
                 <p id="alltimeSpent"></p>
-                <p id="clicksPerSecond"></p>
-                <p id="moneyPerSecond"></p>
+                <p id="clicksPerSecond">Clicks per second : 0 cps</p>
+                <p id="moneyPerSecond">Money per second : 1 $/s</p>
                 <p id="alltimeHighscore"></p>
             </div>
             <div class="upgradeContainer">
-                <div>
-                    <button id="one" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(1)">x1</button>
+                <div id="quantitySelectorContainer">
+                    <button id="one" class="upgradeQuantitySelector" class="selected" onclick="setUpgradeQuantitySelector(1)">x1</button>
                     <button id="ten" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(10)">x10</button>
                     <button id="hundred" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(100)">x100</button>
                 </div>
-                <div>
-                    <div id="upgrade1" class="upgrade" onclick="buyUpgrade(1)">
-                        <p id="upgrade1Level">0</p>
-                        <p id="upgrade1Title">Hache</p>
-                        <p id="upgrade1Price">Placeholder</p>
-                    </div>
-                    <div id="upgrade2" class="upgrade" onclick="buyUpgrade(2)">
-                        <p id="upgrade2Level">0</p>
-                        <p id="upgrade2Title">Tronconneuse</p>
-                        <p id="upgrade2Price">Placeholder</p>
-                    </div>
-                    <div id="upgrade3" class="upgrade" onclick="buyUpgrade(3)">
-                        <p id="upgrade3Level">0</p>
-                        <p id="upgrade3Title">Scierie</p>
-                        <p id="upgrade3Price">Placeholder</p>
-                    </div>
+                <div id="upgrade1" class="upgrade" onclick="buyUpgrade(1)"> 
+                    <p id="upgrade1Level">0</p>
+                    <p id="upgrade1Title">Hache</p>
+                    <p id="upgrade1Price">Placeholder</p>
+                </div>
+                <div id="upgrade2" class="upgrade" onclick="buyUpgrade(2)">
+                    <p id="upgrade2Level">0</p>
+                    <p id="upgrade2Title">Tronconneuse</p>
+                    <p id="upgrade2Price">Placeholder</p>
+                </div>
+                <div id="upgrade3" class="upgrade" onclick="buyUpgrade(3)">
+                    <p id="upgrade3Level">0</p>
+                    <p id="upgrade3Title">Scierie</p>
+                    <p id="upgrade3Price">Placeholder</p>
                 </div>
             </div>
 

@@ -59,6 +59,61 @@ body {
 #popupSaveDataFound {
     position: absolute;
     background-color: #DEB887;
-    padding: 2rem;
     font-size: 1.5rem;
+    border-radius: 1rem;
+    padding: 1rem 3.5rem 1rem 3.5rem;
+}
+
+#popupSaveDataFoundContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 50vh;
+}
+
+#popupSaveDataFoundYes {
+    width: 10vw;
+    height: 7.5vh;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border: none;
+    background-color: rgb(0, 200, 0);
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#popupSaveDataFoundNo {
+    width: 10vw;
+    height: 7.5vh;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border: none;
+    background-color: gray;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+#popupSaveDataFoundDelete{
+    width: fit-content;
+    padding: 0 4rem 0 4rem;
+    height: 7.5vh;
+    font-size: 1.25rem;
+    font-weight: 900;
+    border: none;
+    background-color: red;
+    border-radius: 1rem;
+    cursor: pointer;
+}
+
+
+#yesNoContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+
+}
+
+#nameMoneyContainer {
+    display: flex;
+    justify-content: space-evenly;
 }
