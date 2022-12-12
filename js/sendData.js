@@ -9,7 +9,6 @@ function sendScoreToDatabase(username, score) {
     );
     httpRequest.setRequestHeader("Content-Type", "application/json");
     httpRequest.send(data);
-    console.clear();
 
 }
 function responseSendScoreToDatabase() {
