@@ -1,17 +1,19 @@
 // ################### FICHIER DE GESTION DES DONNEES (VARIABLES/SAUVEGARDES) ###################
-// Fichier en TypeScript car problème de type de variables avec JavaScript.
-// Code surement à revoir (dû à l'apprentissage de TypeScript) pour plus de lisibilité et de clarté, ne pas hésiter à me reprendre sur les mauvaises pratiques.
 
+// ################### VARIABLES ###################
 let username: string;
 let money: number;
 let upgrade1lvl: number;
 let upgrade2lvl: number;
 let upgrade3lvl: number;
 let elapsedTime: number;
+let highscore: number;
 let alltimeClicks: number;
 let alltimeMoney: number;
 let alltimeSpent: number;
 let alltimeHighscore: number;
+let clicksPerSecondLatest: number;
+let moneyPerSecondLatest: number;
 
 let upgrade1DefaultPrice: number = 100;
 let upgrade2DefaultPrice: number = 100;
@@ -19,6 +21,10 @@ let upgrade3DefaultPrice: number = 10000;
 let upgrade1Price: number;
 let upgrade2Price: number;
 let upgrade3Price: number;
+
+let upgrade1Unlocked: boolean = false;
+let upgrade2Unlocked: boolean = false;
+let upgrade3Unlocked: boolean = false;
 
 //Nom de la page actuelle
 let currentWebpage = window.location.pathname;
@@ -29,16 +35,16 @@ let moneyFoundElement = document.getElementById("moneyFound");
 let debugDataElement = document.getElementById("debugData");
 let popupSaveDataFoundElement = document.getElementById("popupSaveDataFound");
 
+//Référence pour récupérer le nom d'utilisateur entré dans le champ de texte
 let usernameFieldElement = document.getElementById("username_field") as HTMLInputElement;
 
 
 //Vérification de l'existence d'une sauvegarde selon la page dans laquelle l'utilisateur est.
+//On vérifie que l'on est sur la page /index.html ou / (racine du site)
 if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
-    //Verification que TOUTE les données sont présentes.
-    if (!checkSaveValidity()) {
-        console.log("Première connexion");
-    } else {
-        //Condition élargie sur plusieurs lignes pour plus de lisibilité
+    //Verification que les données de sauvegarde existent et affichage du popup si c'est le cas
+    if (checkSaveValidity()) {
+        //Vérifie que les éléments sont bien chargés (exigé par Typescript)
         if (
             usernameFoundElement != null &&
             moneyFoundElement != null &&
@@ -51,16 +57,6 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
                     "Nom : " + localStorage.getItem("username");
                 moneyFoundElement.innerHTML =
                     "Argent : " + localStorage.getItem("money") + " $";
-                debugDataElement.innerHTML =
-                    "Debug :     u1:" +
-                    localStorage.getItem("upgrade1lvl") +
-                    " u2:" +
-                    localStorage.getItem("upgrade2lvl") +
-                    " u3:" +
-                    localStorage.getItem("upgrade3lvl") +
-                    " eT:" +
-                    localStorage.getItem("elapsedTime") +
-                    "s";
                 //On affiche le popup informant que des informations ont été trouvées
                 popupSaveDataFoundElement.classList.remove("hidden");
             }
@@ -68,6 +64,7 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
     }
 }
 
+//Fonction qui vérifie si le nom fourni par l'utilisateur est valide. Si c'est le cas, création d'une sauvegarde et redirection vers la page de jeu.
 function validateUsername(): void {
     if(usernameFieldElement != null){
         let usernameFromField = usernameFieldElement.value;
@@ -88,7 +85,9 @@ function createSave(username) {
     localStorage.setItem("upgrade2lvl", '0');
     localStorage.setItem("upgrade3lvl", '0');
     localStorage.setItem("elapsedTime", '0');
-    console.debug("Sauvegarde créée !");
+    localStorage.setItem("upgrade1Unlocked", 'false');
+    localStorage.setItem("upgrade2Unlocked", 'false');
+    localStorage.setItem("upgrade3Unlocked", 'false');
 }
 
 function deleteSave():void {
@@ -98,6 +97,9 @@ function deleteSave():void {
     localStorage.removeItem("upgrade2lvl");
     localStorage.removeItem("upgrade3lvl");
     localStorage.removeItem("elapsedTime");
+    localStorage.removeItem("upgrade1Unlocked");
+    localStorage.removeItem("upgrade2Unlocked");
+    localStorage.removeItem("upgrade3Unlocked");
     window.location.href = "index.html";
 }
 function deleteStatistics():void {
@@ -119,14 +121,16 @@ function save():void {
     localStorage.setItem("alltimeMoney", alltimeMoney.toString());
     localStorage.setItem("alltimeSpent", alltimeSpent.toString());
     localStorage.setItem("alltimeHighscore", alltimeHighscore.toString());
-    console.debug("Sauvegarde effectuée !");
+    localStorage.setItem("upgrade1Unlocked", upgrade1Unlocked.toString());
+    localStorage.setItem("upgrade2Unlocked", upgrade2Unlocked.toString());
+    localStorage.setItem("upgrade3Unlocked", upgrade3Unlocked.toString());
 }
 
 function loadSave():void {
-    console.debug("Valeur du localStorage pendant loadSave() :" + localStorage.getItem('username'));
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username") as string;
     money = parseInt(localStorage.getItem("money") as string);
+    highscore = 0;
     upgrade1lvl = parseInt(localStorage.getItem("upgrade1lvl") as string);
     upgrade2lvl = parseInt(localStorage.getItem("upgrade2lvl") as string);
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl") as string);
@@ -135,6 +139,12 @@ function loadSave():void {
     alltimeMoney = parseInt(localStorage.getItem("alltimeMoney") as string);
     alltimeSpent = parseInt(localStorage.getItem("alltimeSpent") as string);
     alltimeHighscore = parseInt(localStorage.getItem("alltimeHighscore") as string);
+    clicksPerSecondLatest = alltimeClicks;
+    moneyPerSecondLatest = alltimeMoney;
+
+    upgrade1Unlocked = (localStorage.getItem("upgrade1Unlocked") as string == 'true') ? true : false;
+    upgrade2Unlocked = (localStorage.getItem("upgrade2Unlocked") as string == 'true') ? true : false;
+    upgrade3Unlocked = (localStorage.getItem("upgrade3Unlocked") as string == 'true') ? true : false;
 }
 
 function checkSaveValidity():boolean {
@@ -145,7 +155,7 @@ function checkSaveValidity():boolean {
         localStorage.getItem("upgrade1lvl") == undefined ||
         localStorage.getItem("upgrade2lvl") == undefined ||
         localStorage.getItem("upgrade3lvl") == undefined ||
-        localStorage.getItem("elapsedTime") == undefined
+        localStorage.getItem("elapsedTime") == undefined 
     ) {
         return false;
     } else {

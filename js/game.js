@@ -18,6 +18,7 @@ var upgrade2PriceElement = document.getElementById("upgrade2Price");
 var upgrade3LevelElement = document.getElementById("upgrade3Level");
 var upgrade3PriceElement = document.getElementById("upgrade3Price");
 var upgradeQuantitySelector = 1;
+var spacebarHeld = false;
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
 window.onload = function () {
     if (!checkSaveValidity()) {
@@ -27,6 +28,20 @@ window.onload = function () {
         init();
     }
 };
+//Listen for key press
+document.addEventListener("keydown", function (event) {
+    if (event.code == "Space" && !spacebarHeld) {
+        spacebarHeld = true;
+        manualClick();
+        console.log("Spacebar pressed");
+    }
+});
+document.addEventListener("keyup", function (event) {
+    if (event.code == "Space") {
+        console.log("Spacebar released");
+        spacebarHeld = false;
+    }
+});
 //Fonction principale
 function init() {
     loadSave();
@@ -49,27 +64,35 @@ function initializeTimers() {
     setInterval(updateElapsedTime, 1000);
     //Gain de points automatique toutes les secondes
     setInterval(automaticClick, 1000);
+    setInterval(updateClicksPerSecond, 1000);
+    setInterval(updateMoneyPerSecond, 1000);
 }
 function updateElapsedTime() {
     if (timeElapsedElementH != null &&
         timeElapsedElementM != null &&
         timeElapsedElementS != null) {
         timeElapsedElementH.innerHTML =
-            Math.floor(elapsedTime / 3600).toString() + " : ";
+            Math.floor(elapsedTime / 3600).toString() + ":";
         timeElapsedElementM.innerHTML =
-            Math.floor((elapsedTime % 3600) / 60).toString() + " : ";
+            Math.floor((elapsedTime % 3600) / 60).toString() + ":";
         timeElapsedElementS.innerHTML = (elapsedTime % 60).toString();
     }
     elapsedTime += 1;
 }
 function manualClick() {
+    var ajout = 1 + 10 * upgrade1lvl + 1000 * upgrade3lvl;
     alltimeClicks++;
     updateAlltimeClicks();
-    money += 1 + 10 * upgrade1lvl + 1000 * upgrade3lvl;
+    money += ajout;
+    alltimeMoney += ajout;
+    updateAlltimeMoney();
     updateMoney();
 }
 function automaticClick() {
-    money += 1 + 10 * upgrade2lvl + 1000 * upgrade3lvl;
+    var ajout = 1 + 10 * upgrade2lvl + 1000 * upgrade3lvl;
+    money += ajout;
+    alltimeMoney += ajout;
+    updateAlltimeMoney();
     updateMoney();
 }
 // ################### FICHIERS NULLES DE MISES A JOUR D'AFFICHAGE ###################
@@ -113,6 +136,19 @@ function updateAlltimeHighscore(newHighscore) {
     //@ts-ignore
     sendScoreToDatabase(username, newHighscore);
 }
+function updateClicksPerSecond() {
+    if (clicksPerSecondElement != null) {
+        clicksPerSecondElement.innerHTML =
+            "Clicks per second : " + (alltimeClicks - clicksPerSecondLatest) + " cps";
+        clicksPerSecondLatest = alltimeClicks;
+    }
+}
+function updateMoneyPerSecond() {
+    if (moneyPerSecondElement != null) {
+        moneyPerSecondElement.innerHTML = "Money per second : " + (alltimeMoney - moneyPerSecondLatest) + " $/s";
+        moneyPerSecondLatest = alltimeMoney;
+    }
+}
 function setUpgradeQuantitySelector(quantity) {
     if (quantity == 1) {
         upgradeQuantitySelector = 1;
@@ -132,19 +168,32 @@ function buyUpgrade(whichOne) {
         case 1:
             if (canBuyUpgrade(upgrade1Price)) {
                 upgrade1lvl += upgradeQuantitySelector;
+                if (upgrade1Unlocked == false) {
+                    //TODO : Succès débloqué
+                    upgrade1Unlocked = true;
+                }
             }
             break;
         case 2:
             if (canBuyUpgrade(upgrade2Price)) {
                 upgrade2lvl += upgradeQuantitySelector;
+                if (upgrade2Unlocked == false) {
+                    //TODO : Succès débloqué
+                    upgrade2Unlocked = true;
+                }
             }
             break;
         case 3:
             if (canBuyUpgrade(upgrade3Price)) {
                 upgrade3lvl += upgradeQuantitySelector;
+                if (upgrade3Unlocked == false) {
+                    //TODO : Succès débloqué
+                    upgrade3Unlocked = true;
+                }
             }
             break;
     }
+    updateUpgrades();
 }
 //Fonction qui actualise les prix et le level de l'interface.
 function updateUpgrades() {
@@ -165,19 +214,18 @@ function updateUpgrades() {
         upgrade3LevelElement.innerHTML = upgrade3lvl + " lvl";
     }
 }
-//Fonction qui retourne true si le joueur à + d'argent que 'price'
+//Fonction qui retourne true si le joueur à + d'argent que 'price', et va alors lui retirer l'argent.
 function canBuyUpgrade(price) {
-    if (money > price) {
+    if (money >= price) {
+        console.log('Bought upgrade for ' + price + ' $');
         money -= price;
         updateAlltimeSpent(price);
         updateMoney();
-        updateUpgrades();
         return true;
     }
     else {
         console.warn("Not enough money to buy this upgrade !");
-        return true;
+        return false;
     }
 }
-//Juste par curiosité, quelqu'un lit vraiment le code jusqu'ici ?
 //# sourceMappingURL=game.js.map
