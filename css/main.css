@@ -7,3 +7,125 @@
 .hidden{
     display: none;
 }
+
+body {
+    background : url(../img/bg.png);
+    background-size: cover;
+}
+
+.gameContainer {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+#clicker {
+    height: 100vh;
+    width: 70vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#clicker p {
+    font-size: 5rem;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 2.5vh;
+    width: fit-content;
+}
+
+#clicker button {
+    width: 30vw;
+    height: 80vh;
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #000;
+    margin-top: 5vh;
+}
+
+#panel {
+    height: 90vh;
+    width: 30vw;
+    background-color: #745D44;
+    border-radius: 10px 0 0 10px;
+    color: white;
+}
+
+.timer {
+    display: flex;
+}
+
+.nameAndTimer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+}
+
+.statsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem 1.5rem 1rem 1.5rem;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    height: 30vh;
+    background-color: #A58760;
+    border-radius: 0.5rem;
+}
+
+#statsName {
+    text-align: center;
+    padding-bottom: 0.5rem;
+}
+
+.upgradeContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+}
+
+#upgrade1 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #A58760;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    height: 7.5vh;
+    border-radius: 0.5rem;
+    user-select: none;
+}
+
+#upgrade2 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #A58760;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    height: 7.5vh;
+    border-radius: 0.5rem;
+    user-select: none;
+}
+
+#upgrade3 {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #A58760;
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+    cursor: pointer;
+    height: 7.5vh;
+    border-radius: 0.5rem;
+    user-select: none;
+}
