@@ -89,3 +89,10 @@ function showLeaderboard(input) {
         position++;
     });
 }
+
+function scrollToYouClass() {
+    let you = document.getElementsByClassName("you");
+    if (you.length > 0) {
+        you[0].scrollIntoView();
+    }
+}

@@ -19,13 +19,19 @@ let upgrade2LevelElement = document.getElementById("upgrade2Level");
 let upgrade2PriceElement = document.getElementById("upgrade2Price");
 let upgrade3LevelElement = document.getElementById("upgrade3Level");
 let upgrade3PriceElement = document.getElementById("upgrade3Price");
+let upgrade4LevelElement = document.getElementById("upgrade4Level");
+let upgrade4PriceElement = document.getElementById("upgrade4Price");
+let upgrade5LevelElement = document.getElementById("upgrade5Level");
+let upgrade5PriceElement = document.getElementById("upgrade5Price");
+
+let oneSelectorElement = document.getElementById("one");
+let tenSelectorElement = document.getElementById("ten");
+let hundredSelectorElement = document.getElementById("hundred");
 
 //Variable pour choisir la quantité d'upgrade à acheter
 type upgradeQuantitySelector = 1 | 10 | 100;
 let upgradeQuantitySelector: upgradeQuantitySelector = 1;
 
-//Variable pour savoir si la touche espace est enfoncée
-let spacebarHeld: boolean = false;
 
 
 
@@ -42,16 +48,12 @@ window.onload = function () {
 //Listener qui va réagir à l'appui sur la touche espace, et appeller la fonction manualClick().
 //On vérifie que la touche n'est pas déjà enfoncée pour éviter de spammer le clic manuel.
 document.addEventListener("keydown", function (event) {
-    if (event.code == "Space" && !spacebarHeld) {
-        spacebarHeld = true;
-        manualClick();
+    if (event.code == "Space" ) {
     }
 });
 //Listener qui va réagir au relâchement de la touche espace, et définir la variable spacebarHeld à false.
 document.addEventListener("keyup", function (event) {
-    if (event.code == "Space") {
-        spacebarHeld = false;
-    }
+    manualClick();
 });
 
 //Fonction principale qui va appeller d'autre fonction pour initialiser le jeu, définir les timers, ainsi que construire l'interface.
@@ -100,6 +102,9 @@ function manualClick(): void {
     //On ajoute le nombre de points gagnés à la variable représentant le total de point gagnés tout compte confondus, et on actualise l'interface
     alltimeMoney += ajout;
     updateAlltimeMoney();
+    //Ignore error
+    //@ts-ignore
+    changeImage();
 }
 
 //Fonction qui va déterminer toute la logique lorsqu'un clic automatique est effectué.
@@ -119,14 +124,29 @@ function automaticClick(): void {
 
 //Fonction qui prend en argument le nombre d'upgrade à acheter et qui met à jour la variable upgradeQuantitySelector ainsi que l'interface grâce à updateUpgrades()
 function setUpgradeQuantitySelector(quantity): void {
+    if (oneSelectorElement != null && tenSelectorElement != null && hundredSelectorElement != null) {
+        oneSelectorElement.classList.remove("selected");
+        tenSelectorElement.classList.remove("selected");
+        hundredSelectorElement.classList.remove("selected");
+    }
+
     if (quantity == 1) {
         upgradeQuantitySelector = 1;
+        if(oneSelectorElement != null){
+            oneSelectorElement.classList.add("selected");
+        }
         updateUpgrades();
     } else if (quantity == 10) {
         upgradeQuantitySelector = 10;
+        if(tenSelectorElement != null){
+            tenSelectorElement.classList.add("selected");
+        }
         updateUpgrades();
     } else if (quantity == 100) {
         upgradeQuantitySelector = 100;
+        if(hundredSelectorElement != null){
+            hundredSelectorElement.classList.add("selected");
+        }
         updateUpgrades();
     }
 }
@@ -169,6 +189,32 @@ function buyUpgrade(whichOne): void {
                 if(upgrade3Unlocked == false){
                     //TODO : Succès débloqué
                     upgrade3Unlocked = true;
+                }
+            }
+            break;
+
+        //Amélioration n°4
+        case 4:
+            if(upgrade4lvl == 0){
+                if (canBuyUpgrade(upgrade4DefaultPrice)) {
+                    upgrade4lvl = 1;
+                    if(upgrade4Unlocked == false){
+                        //TODO : Succès débloqué
+                        upgrade4Unlocked = true;
+                    }
+                }
+            }
+            break;
+
+        //Amélioration n°5
+        case 5:
+            if(upgrade5lvl == 0){
+                if (canBuyUpgrade(upgrade5DefaultPrice)) {
+                    upgrade5lvl = 1;
+                    if(upgrade5Unlocked == false){
+                        //TODO : Succès débloqué
+                        upgrade5Unlocked = true;
+                    }
                 }
             }
             break;
@@ -224,15 +270,18 @@ function updateUpgrades(): void {
     upgrade1Price = Math.floor(upgrade1DefaultPrice * Math.pow(1.5, (upgrade1lvl+upgradeQuantitySelector-1)));
     upgrade2Price = Math.floor(upgrade2DefaultPrice * Math.pow(1.5, (upgrade2lvl+upgradeQuantitySelector-1)));
     upgrade3Price = Math.floor(upgrade3DefaultPrice * Math.pow(3, (upgrade3lvl+upgradeQuantitySelector-1)));
-
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (
         upgrade1PriceElement != null &&
         upgrade2PriceElement != null &&
         upgrade3PriceElement != null &&
+        upgrade4PriceElement != null &&
+        upgrade5PriceElement != null &&
         upgrade1LevelElement != null &&
         upgrade2LevelElement != null &&
-        upgrade3LevelElement != null
+        upgrade3LevelElement != null &&
+        upgrade4LevelElement != null &&
+        upgrade5LevelElement != null
     ) {
         upgrade1PriceElement.innerHTML = upgrade1Price + " $";
         upgrade2PriceElement.innerHTML = upgrade2Price + " $";
@@ -240,6 +289,15 @@ function updateUpgrades(): void {
         upgrade1LevelElement.innerHTML = upgrade1lvl + " lvl";
         upgrade2LevelElement.innerHTML = upgrade2lvl + " lvl";
         upgrade3LevelElement.innerHTML = upgrade3lvl + " lvl";
+
+        if(upgrade4lvl == 1){
+            upgrade4PriceElement.innerHTML = "Débloqué";
+            upgrade4LevelElement.innerHTML = "Débloqué";
+        }
+        if(upgrade5lvl == 1){
+            upgrade5PriceElement.innerHTML = "Débloqué";
+            upgrade5LevelElement.innerHTML = "Débloqué";
+        }
     }
 }
 

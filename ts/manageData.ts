@@ -6,6 +6,8 @@ let money: number;
 let upgrade1lvl: number;
 let upgrade2lvl: number;
 let upgrade3lvl: number;
+let upgrade4lvl: number;
+let upgrade5lvl: number;
 let elapsedTime: number;
 let highscore: number;
 let alltimeClicks: number;
@@ -18,13 +20,19 @@ let moneyPerSecondLatest: number;
 let upgrade1DefaultPrice: number = 100;
 let upgrade2DefaultPrice: number = 100;
 let upgrade3DefaultPrice: number = 10000;
+let upgrade4DefaultPrice: number = 500000;
+let upgrade5DefaultPrice: number = 1000000;
 let upgrade1Price: number;
 let upgrade2Price: number;
 let upgrade3Price: number;
+let upgrade4Price: number;
+let upgrade5Price: number;
 
 let upgrade1Unlocked: boolean = false;
 let upgrade2Unlocked: boolean = false;
 let upgrade3Unlocked: boolean = false;
+let upgrade4Unlocked: boolean = false;
+let upgrade5Unlocked: boolean = false;
 
 //Nom de la page actuelle
 let currentWebpage = window.location.pathname;
@@ -82,10 +90,14 @@ function createSave(username) {
     localStorage.setItem("upgrade1lvl", '0');
     localStorage.setItem("upgrade2lvl", '0');
     localStorage.setItem("upgrade3lvl", '0');
+    localStorage.setItem("upgrade4lvl", '0');
+    localStorage.setItem("upgrade5lvl", '0');
     localStorage.setItem("elapsedTime", '0');
     localStorage.setItem("upgrade1Unlocked", 'false');
     localStorage.setItem("upgrade2Unlocked", 'false');
     localStorage.setItem("upgrade3Unlocked", 'false');
+    localStorage.setItem("upgrade4Unlocked", 'false');
+    localStorage.setItem("upgrade5Unlocked", 'false');
 }
 
 function deleteSave():void {
@@ -94,10 +106,14 @@ function deleteSave():void {
     localStorage.removeItem("upgrade1lvl");
     localStorage.removeItem("upgrade2lvl");
     localStorage.removeItem("upgrade3lvl");
+    localStorage.removeItem("upgrade4lvl");
+    localStorage.removeItem("upgrade5lvl");
     localStorage.removeItem("elapsedTime");
     localStorage.removeItem("upgrade1Unlocked");
     localStorage.removeItem("upgrade2Unlocked");
     localStorage.removeItem("upgrade3Unlocked");
+    localStorage.removeItem("upgrade4Unlocked");
+    localStorage.removeItem("upgrade5Unlocked");
     window.location.href = "index.html";
 }
 function deleteStatistics():void {
@@ -114,6 +130,8 @@ function save():void {
     localStorage.setItem("upgrade1lvl", upgrade1lvl.toString());
     localStorage.setItem("upgrade2lvl", upgrade2lvl.toString());
     localStorage.setItem("upgrade3lvl", upgrade3lvl.toString());
+    localStorage.setItem("upgrade4lvl", upgrade4lvl.toString());
+    localStorage.setItem("upgrade5lvl", upgrade5lvl.toString());
     localStorage.setItem("elapsedTime", elapsedTime.toString());
     localStorage.setItem("alltimeClicks", alltimeClicks.toString());
     localStorage.setItem("alltimeMoney", alltimeMoney.toString());
@@ -122,6 +140,8 @@ function save():void {
     localStorage.setItem("upgrade1Unlocked", upgrade1Unlocked.toString());
     localStorage.setItem("upgrade2Unlocked", upgrade2Unlocked.toString());
     localStorage.setItem("upgrade3Unlocked", upgrade3Unlocked.toString());
+    localStorage.setItem("upgrade4Unlocked", upgrade4Unlocked.toString());
+    localStorage.setItem("upgrade5Unlocked", upgrade5Unlocked.toString());
 }
 
 function loadSave():void {
@@ -132,6 +152,8 @@ function loadSave():void {
     upgrade1lvl = parseInt(localStorage.getItem("upgrade1lvl") as string);
     upgrade2lvl = parseInt(localStorage.getItem("upgrade2lvl") as string);
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl") as string);
+    upgrade4lvl = parseInt(localStorage.getItem("upgrade4lvl") as string);
+    upgrade5lvl = parseInt(localStorage.getItem("upgrade5lvl") as string);
     elapsedTime = parseInt(localStorage.getItem("elapsedTime") as string);
     alltimeClicks = parseInt(localStorage.getItem("alltimeClicks") as string);
     alltimeMoney = parseInt(localStorage.getItem("alltimeMoney") as string);
@@ -143,6 +165,9 @@ function loadSave():void {
     upgrade1Unlocked = (localStorage.getItem("upgrade1Unlocked") as string == 'true') ? true : false;
     upgrade2Unlocked = (localStorage.getItem("upgrade2Unlocked") as string == 'true') ? true : false;
     upgrade3Unlocked = (localStorage.getItem("upgrade3Unlocked") as string == 'true') ? true : false;
+    upgrade4Unlocked = (localStorage.getItem("upgrade4Unlocked") as string == 'true') ? true : false;
+    upgrade5Unlocked = (localStorage.getItem("upgrade5Unlocked") as string == 'true') ? true : false;
+
 }
 
 function checkSaveValidity():boolean {
@@ -153,6 +178,8 @@ function checkSaveValidity():boolean {
         localStorage.getItem("upgrade1lvl") == undefined ||
         localStorage.getItem("upgrade2lvl") == undefined ||
         localStorage.getItem("upgrade3lvl") == undefined ||
+        localStorage.getItem("upgrade4lvl") == undefined ||
+        localStorage.getItem("upgrade5lvl") == undefined ||
         localStorage.getItem("elapsedTime") == undefined 
     ) {
         return false;
