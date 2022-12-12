@@ -48,12 +48,15 @@ window.onload = function () {
 //Listener qui va réagir à l'appui sur la touche espace, et appeller la fonction manualClick().
 //On vérifie que la touche n'est pas déjà enfoncée pour éviter de spammer le clic manuel.
 document.addEventListener("keydown", function (event) {
-    if (event.code == "Space" ) {
+    if (event.code == "Space" && upgrade5lvl > 0) {
+        manualClick();
     }
 });
 //Listener qui va réagir au relâchement de la touche espace, et définir la variable spacebarHeld à false.
 document.addEventListener("keyup", function (event) {
-    manualClick();
+    if(event.code == "Space" && upgrade4lvl > 0) {
+        manualClick();
+    }
 });
 
 //Fonction principale qui va appeller d'autre fonction pour initialiser le jeu, définir les timers, ainsi que construire l'interface.
