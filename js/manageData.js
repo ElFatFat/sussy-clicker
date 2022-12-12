@@ -1,12 +1,12 @@
 // ################### FICHIER DE GESTION DES DONNEES (VARIABLES/SAUVEGARDES) ###################
-// Fichier en TypeScript car problème de type de variables avec JavaScript.
-// Code surement à revoir (dû à l'apprentissage de TypeScript) pour plus de lisibilité et de clarté, ne pas hésiter à me reprendre sur les mauvaises pratiques.
+// ################### VARIABLES ###################
 var username;
 var money;
 var upgrade1lvl;
 var upgrade2lvl;
 var upgrade3lvl;
 var elapsedTime;
+var highscore;
 var alltimeClicks;
 var alltimeMoney;
 var alltimeSpent;
@@ -29,15 +29,14 @@ var usernameFoundElement = document.getElementById("usernameFound");
 var moneyFoundElement = document.getElementById("moneyFound");
 var debugDataElement = document.getElementById("debugData");
 var popupSaveDataFoundElement = document.getElementById("popupSaveDataFound");
+//Référence pour récupérer le nom d'utilisateur entré dans le champ de texte
 var usernameFieldElement = document.getElementById("username_field");
 //Vérification de l'existence d'une sauvegarde selon la page dans laquelle l'utilisateur est.
+//On vérifie que l'on est sur la page /index.html ou / (racine du site)
 if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
-    //Verification que TOUTE les données sont présentes.
-    if (!checkSaveValidity()) {
-        console.log("Première connexion");
-    }
-    else {
-        //Condition élargie sur plusieurs lignes pour plus de lisibilité
+    //Verification que les données de sauvegarde existent et affichage du popup si c'est le cas
+    if (checkSaveValidity()) {
+        //Vérifie que les éléments sont bien chargés (exigé par Typescript)
         if (usernameFoundElement != null &&
             moneyFoundElement != null &&
             debugDataElement != null &&
@@ -48,22 +47,13 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
                     "Nom : " + localStorage.getItem("username");
                 moneyFoundElement.innerHTML =
                     "Argent : " + localStorage.getItem("money") + " $";
-                debugDataElement.innerHTML =
-                    "Debug :     u1:" +
-                        localStorage.getItem("upgrade1lvl") +
-                        " u2:" +
-                        localStorage.getItem("upgrade2lvl") +
-                        " u3:" +
-                        localStorage.getItem("upgrade3lvl") +
-                        " eT:" +
-                        localStorage.getItem("elapsedTime") +
-                        "s";
                 //On affiche le popup informant que des informations ont été trouvées
                 popupSaveDataFoundElement.classList.remove("hidden");
             }
         }
     }
 }
+//Fonction qui vérifie si le nom fourni par l'utilisateur est valide. Si c'est le cas, création d'une sauvegarde et redirection vers la page de jeu.
 function validateUsername() {
     if (usernameFieldElement != null) {
         var usernameFromField = usernameFieldElement.value;
@@ -87,7 +77,6 @@ function createSave(username) {
     localStorage.setItem("upgrade1Unlocked", 'false');
     localStorage.setItem("upgrade2Unlocked", 'false');
     localStorage.setItem("upgrade3Unlocked", 'false');
-    console.debug("Sauvegarde créée !");
 }
 function deleteSave() {
     localStorage.removeItem("username");
@@ -122,13 +111,12 @@ function save() {
     localStorage.setItem("upgrade1Unlocked", upgrade1Unlocked.toString());
     localStorage.setItem("upgrade2Unlocked", upgrade2Unlocked.toString());
     localStorage.setItem("upgrade3Unlocked", upgrade3Unlocked.toString());
-    console.debug("Sauvegarde effectuée !");
 }
 function loadSave() {
-    console.debug("Valeur du localStorage pendant loadSave() :" + localStorage.getItem('username'));
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username");
     money = parseInt(localStorage.getItem("money"));
+    highscore = 0;
     upgrade1lvl = parseInt(localStorage.getItem("upgrade1lvl"));
     upgrade2lvl = parseInt(localStorage.getItem("upgrade2lvl"));
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl"));
