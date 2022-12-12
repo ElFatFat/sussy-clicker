@@ -5,6 +5,8 @@ var money;
 var upgrade1lvl;
 var upgrade2lvl;
 var upgrade3lvl;
+var upgrade4lvl;
+var upgrade5lvl;
 var elapsedTime;
 var highscore;
 var alltimeClicks;
@@ -16,12 +18,18 @@ var moneyPerSecondLatest;
 var upgrade1DefaultPrice = 100;
 var upgrade2DefaultPrice = 100;
 var upgrade3DefaultPrice = 10000;
+var upgrade4DefaultPrice = 500000;
+var upgrade5DefaultPrice = 1000000;
 var upgrade1Price;
 var upgrade2Price;
 var upgrade3Price;
+var upgrade4Price;
+var upgrade5Price;
 var upgrade1Unlocked = false;
 var upgrade2Unlocked = false;
 var upgrade3Unlocked = false;
+var upgrade4Unlocked = false;
+var upgrade5Unlocked = false;
 //Nom de la page actuelle
 var currentWebpage = window.location.pathname;
 //Référence pour afficher le popup sur la page index.html lorsque qu'une sauvegarde est trouvée
@@ -71,10 +79,14 @@ function createSave(username) {
     localStorage.setItem("upgrade1lvl", '0');
     localStorage.setItem("upgrade2lvl", '0');
     localStorage.setItem("upgrade3lvl", '0');
+    localStorage.setItem("upgrade4lvl", '0');
+    localStorage.setItem("upgrade5lvl", '0');
     localStorage.setItem("elapsedTime", '0');
     localStorage.setItem("upgrade1Unlocked", 'false');
     localStorage.setItem("upgrade2Unlocked", 'false');
     localStorage.setItem("upgrade3Unlocked", 'false');
+    localStorage.setItem("upgrade4Unlocked", 'false');
+    localStorage.setItem("upgrade5Unlocked", 'false');
 }
 function deleteSave() {
     localStorage.removeItem("username");
@@ -82,10 +94,14 @@ function deleteSave() {
     localStorage.removeItem("upgrade1lvl");
     localStorage.removeItem("upgrade2lvl");
     localStorage.removeItem("upgrade3lvl");
+    localStorage.removeItem("upgrade4lvl");
+    localStorage.removeItem("upgrade5lvl");
     localStorage.removeItem("elapsedTime");
     localStorage.removeItem("upgrade1Unlocked");
     localStorage.removeItem("upgrade2Unlocked");
     localStorage.removeItem("upgrade3Unlocked");
+    localStorage.removeItem("upgrade4Unlocked");
+    localStorage.removeItem("upgrade5Unlocked");
     window.location.href = "index.html";
 }
 function deleteStatistics() {
@@ -101,6 +117,8 @@ function save() {
     localStorage.setItem("upgrade1lvl", upgrade1lvl.toString());
     localStorage.setItem("upgrade2lvl", upgrade2lvl.toString());
     localStorage.setItem("upgrade3lvl", upgrade3lvl.toString());
+    localStorage.setItem("upgrade4lvl", upgrade4lvl.toString());
+    localStorage.setItem("upgrade5lvl", upgrade5lvl.toString());
     localStorage.setItem("elapsedTime", elapsedTime.toString());
     localStorage.setItem("alltimeClicks", alltimeClicks.toString());
     localStorage.setItem("alltimeMoney", alltimeMoney.toString());
@@ -109,6 +127,8 @@ function save() {
     localStorage.setItem("upgrade1Unlocked", upgrade1Unlocked.toString());
     localStorage.setItem("upgrade2Unlocked", upgrade2Unlocked.toString());
     localStorage.setItem("upgrade3Unlocked", upgrade3Unlocked.toString());
+    localStorage.setItem("upgrade4Unlocked", upgrade4Unlocked.toString());
+    localStorage.setItem("upgrade5Unlocked", upgrade5Unlocked.toString());
 }
 function loadSave() {
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
@@ -118,6 +138,8 @@ function loadSave() {
     upgrade1lvl = parseInt(localStorage.getItem("upgrade1lvl"));
     upgrade2lvl = parseInt(localStorage.getItem("upgrade2lvl"));
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl"));
+    upgrade4lvl = parseInt(localStorage.getItem("upgrade4lvl"));
+    upgrade5lvl = parseInt(localStorage.getItem("upgrade5lvl"));
     elapsedTime = parseInt(localStorage.getItem("elapsedTime"));
     alltimeClicks = parseInt(localStorage.getItem("alltimeClicks"));
     alltimeMoney = parseInt(localStorage.getItem("alltimeMoney"));
@@ -128,6 +150,8 @@ function loadSave() {
     upgrade1Unlocked = (localStorage.getItem("upgrade1Unlocked") == 'true') ? true : false;
     upgrade2Unlocked = (localStorage.getItem("upgrade2Unlocked") == 'true') ? true : false;
     upgrade3Unlocked = (localStorage.getItem("upgrade3Unlocked") == 'true') ? true : false;
+    upgrade4Unlocked = (localStorage.getItem("upgrade4Unlocked") == 'true') ? true : false;
+    upgrade5Unlocked = (localStorage.getItem("upgrade5Unlocked") == 'true') ? true : false;
 }
 function checkSaveValidity() {
     //Condition élargie sur plusieurs lignes pour plus de lisibilité
@@ -136,6 +160,8 @@ function checkSaveValidity() {
         localStorage.getItem("upgrade1lvl") == undefined ||
         localStorage.getItem("upgrade2lvl") == undefined ||
         localStorage.getItem("upgrade3lvl") == undefined ||
+        localStorage.getItem("upgrade4lvl") == undefined ||
+        localStorage.getItem("upgrade5lvl") == undefined ||
         localStorage.getItem("elapsedTime") == undefined) {
         return false;
     }
