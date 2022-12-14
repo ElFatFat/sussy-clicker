@@ -1,4 +1,4 @@
-/*change src of the image on click*/
+let logActive = false;
 
 if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
     var input = document.getElementById('username_field');
@@ -14,12 +14,26 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
     });
 }
 
-var logImage = document.getElementById('logImg');
+var logImage = document.getElementById('clicker');
 function changeImage() {
-    if (logImage.src.match("img/log1.png")) {
-        logImage.src = "img/log2.png";
-        setTimeout(changeImage, 100);
+    if (logActive == false) {
+        if (upgrade5lvl == 1) {
+            logImage.style.backgroundImage = "url('../img/log4.png')";
+        }
+        else {
+            logImage.style.backgroundImage = "url('../img/log2.png')";
+        }
+        setTimeout(changeImage, 200);
+        logActive = true;
     } else {
-        logImage.src = "img/log1.png";
+        if (upgrade5lvl == 1) {
+            logImage.style.backgroundImage = "url('../img/log3.png')";
+            
+        }
+        else {
+            logImage.style.backgroundImage = "url('../img/log1.png')";
+        }
+        logActive = false;
     }
+}
 }
