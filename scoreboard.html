@@ -10,9 +10,9 @@
         <link rel="stylesheet" href="css/scoreboard.css">
     </head>
     <body>
-
+        <div id="anchor"></div>
         <input type="text" id="search_field" placeholder="Cherchez un nom...">
-        <div id="scrollToYou" onclick="scrollToYouClass()" style="display: none;">Mon score</div>
+        <div id="scrollToYou" onclick="scrollToYouClass()" style="display: none;">Afficher mon score</div>
         <div id="leaderboard"> 
             
             <!--Le leaderboard est implementé directement en JS. Elles ont toute la classe "leaderboardLine". La ligne de l'utilisateur posséde la classe "you". -->
@@ -25,7 +25,7 @@
 
         
         </div>
-        <div id="scrollToTop" onclick="scrollToTop()">Haut de page</div>
+        <div id="scrollToTop" onclick="scrollToTop()">^</div>
         
         <script src="js/scoreboard.js"></script>
         <script src="js/sendData.js"></script>
