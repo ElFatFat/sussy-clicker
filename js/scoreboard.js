@@ -1,20 +1,32 @@
 let search_field = document.getElementById("search_field");
-
 let leaderboard = document.getElementById("leaderboard");
+let youExists = false;
 
-//Call function every time the content of the input field changes
-search_field.addEventListener("input", function () {
+window.onload = function () {
+    searchFullDatabase();
+};
+
+
+//Listen for every change of the input field when user stops modifying it for 1s
+let typingTimer;
+let doneTypingInterval = 1000;
+search_field.addEventListener("keyup", function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+});
+search_field.addEventListener("keydown", function () {
+    clearTimeout(typingTimer);
+});
+
+function doneTyping() {
     let search_value = search_field.value;
     if (search_value != "") {
         searchUsernameInDatabase(search_value);
     } else {
         searchFullDatabase();
     }
-});
+}
 
-window.onload = function () {
-    searchFullDatabase();
-};
 
 function searchUsernameInDatabase(username) {
     const data = {
@@ -54,6 +66,7 @@ function searchFullDatabase() {
 
 //Recoit un tableau en entrée, de la forme [{username: "username", score: "score"}]
 function showLeaderboard(input) {
+    let youExists = false;
     let position = 1;
 
     //On nettoie le contenu du leaderboard
@@ -75,18 +88,32 @@ function showLeaderboard(input) {
         leaderboardScore.classList.add("leaderboardScore");
 
 
-        leaderboardPosition.innerHTML = position;
-        leaderboardUsername.innerHTML = element.username;
-        leaderboardScore.innerHTML = element.score;
+        leaderboardPosition.innerHTML = position+".";
+        if (element.username.length > 20) {
+            leaderboardUsername.innerHTML = element.username.substring(0, 20) + "...";
+        }else{
+            leaderboardUsername.innerHTML = element.username;
+        }
+
+        leaderboardScore.innerHTML = convertNumber(element.score);
 
         if (element.username == localStorage.getItem("username")) {
             leaderboardItem.classList.add("you");
+            youExists = true;
         }
+        leaderboardItem.setAttribute("title", "Nom : " + element.username + " | Score : " + element.score);
+
         leaderboard.appendChild(leaderboardItem);
         leaderboardItem.appendChild(leaderboardPosition);
         leaderboardItem.appendChild(leaderboardUsername);
         leaderboardItem.appendChild(leaderboardScore);
         position++;
+
+        if(youExists){
+            document.getElementById("scrollToYou").style.display = "flex";
+        }else{
+            document.getElementById("scrollToYou").style.display = "none";
+        }
     });
 }
 
@@ -94,5 +121,30 @@ function scrollToYouClass() {
     let you = document.getElementsByClassName("you");
     if (you.length > 0) {
         you[0].scrollIntoView();
+    }
+}
+
+function scrollToTop() {
+    window.scrollTo(0, 0);
+}
+
+function convertNumber(string){
+    let input = string.toString();
+    if (input.length > 3 && input.length <= 6) {
+        return input.substring(0, input.length-3) + "." + input.substring(input.length-3, input.length-2) + " K";
+    }else if (input.length > 6 && input.length <= 9) {
+        return input.substring(0, input.length-6) + " M";
+    }else if (input.length > 9 && input.length <= 12) {
+        return input.substring(0, input.length-9) + " B";
+    }else if (input.length > 12 && input.length <= 15) {
+        return input.substring(0, input.length-12) + " T";
+    }else if (input.length > 15 && input.length <= 18) {
+        return input.substring(0, input.length-15) + " Q";
+    }else if (input.length > 18 && input.length <= 21) {
+        return input.substring(0, input.length-18) + " Qi";
+    }else if (input.length > 21 && input.length <= 24) {
+        return input.substring(0, input.length-21) + " Sx";
+    }else {
+        return input;
     }
 }

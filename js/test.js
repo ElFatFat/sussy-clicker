@@ -36,9 +36,4 @@ function changeImage() {
         logActive = false;
     }
 }
-
-
-
-if (currentWebpage.match("game.html") || currentWebpage.match(/\/$/)) {
-    changeImage();
 }

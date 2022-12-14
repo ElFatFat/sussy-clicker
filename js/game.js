@@ -11,14 +11,19 @@ var alltimeSpentElement = document.getElementById("alltimeSpent");
 var clicksPerSecondElement = document.getElementById("clicksPerSecond");
 var moneyPerSecondElement = document.getElementById("moneyPerSecond");
 var alltimeHighscoreElement = document.getElementById("alltimeHighscore");
+var upgrade1Element = document.getElementById("upgrade1");
 var upgrade1LevelElement = document.getElementById("upgrade1Level");
 var upgrade1PriceElement = document.getElementById("upgrade1Price");
+var upgrade2Element = document.getElementById("upgrade2");
 var upgrade2LevelElement = document.getElementById("upgrade2Level");
 var upgrade2PriceElement = document.getElementById("upgrade2Price");
+var upgrade3Element = document.getElementById("upgrade3");
 var upgrade3LevelElement = document.getElementById("upgrade3Level");
 var upgrade3PriceElement = document.getElementById("upgrade3Price");
+var upgrade4Element = document.getElementById("upgrade4");
 var upgrade4LevelElement = document.getElementById("upgrade4Level");
 var upgrade4PriceElement = document.getElementById("upgrade4Price");
+var upgrade5Element = document.getElementById("upgrade5");
 var upgrade5LevelElement = document.getElementById("upgrade5Level");
 var upgrade5PriceElement = document.getElementById("upgrade5Price");
 var oneSelectorElement = document.getElementById("one");
@@ -34,13 +39,6 @@ window.onload = function () {
         init();
     }
 };
-//Listener qui va réagir à l'appui sur la touche espace, et appeller la fonction manualClick().
-//On vérifie que la touche n'est pas déjà enfoncée pour éviter de spammer le clic manuel.
-document.addEventListener("keydown", function (event) {
-    if (event.code == "Space" && upgrade5lvl > 0) {
-        manualClick();
-    }
-});
 //Listener qui va réagir au relâchement de la touche espace, et définir la variable spacebarHeld à false.
 document.addEventListener("keyup", function (event) {
     if (event.code == "Space" && upgrade4lvl > 0) {
@@ -72,6 +70,12 @@ function initializeTimers() {
     setInterval(updateClicksPerSecond, 1000);
     //Fonction qui actualise la statistique de points par seconde toutes les secondes
     setInterval(updateMoneyPerSecond, 1000);
+    setInterval(function () {
+        if (money > highscore) {
+            highscore = money;
+            updateHighscore(money);
+        }
+    }, 2000);
 }
 //Fonction qui va déterminer toute la logique lorsqu'un clic manuel (souris/touche espace) est effectué.
 function manualClick() {
@@ -225,14 +229,6 @@ function updateMoney() {
     if (moneyElement != null) {
         moneyElement.innerHTML = money + " $";
     }
-    //On vérifie si le joueur a battu son record tout compte confondus
-    if (money > alltimeHighscore) {
-        updateAlltimeHighscore(money);
-    }
-    //On vérifie si le joueur a battu son record de la session
-    if (money > highscore) {
-        updateHighscore(money);
-    }
 }
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
 function updateUpgrades() {
@@ -249,20 +245,31 @@ function updateUpgrades() {
         upgrade2LevelElement != null &&
         upgrade3LevelElement != null &&
         upgrade4LevelElement != null &&
-        upgrade5LevelElement != null) {
-        upgrade1PriceElement.innerHTML = upgrade1Price + " $";
-        upgrade2PriceElement.innerHTML = upgrade2Price + " $";
-        upgrade3PriceElement.innerHTML = upgrade3Price + " $";
-        upgrade1LevelElement.innerHTML = upgrade1lvl + " lvl";
-        upgrade2LevelElement.innerHTML = upgrade2lvl + " lvl";
-        upgrade3LevelElement.innerHTML = upgrade3lvl + " lvl";
+        upgrade5LevelElement != null &&
+        upgrade1Element != null &&
+        upgrade2Element != null &&
+        upgrade3Element != null &&
+        upgrade4Element != null &&
+        upgrade5Element != null) {
+        upgrade1PriceElement.innerHTML = convertNumber(upgrade1Price) + " $";
+        upgrade2PriceElement.innerHTML = convertNumber(upgrade2Price) + " $";
+        upgrade3PriceElement.innerHTML = convertNumber(upgrade3Price) + " $";
+        upgrade1LevelElement.innerHTML = "Niv. " + upgrade1lvl;
+        upgrade2LevelElement.innerHTML = "Niv. " + upgrade2lvl;
+        upgrade3LevelElement.innerHTML = "Niv. " + upgrade3lvl;
+        //@ts-ignore
+        upgrade1Element.setAttribute("title", "Augmente le nombre de $ par clic manuel de +10 par niveau. \nActuellement Niv. " + upgrade1lvl + " | Gains de + " + (10 * upgrade1Level) + " $ par clic.");
+        //@ts-ignore
+        upgrade2Element.setAttribute("title", "Augmente le nombre de $ par clic automatique de +10 par niveau. \nActuellement Niv. " + upgrade2lvl + " | Gains de + " + (100 * upgrade2Level) + " $ par seconde.");
+        //@ts-ignore
+        upgrade3Element.setAttribute("title", "Augmente le nombre de $ par clic manuel ET automatique de +1000 par niveau. \nActuellement Niv. " + upgrade3lvl + " | Gains de + " + (1000 * upgrade3Level) + " $ par clic ET seconde.");
         if (upgrade4lvl == 1) {
-            upgrade4PriceElement.innerHTML = "Débloqué";
-            upgrade4LevelElement.innerHTML = "Débloqué";
+            upgrade4PriceElement.innerHTML = "Achat impossible";
+            upgrade4LevelElement.innerHTML = "Niv. Max";
         }
         if (upgrade5lvl == 1) {
-            upgrade5PriceElement.innerHTML = "Débloqué";
-            upgrade5LevelElement.innerHTML = "Débloqué";
+            upgrade5PriceElement.innerHTML = "Achat impossible";
+            upgrade5LevelElement.innerHTML = "Niv. Max";
         }
     }
 }
@@ -301,14 +308,14 @@ function updateAlltimeClicks() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeClicksElement != null) {
         alltimeClicksElement.innerHTML =
-            "AlltimeClicks : " + alltimeClicks + " clics";
+            "Nombre de clics totaux  : " + alltimeClicks;
     }
 }
 //Fonction qui met à jour le nombre de $ gagnés tout comptes confondus
 function updateAlltimeMoney() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeMoneyElement != null) {
-        alltimeMoneyElement.innerHTML = "AlltimeMoney : " + alltimeMoney + " $";
+        alltimeMoneyElement.innerHTML = "Argent gagné total : " + alltimeMoney + " $";
     }
 }
 //Fonction qui met à jour le nombre de $ dépensés tout comptes confondus
@@ -316,7 +323,7 @@ function updateAlltimeSpent(price) {
     alltimeSpent += price;
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeSpentElement != null) {
-        alltimeSpentElement.innerHTML = "AlltimeSpent : " + alltimeSpent + " $";
+        alltimeSpentElement.innerHTML = "Argent depensé total : " + alltimeSpent + " $";
     }
 }
 //Fonction qui définit quel est le nouveau highscore tout compte confondus.
@@ -325,7 +332,7 @@ function updateAlltimeHighscore(newHighscore) {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeHighscoreElement != null) {
         alltimeHighscoreElement.innerHTML =
-            "AlltimeHighscore : " + newHighscore + " $";
+            "Record total : " + newHighscore + " $";
     }
 }
 //Fonction qui définit quel est le nouveau highscore, et en informe le serveur.
@@ -342,7 +349,7 @@ function updateClicksPerSecond() {
     if (clicksPerSecondElement != null) {
         //Pour déterminer le nombre de clics/s, on compare notre nombre de cicls total avec le nombre de clics total lors de la dernière mise à jour
         clicksPerSecondElement.innerHTML =
-            "Clicks per second : " + (alltimeClicks - clicksPerSecondLatest) + " cps";
+            "Clics par seconde : " + (alltimeClicks - clicksPerSecondLatest) + " cps";
         clicksPerSecondLatest = alltimeClicks;
     }
 }
@@ -351,7 +358,7 @@ function updateMoneyPerSecond() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (moneyPerSecondElement != null) {
         //Pour déterminer le nombre de $/s, on compare notre nombre de $ total avec le nombre de $ total lors de la dernière mise à jour
-        moneyPerSecondElement.innerHTML = "Money per second : " + (alltimeMoney - moneyPerSecondLatest) + " $/s";
+        moneyPerSecondElement.innerHTML = "Dollars par seconde : " + (alltimeMoney - moneyPerSecondLatest) + " $/s";
         moneyPerSecondLatest = alltimeMoney;
     }
 }

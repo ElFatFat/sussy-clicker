@@ -169,7 +169,31 @@ function checkSaveValidity() {
         return true;
     }
 }
-function goToGame() {
-    window.location.href = "game.html";
+function convertNumber(string) {
+    var input = string.toString();
+    if (input.length > 3 && input.length <= 6) {
+        return input.substring(0, input.length - 3) + " K";
+    }
+    else if (input.length > 6 && input.length <= 9) {
+        return input.substring(0, input.length - 6) + " M";
+    }
+    else if (input.length > 9 && input.length <= 12) {
+        return input.substring(0, input.length - 9) + " B";
+    }
+    else if (input.length > 12 && input.length <= 15) {
+        return input.substring(0, input.length - 12) + " T";
+    }
+    else if (input.length > 15 && input.length <= 18) {
+        return input.substring(0, input.length - 15) + " Q";
+    }
+    else if (input.length > 18 && input.length <= 21) {
+        return input.substring(0, input.length - 18) + " Qi";
+    }
+    else if (input.length > 21 && input.length <= 24) {
+        return input.substring(0, input.length - 21) + " Sx";
+    }
+    else {
+        return input;
+    }
 }
 //# sourceMappingURL=manageData.js.map
