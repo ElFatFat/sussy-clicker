@@ -31,7 +31,7 @@ body {
     background-image: url(../img/log1.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: bottom;
     /*move up background image*/
     background-position-y: -30vh;
     cursor: pointer;
@@ -110,7 +110,7 @@ body {
     background-color: #A58760;
     margin-left: 1.5rem;
     margin-right: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
     cursor: pointer;
     height: 8vh;
     border-radius: 0.5rem;
