@@ -407,3 +407,21 @@ function updateMoneyPerSecond():void{
         moneyPerSecondLatest = alltimeMoney;
     }
 }
+
+function manualSave(){
+    //Send data to api using fetch api and post method and promise
+    fetch('https://sae-301.azurewebsites.net/save-score.php', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: username,
+            score: highscore,
+            force: true
+        })
+    })
+    .then((res) => res.json())
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
+}

@@ -363,4 +363,20 @@ function updateMoneyPerSecond() {
         moneyPerSecondLatest = alltimeMoney;
     }
 }
+function manualSave() {
+    //Send data to api using fetch api and post method and promise
+    fetch('https://sae-301.azurewebsites.net/save-score.php', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: username,
+            score: highscore
+        })
+    })
+        .then(function (res) { return res.json(); })
+        .then(function (data) { return console.log(data); })
+        .catch(function (err) { return console.log(err); });
+}
 //# sourceMappingURL=game.js.map

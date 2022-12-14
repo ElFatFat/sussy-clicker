@@ -31,9 +31,7 @@ body {
     background-image: url(../img/log1.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-    /*move up background image*/
-    background-position-y: -30vh;
+    background-position: bottom;
     cursor: pointer;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
