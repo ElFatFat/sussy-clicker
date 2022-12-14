@@ -29,6 +29,7 @@ var upgrade5PriceElement = document.getElementById("upgrade5Price");
 var oneSelectorElement = document.getElementById("one");
 var tenSelectorElement = document.getElementById("ten");
 var hundredSelectorElement = document.getElementById("hundred");
+var manualSaveElement = document.getElementById("manualSave");
 var upgradeQuantitySelector = 1;
 var version = "0.0.1";
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
@@ -74,7 +75,6 @@ function initializeTimers() {
     setInterval(function () {
         if (money > highscore) {
             highscore = money;
-            updateHighscore(money);
         }
     }, 2000);
 }
@@ -230,6 +230,9 @@ function updateMoney() {
     if (moneyElement != null) {
         moneyElement.innerHTML = money + " $ v" + version;
     }
+    if (money > alltimeHighscore) {
+        updateAlltimeHighscore(money);
+    }
 }
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
 function updateUpgrades() {
@@ -336,14 +339,6 @@ function updateAlltimeHighscore(newHighscore) {
             "Record total : " + newHighscore + " $";
     }
 }
-//Fonction qui définit quel est le nouveau highscore, et en informe le serveur.
-function updateHighscore(newHighscore) {
-    highscore = newHighscore;
-    //On envoie le score sur le serveur
-    //On est obligé de mettre un //@ts-ignore pour ignorer l'erreur de Typescript, car la fonction sendScoreToDatabase n'est pas définie dans ce fichier mais dans le fichier sendData.js
-    //@ts-ignore
-    sendScoreToDatabase(username, newHighscore);
-}
 //Fonction qui actualise le nombre de clics/s sur l'interface
 function updateClicksPerSecond() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
@@ -364,7 +359,9 @@ function updateMoneyPerSecond() {
     }
 }
 function manualSave() {
-    //Send data to api using fetch api and post method and promise
+    if (manualSaveElement != null) {
+        manualSaveElement.innerHTML = "Sauvegarde en cours...";
+    }
     fetch('https://sae-301.azurewebsites.net/save-score.php', {
         method: "POST",
         headers: {
@@ -372,11 +369,29 @@ function manualSave() {
         },
         body: JSON.stringify({
             username: username,
-            score: highscore
+            score: highscore,
+            force: true
         })
     })
         .then(function (res) { return res.json(); })
-        .then(function (data) { return console.log(data); })
-        .catch(function (err) { return console.log(err); });
+        .then(function (data) {
+        console.log('Requête réussie : ' + JSON.stringify(data));
+        console.log("Sauvegarde manuelle réussie");
+        if (manualSaveElement != null) {
+            manualSaveElement.innerHTML = "Sauvegarde réussie !";
+            setTimeout(function () {
+                manualSaveElement.innerHTML = "Sauvegarder";
+            }, 2000);
+        }
+    })
+        .catch(function (error) {
+        console.error('Erreur sauvegarde manuelle: ' + error);
+        if (manualSaveElement != null) {
+            manualSaveElement.innerHTML = "Sauvegarde échouée !";
+            setTimeout(function () {
+                manualSaveElement.innerHTML = "Sauvegarder";
+            }, 2000);
+        }
+    });
 }
 //# sourceMappingURL=game.js.map

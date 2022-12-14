@@ -33,6 +33,8 @@ let oneSelectorElement = document.getElementById("one");
 let tenSelectorElement = document.getElementById("ten");
 let hundredSelectorElement = document.getElementById("hundred");
 
+let manualSaveElement = document.getElementById("manualSave");
+
 //Variable pour choisir la quantité d'upgrade à acheter
 type upgradeQuantitySelector = 1 | 10 | 100;
 let upgradeQuantitySelector: upgradeQuantitySelector = 1;
@@ -89,7 +91,6 @@ function initializeTimers():void{
     setInterval(() => {
         if(money>highscore){
             highscore = money;
-            updateHighscore(money);
         }
     }, 2000);
 }
@@ -262,6 +263,10 @@ function updateMoney(): void {
     if (moneyElement != null) {
         moneyElement.innerHTML = money + " $ v" + version;
     }
+
+    if(money > alltimeHighscore){
+        updateAlltimeHighscore(money);
+    }
 }
 
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
@@ -378,15 +383,6 @@ function updateAlltimeHighscore(newHighscore: number): void {
     }
 }
 
-//Fonction qui définit quel est le nouveau highscore, et en informe le serveur.
-function updateHighscore(newHighscore: number): void {
-    highscore = newHighscore;
-    //On envoie le score sur le serveur
-    //On est obligé de mettre un //@ts-ignore pour ignorer l'erreur de Typescript, car la fonction sendScoreToDatabase n'est pas définie dans ce fichier mais dans le fichier sendData.js
-    //@ts-ignore
-    sendScoreToDatabase(username, newHighscore);
-}
-
 //Fonction qui actualise le nombre de clics/s sur l'interface
 function updateClicksPerSecond(): void {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
@@ -409,7 +405,10 @@ function updateMoneyPerSecond():void{
 }
 
 function manualSave(){
-    //Send data to api using fetch api and post method and promise
+    if(manualSaveElement != null) {
+        manualSaveElement.innerHTML = "Sauvegarde en cours...";
+    }
+    
     fetch('https://sae-301.azurewebsites.net/save-score.php', {
         method: "POST",
         headers: {
@@ -422,6 +421,23 @@ function manualSave(){
         })
     })
     .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
+    .then((data) => {
+        console.log('Requête réussie : ' + JSON.stringify(data));
+            console.log("Sauvegarde manuelle réussie");
+            if(manualSaveElement != null) {
+                manualSaveElement.innerHTML = "Sauvegarde réussie !";
+                setTimeout(() => {
+                    manualSaveElement.innerHTML = "Sauvegarder";
+                }, 2000);
+            }
+    })
+    .catch((error) => {
+        console.error('Erreur sauvegarde manuelle: ' + error);
+        if(manualSaveElement != null) {
+            manualSaveElement.innerHTML = "Sauvegarde échouée !";
+            setTimeout(() => {
+                manualSaveElement.innerHTML = "Sauvegarder";
+            }, 2000);
+        }
+    });
 }
