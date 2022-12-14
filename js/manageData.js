@@ -196,4 +196,7 @@ function convertNumber(string) {
         return input;
     }
 }
+function goToGame() {
+    window.location.href = "game.html";
+}
 //# sourceMappingURL=manageData.js.map

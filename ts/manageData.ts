@@ -208,3 +208,7 @@ function convertNumber(string){
         return input;
     }
 }
+
+function goToGame():void {
+    window.location.href = "game.html";
+}
