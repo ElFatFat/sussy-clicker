@@ -133,17 +133,17 @@ function convertNumber(string){
     if (input.length > 3 && input.length <= 6) {
         return input.substring(0, input.length-3) + "." + input.substring(input.length-3, input.length-2) + " K";
     }else if (input.length > 6 && input.length <= 9) {
-        return input.substring(0, input.length-6) + " M";
+        return input.substring(0, input.length-6) + "." + input.substring(input.length-6, input.length-5) + " M";
     }else if (input.length > 9 && input.length <= 12) {
-        return input.substring(0, input.length-9) + " B";
+        return input.substring(0, input.length-9) + "." + input.substring(input.length-9, input.length-8) + " Md";
     }else if (input.length > 12 && input.length <= 15) {
-        return input.substring(0, input.length-12) + " T";
+        return input.substring(0, input.length-12) + "." + input.substring(input.length-12, input.length-11) + " B";
     }else if (input.length > 15 && input.length <= 18) {
-        return input.substring(0, input.length-15) + " Q";
+        return input.substring(0, input.length-15) + "." + input.substring(input.length-15, input.length-14) + " T";
     }else if (input.length > 18 && input.length <= 21) {
-        return input.substring(0, input.length-18) + " Qi";
+        return input.substring(0, input.length-18) + "." + input.substring(input.length-18, input.length-17) + " Qa";
     }else if (input.length > 21 && input.length <= 24) {
-        return input.substring(0, input.length-21) + " Sx";
+        return input.substring(0, input.length-21) + "." + input.substring(input.length-21, input.length-20) + " Qi";
     }else {
         return input;
     }
