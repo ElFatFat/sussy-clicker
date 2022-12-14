@@ -36,4 +36,3 @@ function changeImage() {
         logActive = false;
     }
 }
-}
