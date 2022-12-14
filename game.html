@@ -10,10 +10,16 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
-    <div class="gameContainer">
+<body id="body">
+    <div id="loading">
+        <div id="loadingBar">
+            <div id="loadingBarFill"></div>
+        </div>
+        <p id="loadingText"> 0% - Chargement...</p>
+    </div>
+    <div id="gameContainer">
         <div id="achievementAndLeaderboardContainer">
-            <a href="scoreboard.html"><img class="gameIcon"src="img/trophy-pngrepo-com.png" alt=""></a>
+            <a href="scoreboard.html"><img id="gameIcon"src="img/trophy-pngrepo-com.png" alt=""></a>
         </div>
         <div id="clicker" onclick="manualClick()">
             <p id="money"></p>
@@ -81,7 +87,7 @@
             </div>
 
         </div>
-
+    <script src="js/loading.js"></script>
     <script src="js/manageData.js"></script>
     <script src="js/sendData.js"></script>
     <script src="js/game.js"></script>

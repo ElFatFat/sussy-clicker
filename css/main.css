@@ -14,8 +14,36 @@ body {
     background-repeat: no-repeat;
     background-position: center;
 }
+#loading{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #745D44;
+    transition: opacity 1s ease-in-out;
+}
 
-.gameContainer {
+#loadingBar{
+    width: 50vw;
+    height: 5vh;
+    background-color: #A58760;
+    border-radius: 10px;
+    display: flex;
+}
+
+#loadingBarFill{
+    width: 50px;
+    height: 100%;
+    background-color: #DEB887;
+    border-radius: 10px;
+    transition: width 0.5s ease-in-out;
+}
+
+#gameContainer {
     display: flex;
     align-items: center;
     height: 100vh;
@@ -160,7 +188,7 @@ body {
     top: 0;
 }
 
-.gameIcon {
+#gameIcon {
     width: 4vw;
     height: auto;
     margin-left: 1vw;
