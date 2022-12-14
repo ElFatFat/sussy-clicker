@@ -12,7 +12,10 @@
     <body>
 
         <input type="text" id="search_field" placeholder="Cherchez un nom...">
-        <div id="leaderboard"> <!--Le leaderboard est implementé directement en JS. Elles ont toute la classe "leaderboardLine". La ligne de l'utilisateur posséde la classe "you". -->
+        <div id="scrollToYou" onclick="scrollToYouClass()" style="display: none;">Mon score</div>
+        <div id="leaderboard"> 
+            
+            <!--Le leaderboard est implementé directement en JS. Elles ont toute la classe "leaderboardLine". La ligne de l'utilisateur posséde la classe "you". -->
             <!--Exemple du format avec réponse JS-->
             <!-- <div class="leaderboardItem you">
                 <div class="leaderboardPosition">1</div>
@@ -22,6 +25,7 @@
 
         
         </div>
+        <div id="scrollToTop" onclick="scrollToTop()">Haut de page</div>
         
         <script src="js/scoreboard.js"></script>
         <script src="js/sendData.js"></script>

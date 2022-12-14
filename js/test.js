@@ -15,19 +15,11 @@ if (currentWebpage.match("index.html") || currentWebpage.match(/\/$/)) {
 }
 
 var logImage = document.getElementById('logImg');
-    function changeImage() {
-        if (logImage.src.match("img/log1.png")) {
-            logImage.src = "img/log2.png";
-            setTimeout(changeImage, 100);
-            console.log("image changed");
-        } else {
-            logImage.src = "img/log1.png";
-            console.log("image reinitialised");
-        }
+function changeImage() {
+    if (logImage.src.match("img/log1.png")) {
+        logImage.src = "img/log2.png";
+        setTimeout(changeImage, 100);
+    } else {
+        logImage.src = "img/log1.png";
     }
-    
-
-
-if (currentWebpage.match("game.html") || currentWebpage.match(/\/$/)) {
-    changeImage();
 }

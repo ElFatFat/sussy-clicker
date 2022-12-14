@@ -95,7 +95,7 @@ body {
 
 .upgrade {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     background-color: #A58760;
     margin-left: 1.5rem;
@@ -104,6 +104,25 @@ body {
     height: 7.5vh;
     border-radius: 0.5rem;
     user-select: none;
+    padding-inline: 5%;
+}
+.upgradeLevel{
+    width: 30%;
+    min-width:30%;
+    max-width: 30%;
+    text-align: left;
+}
+
+.upgradeTitle {
+    width: 100%;
+    text-align: center;
+}
+
+.upgradePrice {
+    width: 30%;
+    min-width:30%;
+    max-width: 30%;
+    text-align: right;
 }
 
 #quantitySelectorContainer {

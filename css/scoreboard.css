@@ -9,9 +9,10 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 6rem;
 
     scroll-behavior: smooth;
+
+    overflow-x: hidden;
 }
 
 #leaderboard{
@@ -21,6 +22,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-top: 6rem;
     gap: 1.5rem;
 }
 
@@ -59,6 +61,8 @@ body{
 }
 
 #search_field{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
     width: 60vw;
     height: 100px;
     border-radius: 1rem;
@@ -66,8 +70,41 @@ body{
     background-color: #A58760;
     font-size: 1.7rem;
     padding-left: 2rem;
+    color: white;
 }
 
 #search_field::placeholder{
-    color: rgb(188, 188, 188);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#scrollToTop{
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #A58760;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0rem 0.3rem 0rem 0rem #212121;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#scrollToYou{
+    width: 30vw;
+    height: 100px;
+    border-radius: 1rem;
+    background-color: #A58760;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0rem 0.3rem 0rem 0rem #212121;
+    cursor: pointer;
+    transition: 0.3s;
+    color: white;
+    font-size: 1.7em;
+    font-weight: 900;
 }
