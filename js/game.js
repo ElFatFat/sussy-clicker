@@ -30,6 +30,7 @@ var oneSelectorElement = document.getElementById("one");
 var tenSelectorElement = document.getElementById("ten");
 var hundredSelectorElement = document.getElementById("hundred");
 var upgradeQuantitySelector = 1;
+var version = "0.0.1";
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
 window.onload = function () {
     if (!checkSaveValidity()) {
@@ -227,7 +228,7 @@ function updatePlayerName() {
 function updateMoney() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (moneyElement != null) {
-        moneyElement.innerHTML = money + " $";
+        moneyElement.innerHTML = money + " $ v" + version;
     }
 }
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.

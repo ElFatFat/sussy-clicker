@@ -37,6 +37,8 @@ let hundredSelectorElement = document.getElementById("hundred");
 type upgradeQuantitySelector = 1 | 10 | 100;
 let upgradeQuantitySelector: upgradeQuantitySelector = 1;
 
+let version = "0.0.1";
+
 
 
 
@@ -258,7 +260,7 @@ function updatePlayerName(): void {
 function updateMoney(): void {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (moneyElement != null) {
-        moneyElement.innerHTML = money + " $";
+        moneyElement.innerHTML = money + " $ v" + version;
     }
 }
 
