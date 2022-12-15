@@ -11,15 +11,11 @@ var imagesToPreload = new Array();
 function preload() {
     sizeToPreload = preload.arguments.length;
     loaded = 0;
-    console.log("Preloading images...");
     for (i = 0; i < preload.arguments.length; i++) {
         imagesToPreload[i] = new Image();
         imagesToPreload[i].src = preload.arguments[i];
         imagesToPreload[i].onload = function () {
-            console.log("Preloaded " + this.src);
-            // let imageElement = document.createElement("img");
-            // imageElement.src = this.src;
-            // imageContainerElement.appendChild(imageElement);
+            // console.log("Preloaded " + this.src);
             loaded++;
             actualizeLoadingBar();
             if (loaded == sizeToPreload) {
