@@ -98,6 +98,20 @@ function createSave(username) {
     localStorage.setItem("upgrade3Unlocked", 'false');
     localStorage.setItem("upgrade4Unlocked", 'false');
     localStorage.setItem("upgrade5Unlocked", 'false');
+
+    if (localStorage.getItem("alltimeClicks") == null) {
+        localStorage.setItem("alltimeClicks", '0');
+    }
+    if (localStorage.getItem("alltimeMoney") == null) {
+        localStorage.setItem("alltimeMoney", '0');
+    }
+    if (localStorage.getItem("alltimeSpent") == null) {
+        localStorage.setItem("alltimeSpent", '0');
+    }
+    if (localStorage.getItem("alltimeHighscore") == null) {
+        localStorage.setItem("alltimeHighscore", '0');
+    }
+
 }
 
 function deleteSave():void {
@@ -117,10 +131,10 @@ function deleteSave():void {
     window.location.href = "index.html";
 }
 function deleteStatistics():void {
-    localStorage.setItem("alltimeClicks", '0');
-    localStorage.setItem("alltimeMoney", '0');
-    localStorage.setItem("alltimeSpent", '0');
-    localStorage.setItem("alltimeHighscore", '0');
+    localStorage.removeItem("alltimeClicks");
+    localStorage.removeItem("alltimeMoney");
+    localStorage.removeItem("alltimeSpent");
+    localStorage.removeItem("alltimeHighscore");
     deleteSave();
 }
     
@@ -154,6 +168,9 @@ function loadSave():void {
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl") as string);
     upgrade4lvl = parseInt(localStorage.getItem("upgrade4lvl") as string);
     upgrade5lvl = parseInt(localStorage.getItem("upgrade5lvl") as string);
+    if(upgrade5lvl > 0){
+        document.getElementById('clicker').style.backgroundImage = "url('../img/log3.png')";
+    }
     elapsedTime = parseInt(localStorage.getItem("elapsedTime") as string);
     alltimeClicks = parseInt(localStorage.getItem("alltimeClicks") as string);
     alltimeMoney = parseInt(localStorage.getItem("alltimeMoney") as string);
@@ -179,8 +196,7 @@ function checkSaveValidity():boolean {
         localStorage.getItem("upgrade2lvl") == undefined ||
         localStorage.getItem("upgrade3lvl") == undefined ||
         localStorage.getItem("upgrade4lvl") == undefined ||
-        localStorage.getItem("upgrade5lvl") == undefined ||
-        localStorage.getItem("elapsedTime") == undefined 
+        localStorage.getItem("upgrade5lvl") == undefined
     ) {
         return false;
     } else {

@@ -1,7 +1,16 @@
+:root {
+    --bg_main: #A58760;
+    --bg_secondary: #5c4730;
+    --bg_menu: #745D44;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 *{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Exo 2', sans-serif;
 }
 
 .hidden{
@@ -23,14 +32,14 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    background-color: #745D44;
+    background-color: var(--bg_menu);
     transition: opacity 1s ease-in-out;
 }
 
 #loadingBar{
     width: 50vw;
     height: 5vh;
-    background-color: #A58760;
+    background-color: var(--bg_main);
     border-radius: 10px;
     display: flex;
 }
@@ -60,6 +69,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
+    background-size: 70%;
     cursor: pointer;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
@@ -91,60 +101,77 @@ body {
 #panel {
     height: 90vh;
     width: 30vw;
-    background-color: #745D44;
+    background-color: var(--bg_menu);
     border-radius: 10px 0 0 10px;
     color: white;
-}
-
-.timer {
-    display: flex;
-}
-
-.nameAndTimer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 1.5rem 1.5rem 1.5rem;
-}
-
-.statsContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+
+#nameAndTimer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 6%;
+    width: 100%;
+}
+#nameAndTimer>*{
+    width: 30%;
+}
+#manualSave{
+    text-align: center;
+    overflow: visible;
+}
+#manualSaveImg{
+    background-color: var(--bg_main);
+    border-radius: 8%;
+    width: 50%;
+    padding: 10%;
+    transition: all 0.12s ease-in-out;
+}
+#timer {
+    display: flex;
+    justify-content: flex-end;
+}
+.statsContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     padding: 1rem 1.5rem 1rem 1.5rem;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    height: 30vh;
-    background-color: #A58760;
+    height: 40%;
+    background-color: var(--bg_main);
     border-radius: 0.5rem;
 }
 
 #statsName {
     text-align: center;
-    padding-bottom: 0.5rem;
 }
 
-.upgradeContainer {
+#scrollUpgrade {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    height: 50vh;
+    justify-content: space-between;
+    height: 40%;
+    width: 100%;
+    gap: 10px;
 }
-
 .upgrade {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #A58760;
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    margin-bottom: 1.5rem;
+    background-color: var(--bg_main);
     cursor: pointer;
-    height: 8vh;
     border-radius: 0.5rem;
     user-select: none;
-    padding-inline: 5%;
+    width: 100%;
+    flex-grow: 1;
+    padding-inline: 1.5rem;
 }
+
 .upgradeLevel{
     width: 30%;
     min-width:30%;
@@ -164,23 +191,22 @@ body {
     text-align: right;
 }
 
-#scrollUpgrade {
-    overflow-y: scroll;
-    height: 35vh;
-    /* box-shadow: 0 4px 10px -5px black; */
-}
 
 #quantitySelectorContainer {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    height: 7%;
 }
 
 .upgradeQuantitySelector {
-    width: 5vw;
-    height: 5vh;
+    width: 25%;
+    height: 100%;
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
+    background-color: var(--bg_secondary);
+    color: white;
+
 }
 
 #achievementAndLeaderboardContainer {
@@ -207,5 +233,19 @@ body {
 }
 
 .selected {
-    background-color: gray!important;
+    background-color: var(--bg_main)!important;
 }
+
+.disabled {
+    background-color: var(--bg_secondary)!important;
+}
+
+.example::-webkit-scrollbar {
+    display: none;
+  }
+  
+.example {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  

@@ -1,4 +1,3 @@
-var version = "0.0.2";
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
 //Référeces aux éléments HTML
 var playerNameElement = document.getElementById("playerName");
@@ -28,9 +27,10 @@ var upgrade5Element = document.getElementById("upgrade5");
 var upgrade5LevelElement = document.getElementById("upgrade5Level");
 var upgrade5PriceElement = document.getElementById("upgrade5Price");
 var oneSelectorElement = document.getElementById("one");
+var fiveSelectorElement = document.getElementById("five");
 var tenSelectorElement = document.getElementById("ten");
-var hundredSelectorElement = document.getElementById("hundred");
-var manualSaveElement = document.getElementById("manualSave");
+var manualSaveElement = document.getElementById("manualSaveImg");
+;
 var upgradeQuantitySelector = 1;
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
 window.onload = function () {
@@ -113,10 +113,10 @@ function automaticClick() {
 function setUpgradeQuantitySelector(quantity) {
     if (oneSelectorElement != null &&
         tenSelectorElement != null &&
-        hundredSelectorElement != null) {
+        fiveSelectorElement != null) {
         oneSelectorElement.classList.remove("selected");
         tenSelectorElement.classList.remove("selected");
-        hundredSelectorElement.classList.remove("selected");
+        fiveSelectorElement.classList.remove("selected");
     }
     if (quantity == 1) {
         upgradeQuantitySelector = 1;
@@ -125,17 +125,17 @@ function setUpgradeQuantitySelector(quantity) {
         }
         updateUpgrades();
     }
+    else if (quantity == 5) {
+        upgradeQuantitySelector = 5;
+        if (fiveSelectorElement != null) {
+            fiveSelectorElement.classList.add("selected");
+        }
+        updateUpgrades();
+    }
     else if (quantity == 10) {
         upgradeQuantitySelector = 10;
         if (tenSelectorElement != null) {
             tenSelectorElement.classList.add("selected");
-        }
-        updateUpgrades();
-    }
-    else if (quantity == 100) {
-        upgradeQuantitySelector = 100;
-        if (hundredSelectorElement != null) {
-            hundredSelectorElement.classList.add("selected");
         }
         updateUpgrades();
     }
@@ -198,6 +198,7 @@ function buyUpgrade(whichOne) {
                     upgrade5lvl = 1;
                     if (upgrade5Unlocked == false) {
                         //TODO : Succès débloqué
+                        document.getElementById('clicker').style.backgroundImage = "url('../img/log3.png')";
                         upgrade5Unlocked = true;
                     }
                 }
@@ -219,6 +220,58 @@ function canBuyUpgrade(price) {
         return false;
     }
 }
+function updateBuyables() {
+    if (money >= upgrade1Price) {
+        if (upgrade1Element != null) {
+            upgrade1Element.classList.remove("disabled");
+        }
+    }
+    else {
+        if (upgrade1Element != null) {
+            upgrade1Element.classList.add("disabled");
+        }
+    }
+    if (money >= upgrade2Price) {
+        if (upgrade2Element != null) {
+            upgrade2Element.classList.remove("disabled");
+        }
+    }
+    else {
+        if (upgrade2Element != null) {
+            upgrade2Element.classList.add("disabled");
+        }
+    }
+    if (money >= upgrade3Price) {
+        if (upgrade3Element != null) {
+            upgrade3Element.classList.remove("disabled");
+        }
+    }
+    else {
+        if (upgrade3Element != null) {
+            upgrade3Element.classList.add("disabled");
+        }
+    }
+    if (money >= upgrade4DefaultPrice && upgrade4lvl == 0) {
+        if (upgrade4Element != null) {
+            upgrade4Element.classList.remove("disabled");
+        }
+    }
+    else {
+        if (upgrade4Element != null) {
+            upgrade4Element.classList.add("disabled");
+        }
+    }
+    if (money >= upgrade5DefaultPrice && upgrade5lvl == 0) {
+        if (upgrade5Element != null) {
+            upgrade5Element.classList.remove("disabled");
+        }
+    }
+    else {
+        if (upgrade5Element != null) {
+            upgrade5Element.classList.add("disabled");
+        }
+    }
+}
 // ################### FONCTIONS QUI SONT APPELLEES LORSQUE DES VARIABLES ONT ETE MODIFIEES ###################
 //Ces fonctions vont principalement actualiser l'interface utilisateur ainsi qu'effectuer des vérifications basiques (ex: Est-ce que le joueur à battu son record ?)
 //Fonction qui met à jour le nom du joueur sur l'interface
@@ -232,11 +285,12 @@ function updatePlayerName() {
 function updateMoney() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (moneyElement != null) {
-        moneyElement.innerHTML = money + " $ v" + version;
+        moneyElement.innerHTML = money + "$";
     }
     if (money > alltimeHighscore) {
         updateAlltimeHighscore(money);
     }
+    updateBuyables();
 }
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
 function updateUpgrades() {
@@ -295,6 +349,7 @@ function updateUpgrades() {
             upgrade5LevelElement.innerHTML = "Niv. Max";
         }
     }
+    updateBuyables();
 }
 //Fonction qui actualise le temps écoulé depuis le début de la partie.
 function updateElapsedTime() {
@@ -385,9 +440,7 @@ function updateMoneyPerSecond() {
     }
 }
 function manualSave() {
-    if (manualSaveElement != null) {
-        manualSaveElement.innerHTML = "Sauvegarde en cours...";
-    }
+    manualSaveElement.style.backgroundColor = "var(--bg_secondary)";
     fetch("https://sae-301.azurewebsites.net/save-score.php", {
         method: "POST",
         headers: {
@@ -399,22 +452,44 @@ function manualSave() {
             force: true,
         }),
     })
-        .then(function (res) { return res.json(); })
-        .then(function (data) {
-        console.log("Sauvegarde manuelle réussie");
-        if (manualSaveElement != null) {
-            manualSaveElement.innerHTML = "Sauvegarde réussie !";
-            setTimeout(function () {
-                manualSaveElement.innerHTML = "Sauvegarder";
-            }, 2000);
+        .then(function (res) {
+        if (res.status === 200) {
+            console.debug("Sauvegarde manuelle réussie");
+            if (manualSaveElement != null) {
+                manualSaveElement.src = "img/succes.svg";
+                manualSaveElement.style.backgroundColor = "green";
+                manualSaveElement.style.borderRadius = "50%";
+                setTimeout(function () {
+                    manualSaveElement.src = "img/save.svg";
+                    manualSaveElement.style.backgroundColor = "var(--bg_main)";
+                    manualSaveElement.style.borderRadius = "8%";
+                }, 2000);
+            }
+        }
+        else {
+            console.error("Erreur sauvegarde manuelle: " + res.status);
+            if (manualSaveElement != null) {
+                manualSaveElement.src = "img/fail.svg";
+                manualSaveElement.style.backgroundColor = "red";
+                manualSaveElement.style.borderRadius = "50%";
+                setTimeout(function () {
+                    manualSaveElement.src = "img/save.svg";
+                    manualSaveElement.style.backgroundColor = "var(--bg_main)";
+                    manualSaveElement.style.borderRadius = "8%";
+                }, 2000);
+            }
         }
     })
-        .catch(function (error) {
-        console.error("Erreur sauvegarde manuelle: " + error);
+        .catch(function (err) {
+        console.error("Erreur sauvegarde manuelle: " + err);
         if (manualSaveElement != null) {
-            manualSaveElement.innerHTML = "Sauvegarde échouée !";
+            manualSaveElement.src = "img/fail.svg";
+            manualSaveElement.style.backgroundColor = "red";
+            manualSaveElement.style.borderRadius = "50%";
             setTimeout(function () {
-                manualSaveElement.innerHTML = "Sauvegarder";
+                manualSaveElement.src = "img/save.svg";
+                manualSaveElement.style.backgroundColor = "var(--bg_main)";
+                manualSaveElement.style.borderRadius = "8%";
             }, 2000);
         }
     });
@@ -430,12 +505,16 @@ function automaticSave() {
             score: money,
         }),
     })
-        .then(function (res) { return res.json(); })
-        .then(function (data) {
-        console.debug("Sauvegarde automatique réussie");
+        .then(function (res) {
+        if (res.status === 200) {
+            console.debug("Sauvegarde automatique réussie");
+        }
+        else {
+            console.error("Erreur sauvegarde automatique : " + res.status);
+        }
     })
-        .catch(function (error) {
-        console.debug("Erreur sauvegarde automatique: " + error);
+        .catch(function (err) {
+        console.error("Erreur sauvegarde automatique : " + err);
     });
 }
 //# sourceMappingURL=game.js.map
