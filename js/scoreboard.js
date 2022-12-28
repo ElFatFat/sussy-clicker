@@ -120,13 +120,13 @@ function showLeaderboard(input) {
 function scrollToYouClass() {
     let you = document.getElementsByClassName("you");
     if (you.length > 0) {
-        you[0].scrollIntoView();
+        you[0].scrollIntoView({behavior: "smooth"});
     }
 }
 
-function scrollToTop() {
-    window.scrollTo(0, 0);
-}
+// function scrollToTop() {
+//     window.scrollTo(0, 0);
+// }
 
 function convertNumber(string){
     let input = string.toString();
@@ -147,4 +147,9 @@ function convertNumber(string){
     }else {
         return input;
     }
+}
+
+function scrollToTop() {
+    var anchor = document.getElementById("anchor");
+    anchor.scrollIntoView({behavior: "smooth"});
 }
