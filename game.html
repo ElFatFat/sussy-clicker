@@ -29,15 +29,15 @@
             <!-- <button id="manualClick" >Couper un arbre !</button> -->
         </div>
         <div id="panel">
-            <div class="nameAndTimer">
+            <div id="nameAndTimer">
                 <p id="playerName"></p>
-                <div id="spacing">
-                    <div id="manualSave" onclick="manualSave()">Sauvegarder</div>
+                <div id="manualSave">
+                    <img id="manualSaveImg" src="img/save.svg" alt="" onclick="manualSave()">
                 </div>
-                <div class="timer">
-                    <p id="timeElapsedH"></p>
-                    <p id="timeElapsedM"></p>
-                    <p id="timeElapsedS"></p>
+                <div id="timer">
+                    <p id="timeElapsedH">00:</p>
+                    <p id="timeElapsedM">00:</p>
+                    <p id="timeElapsedS">00</p>
                 </div>
             </div>
             <div class="statsContainer">
@@ -49,7 +49,6 @@
                 <p id="alltimeSpent">Argent depensé total : 0 $</p>
                 <p id="alltimeHighscore">Record total : 0 $</p>
             </div>
-            <div class="upgradeContainer">
                 <div id="quantitySelectorContainer">
                     <button id="one" class="upgradeQuantitySelector" class="selected" onclick="setUpgradeQuantitySelector(1)">x1</button>
                     <button id="five" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(5)">x5</button>
@@ -82,7 +81,6 @@
                       <p id="upgrade5Price" class="upgradePrice">1000000 $</p>
                     </div>
                   </div>
-                </div>
                 
                 
             </div>

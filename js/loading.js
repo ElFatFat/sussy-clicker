@@ -29,6 +29,7 @@ function preload() {
     }
 }
 
+
 preload(
     "img/bg.png", // 0
     "img/log1.png", // 1
@@ -37,6 +38,10 @@ preload(
     "img/log4.png",  // 4
     "img/achievement.png", // 5
     "img/scoreboard.png", // 6
+    "img/save.svg", // 7
+    "img/succes.svg", // 8
+    "img/fail.svg", // 9
+
 );
 
 function actualizeLoadingBar(){

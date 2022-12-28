@@ -1,5 +1,3 @@
-let version = "0.0.2";
-
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
 
 //Référeces aux éléments HTML
@@ -35,7 +33,8 @@ let oneSelectorElement = document.getElementById("one");
 let fiveSelectorElement = document.getElementById("five");
 let tenSelectorElement = document.getElementById("ten");
 
-let manualSaveElement = document.getElementById("manualSave");
+let manualSaveElement = document.getElementById("manualSaveImg") as HTMLImageElement | null;
+;
 
 //Variable pour choisir la quantité d'upgrade à acheter
 type upgradeQuantitySelector = 1 | 5 | 10;
@@ -316,7 +315,7 @@ function updatePlayerName(): void {
 function updateMoney(): void {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (moneyElement != null) {
-        moneyElement.innerHTML = money + " $ v" + version;
+        moneyElement.innerHTML = money + "$";
     }
 
     if (money > alltimeHighscore) {
@@ -499,9 +498,8 @@ function updateMoneyPerSecond(): void {
 }
 
 function manualSave() {
-    if (manualSaveElement != null) {
-        manualSaveElement.innerHTML = "Sauvegarde en cours...";
-    }
+    manualSaveElement.style.backgroundColor = "var(--bg_secondary)";
+
 
     fetch("https://sae-301.azurewebsites.net/save-score.php", {
         method: "POST",
@@ -514,22 +512,48 @@ function manualSave() {
             force: true,
         }),
     })
-        .then((res) => res.json())
-        .then((data) => {
-            console.log("Sauvegarde manuelle réussie");
-            if (manualSaveElement != null) {
-                manualSaveElement.innerHTML = "Sauvegarde réussie !";
-                setTimeout(() => {
-                    manualSaveElement.innerHTML = "Sauvegarder";
-                }, 2000);
+        .then((res) => {
+            if (res.status === 200) {
+                console.debug("Sauvegarde manuelle réussie");
+                if (manualSaveElement != null) {
+                    manualSaveElement.src = "img/succes.svg";
+                    manualSaveElement.style.backgroundColor = "green";
+                    manualSaveElement.style.borderRadius = "50%";
+
+                    setTimeout(() => {
+                        manualSaveElement.src = "img/save.svg";
+                        manualSaveElement.style.backgroundColor = "var(--bg_main)";
+                    manualSaveElement.style.borderRadius = "8%";
+
+                    }, 2000);
+                }
+            } else {
+                console.error("Erreur sauvegarde manuelle: " + res.status);
+                if (manualSaveElement != null) {
+                    manualSaveElement.src = "img/fail.svg";
+                    manualSaveElement.style.backgroundColor = "red";
+                    manualSaveElement.style.borderRadius = "50%";
+                    
+                    setTimeout(() => {
+                        manualSaveElement.src = "img/save.svg";
+                        manualSaveElement.style.backgroundColor = "var(--bg_main)";
+                    manualSaveElement.style.borderRadius = "8%";
+
+                    }, 2000);
+                }
             }
         })
-        .catch((error) => {
-            console.error("Erreur sauvegarde manuelle: " + error);
+        .catch((err) => {
+            console.error("Erreur sauvegarde manuelle: " + err);
             if (manualSaveElement != null) {
-                manualSaveElement.innerHTML = "Sauvegarde échouée !";
+                manualSaveElement.src = "img/fail.svg";
+                manualSaveElement.style.backgroundColor = "red";
+                manualSaveElement.style.borderRadius = "50%";
+
                 setTimeout(() => {
-                    manualSaveElement.innerHTML = "Sauvegarder";
+                    manualSaveElement.src = "img/save.svg";
+                    manualSaveElement.style.backgroundColor = "var(--bg_main)";
+                    manualSaveElement.style.borderRadius = "8%";
                 }, 2000);
             }
         });
@@ -546,11 +570,14 @@ function automaticSave() {
             score: money,
         }),
     })
-        .then((res) => res.json())
-        .then((data) => {
+    .then((res) => {
+        if (res.status === 200) {
             console.debug("Sauvegarde automatique réussie");
-        })
-        .catch((error) => {
-            console.debug("Erreur sauvegarde automatique: " + error);
-        });
+        } else {
+            console.error("Erreur sauvegarde automatique : " + res.status);
+        }
+    })
+    .catch((err) => {
+        console.error("Erreur sauvegarde automatique : " + err);
+    });
 }

@@ -87,6 +87,18 @@ function createSave(username) {
     localStorage.setItem("upgrade3Unlocked", 'false');
     localStorage.setItem("upgrade4Unlocked", 'false');
     localStorage.setItem("upgrade5Unlocked", 'false');
+    if (localStorage.getItem("alltimeClicks") == null) {
+        localStorage.setItem("alltimeClicks", '0');
+    }
+    if (localStorage.getItem("alltimeMoney") == null) {
+        localStorage.setItem("alltimeMoney", '0');
+    }
+    if (localStorage.getItem("alltimeSpent") == null) {
+        localStorage.setItem("alltimeSpent", '0');
+    }
+    if (localStorage.getItem("alltimeHighscore") == null) {
+        localStorage.setItem("alltimeHighscore", '0');
+    }
 }
 function deleteSave() {
     localStorage.removeItem("username");
@@ -105,10 +117,10 @@ function deleteSave() {
     window.location.href = "index.html";
 }
 function deleteStatistics() {
-    localStorage.setItem("alltimeClicks", '0');
-    localStorage.setItem("alltimeMoney", '0');
-    localStorage.setItem("alltimeSpent", '0');
-    localStorage.setItem("alltimeHighscore", '0');
+    localStorage.removeItem("alltimeClicks");
+    localStorage.removeItem("alltimeMoney");
+    localStorage.removeItem("alltimeSpent");
+    localStorage.removeItem("alltimeHighscore");
     deleteSave();
 }
 function save() {

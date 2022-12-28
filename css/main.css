@@ -1,6 +1,6 @@
 :root {
     --bg_main: #A58760;
-    --bg_secondary: #88755d;
+    --bg_secondary: #5c4730;
     --bg_menu: #745D44;
 }
 
@@ -104,26 +104,45 @@ body {
     background-color: var(--bg_menu);
     border-radius: 10px 0 0 10px;
     color: white;
-}
-
-.timer {
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    gap: 1rem;
 }
 
-.nameAndTimer {
+
+#nameAndTimer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    height: 6%;
+    width: 100%;
 }
-
+#nameAndTimer>*{
+    width: 30%;
+}
+#manualSave{
+    text-align: center;
+    overflow: visible;
+}
+#manualSaveImg{
+    background-color: var(--bg_main);
+    border-radius: 8%;
+    width: 50%;
+    padding: 10%;
+    transition: all 0.12s ease-in-out;
+}
+#timer {
+    display: flex;
+    justify-content: flex-end;
+}
 .statsContainer {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 1rem 1.5rem 1rem 1.5rem;
-    margin-inline: 1.5rem;
-    height: 30vh;
+    height: 40%;
     background-color: var(--bg_main);
     border-radius: 0.5rem;
 }
@@ -132,27 +151,27 @@ body {
     text-align: center;
 }
 
-.upgradeContainer {
+#scrollUpgrade {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
-    height: 50vh;
+    justify-content: space-between;
+    height: 40%;
+    width: 100%;
+    gap: 10px;
 }
-
 .upgrade {
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: var(--bg_main);
-    margin-left: 1.5rem;
-    margin-right: 1.5rem;
-    margin-bottom: 1.5rem;
     cursor: pointer;
-    height: 8vh;
     border-radius: 0.5rem;
     user-select: none;
-    padding-inline: 5%;
+    width: 100%;
+    flex-grow: 1;
+    padding-inline: 1.5rem;
 }
+
 .upgradeLevel{
     width: 30%;
     min-width:30%;
@@ -172,20 +191,16 @@ body {
     text-align: right;
 }
 
-#scrollUpgrade {
-    overflow-y: scroll;
-    height: 35vh;
-    /* box-shadow: 0 4px 10px -5px black; */
-}
 
 #quantitySelectorContainer {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    height: 7%;
 }
 
 .upgradeQuantitySelector {
-    width: 5vw;
-    height: 5vh;
+    width: 25%;
+    height: 100%;
     border-radius: 0.5rem;
     border: none;
     cursor: pointer;
@@ -224,3 +239,13 @@ body {
 .disabled {
     background-color: var(--bg_secondary)!important;
 }
+
+.example::-webkit-scrollbar {
+    display: none;
+  }
+  
+.example {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
