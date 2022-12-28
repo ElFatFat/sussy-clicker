@@ -1,3 +1,6 @@
+let version = "0.0.2";
+
+
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
 
 //Référeces aux éléments HTML
@@ -33,14 +36,11 @@ let oneSelectorElement = document.getElementById("one");
 let tenSelectorElement = document.getElementById("ten");
 let hundredSelectorElement = document.getElementById("hundred");
 
+let manualSaveElement = document.getElementById("manualSave");
+
 //Variable pour choisir la quantité d'upgrade à acheter
 type upgradeQuantitySelector = 1 | 10 | 100;
 let upgradeQuantitySelector: upgradeQuantitySelector = 1;
-
-let version = "0.0.1";
-
-
-
 
 
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
@@ -54,7 +54,7 @@ window.onload = function () {
 
 //Listener qui va réagir au relâchement de la touche espace, et définir la variable spacebarHeld à false.
 document.addEventListener("keyup", function (event) {
-    if(event.code == "Space" && upgrade4lvl > 0) {
+    if (event.code == "Space" && upgrade4lvl > 0) {
         manualClick();
     }
 });
@@ -62,6 +62,7 @@ document.addEventListener("keyup", function (event) {
 //Fonction principale qui va appeller d'autre fonction pour initialiser le jeu, définir les timers, ainsi que construire l'interface.
 function init() {
     loadSave();
+    setUpgradeQuantitySelector(1);
     updatePlayerName();
     updateMoney();
     updateUpgrades();
@@ -74,9 +75,11 @@ function init() {
 }
 
 //Fonction qui va déclarer tout les timers que l'on va utiliser dans le jeu.
-function initializeTimers():void{
+function initializeTimers(): void {
     //Fonction de sauvegarde automatique toutes les secondes
     setInterval(save, 1000);
+
+    setInterval(automaticSave, 1000)
     //Fonction de timer qui s'écoule
     setInterval(updateElapsedTime, 1000);
     //Fonction de clic automatique toutes les secondes
@@ -87,9 +90,8 @@ function initializeTimers():void{
     setInterval(updateMoneyPerSecond, 1000);
 
     setInterval(() => {
-        if(money>highscore){
+        if (money > highscore) {
             highscore = money;
-            updateHighscore(money);
         }
     }, 2000);
 }
@@ -131,7 +133,11 @@ function automaticClick(): void {
 
 //Fonction qui prend en argument le nombre d'upgrade à acheter et qui met à jour la variable upgradeQuantitySelector ainsi que l'interface grâce à updateUpgrades()
 function setUpgradeQuantitySelector(quantity): void {
-    if (oneSelectorElement != null && tenSelectorElement != null && hundredSelectorElement != null) {
+    if (
+        oneSelectorElement != null &&
+        tenSelectorElement != null &&
+        hundredSelectorElement != null
+    ) {
         oneSelectorElement.classList.remove("selected");
         tenSelectorElement.classList.remove("selected");
         hundredSelectorElement.classList.remove("selected");
@@ -139,26 +145,26 @@ function setUpgradeQuantitySelector(quantity): void {
 
     if (quantity == 1) {
         upgradeQuantitySelector = 1;
-        if(oneSelectorElement != null){
+        if (oneSelectorElement != null) {
             oneSelectorElement.classList.add("selected");
         }
         updateUpgrades();
     } else if (quantity == 10) {
         upgradeQuantitySelector = 10;
-        if(tenSelectorElement != null){
+        if (tenSelectorElement != null) {
             tenSelectorElement.classList.add("selected");
         }
         updateUpgrades();
     } else if (quantity == 100) {
         upgradeQuantitySelector = 100;
-        if(hundredSelectorElement != null){
+        if (hundredSelectorElement != null) {
             hundredSelectorElement.classList.add("selected");
         }
         updateUpgrades();
     }
 }
 
-//Fonction qui s'occupe de l'achat des upgrade. 
+//Fonction qui s'occupe de l'achat des upgrade.
 //On précisant en argument quelle amélioration on veut acheter (1 = upgrade1, 2 = upgrade2, 3 = upgrade3)
 function buyUpgrade(whichOne): void {
     //On switch l'argument reçu pour savoir quelle amélioration on veut acheter
@@ -171,7 +177,7 @@ function buyUpgrade(whichOne): void {
                 //On incrémente le level selon la quantité d'amélioration achetée
                 upgrade1lvl += upgradeQuantitySelector;
                 //Si l'amélioration n'était pas débloquée, on débloque l'amélioration et on débloque le succès associé
-                if(upgrade1Unlocked == false){
+                if (upgrade1Unlocked == false) {
                     //TODO : Succès débloqué
                     upgrade1Unlocked = true;
                 }
@@ -182,7 +188,7 @@ function buyUpgrade(whichOne): void {
         case 2:
             if (canBuyUpgrade(upgrade2Price)) {
                 upgrade2lvl += upgradeQuantitySelector;
-                if(upgrade2Unlocked == false){
+                if (upgrade2Unlocked == false) {
                     //TODO : Succès débloqué
                     upgrade2Unlocked = true;
                 }
@@ -193,7 +199,7 @@ function buyUpgrade(whichOne): void {
         case 3:
             if (canBuyUpgrade(upgrade3Price)) {
                 upgrade3lvl += upgradeQuantitySelector;
-                if(upgrade3Unlocked == false){
+                if (upgrade3Unlocked == false) {
                     //TODO : Succès débloqué
                     upgrade3Unlocked = true;
                 }
@@ -202,10 +208,10 @@ function buyUpgrade(whichOne): void {
 
         //Amélioration n°4
         case 4:
-            if(upgrade4lvl == 0){
+            if (upgrade4lvl == 0) {
                 if (canBuyUpgrade(upgrade4DefaultPrice)) {
                     upgrade4lvl = 1;
-                    if(upgrade4Unlocked == false){
+                    if (upgrade4Unlocked == false) {
                         //TODO : Succès débloqué
                         upgrade4Unlocked = true;
                     }
@@ -215,10 +221,10 @@ function buyUpgrade(whichOne): void {
 
         //Amélioration n°5
         case 5:
-            if(upgrade5lvl == 0){
+            if (upgrade5lvl == 0) {
                 if (canBuyUpgrade(upgrade5DefaultPrice)) {
                     upgrade5lvl = 1;
-                    if(upgrade5Unlocked == false){
+                    if (upgrade5Unlocked == false) {
                         //TODO : Succès débloqué
                         upgrade5Unlocked = true;
                     }
@@ -242,9 +248,6 @@ function canBuyUpgrade(price): boolean {
     }
 }
 
-
-
-
 // ################### FONCTIONS QUI SONT APPELLEES LORSQUE DES VARIABLES ONT ETE MODIFIEES ###################
 //Ces fonctions vont principalement actualiser l'interface utilisateur ainsi qu'effectuer des vérifications basiques (ex: Est-ce que le joueur à battu son record ?)
 
@@ -262,13 +265,26 @@ function updateMoney(): void {
     if (moneyElement != null) {
         moneyElement.innerHTML = money + " $ v" + version;
     }
+
+    if (money > alltimeHighscore) {
+        updateAlltimeHighscore(money);
+    }
 }
 
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
 function updateUpgrades(): void {
-    upgrade1Price = Math.floor(upgrade1DefaultPrice * Math.pow(1.5, (upgrade1lvl+upgradeQuantitySelector-1)));
-    upgrade2Price = Math.floor(upgrade2DefaultPrice * Math.pow(1.5, (upgrade2lvl+upgradeQuantitySelector-1)));
-    upgrade3Price = Math.floor(upgrade3DefaultPrice * Math.pow(3, (upgrade3lvl+upgradeQuantitySelector-1)));
+    upgrade1Price = Math.floor(
+        upgrade1DefaultPrice *
+            Math.pow(1.5, upgrade1lvl + upgradeQuantitySelector - 1)
+    );
+    upgrade2Price = Math.floor(
+        upgrade2DefaultPrice *
+            Math.pow(1.5, upgrade2lvl + upgradeQuantitySelector - 1)
+    );
+    upgrade3Price = Math.floor(
+        upgrade3DefaultPrice *
+            Math.pow(3, upgrade3lvl + upgradeQuantitySelector - 1)
+    );
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (
         upgrade1PriceElement != null &&
@@ -295,17 +311,38 @@ function updateUpgrades(): void {
         upgrade3LevelElement.innerHTML = "Niv. " + upgrade3lvl;
 
         //@ts-ignore
-        upgrade1Element.setAttribute("title", "Augmente le nombre de $ par clic manuel de +10 par niveau. \nActuellement Niv. " + upgrade1lvl + " | Gains de + " + (10*upgrade1Level) + " $ par clic.");
+        upgrade1Element.setAttribute(
+            "title",
+            "Augmente le nombre de $ par clic manuel de +10 par niveau. \nActuellement Niv. " +
+                upgrade1lvl +
+                " | Gains de + " +
+                10 * upgrade1lvl +
+                " $ par clic."
+        );
         //@ts-ignore
-        upgrade2Element.setAttribute("title", "Augmente le nombre de $ par clic automatique de +10 par niveau. \nActuellement Niv. " + upgrade2lvl + " | Gains de + " + (100*upgrade2Level) + " $ par seconde.");
+        upgrade2Element.setAttribute(
+            "title",
+            "Augmente le nombre de $ par clic automatique de +10 par niveau. \nActuellement Niv. " +
+                upgrade2lvl +
+                " | Gains de + " +
+                100 * upgrade2lvl +
+                " $ par seconde."
+        );
         //@ts-ignore
-        upgrade3Element.setAttribute("title", "Augmente le nombre de $ par clic manuel ET automatique de +1000 par niveau. \nActuellement Niv. " + upgrade3lvl + " | Gains de + " + (1000*upgrade3Level) + " $ par clic ET seconde.");
-        
-        if(upgrade4lvl == 1){
+        upgrade3Element.setAttribute(
+            "title",
+            "Augmente le nombre de $ par clic manuel ET automatique de +1000 par niveau. \nActuellement Niv. " +
+                upgrade3lvl +
+                " | Gains de + " +
+                1000 * upgrade3lvl +
+                " $ par clic ET seconde."
+        );
+
+        if (upgrade4lvl == 1) {
             upgrade4PriceElement.innerHTML = "Achat impossible";
             upgrade4LevelElement.innerHTML = "Niv. Max";
         }
-        if(upgrade5lvl == 1){
+        if (upgrade5lvl == 1) {
             upgrade5PriceElement.innerHTML = "Achat impossible";
             upgrade5LevelElement.innerHTML = "Niv. Max";
         }
@@ -320,22 +357,22 @@ function updateElapsedTime(): void {
         timeElapsedElementM != null &&
         timeElapsedElementS != null
     ) {
-        let h:number = Math.floor(elapsedTime / 3600);
-        let m:number = Math.floor((elapsedTime % 3600) / 60);
-        let s:number = (elapsedTime % 60);
-        if(h < 10){
+        let h: number = Math.floor(elapsedTime / 3600);
+        let m: number = Math.floor((elapsedTime % 3600) / 60);
+        let s: number = elapsedTime % 60;
+        if (h < 10) {
             timeElapsedElementH.innerHTML = "0" + h.toString() + ":";
-        }else{
+        } else {
             timeElapsedElementH.innerHTML = h.toString() + ":";
         }
-        if(m < 10){
+        if (m < 10) {
             timeElapsedElementM.innerHTML = "0" + m.toString() + ":";
-        }else{
+        } else {
             timeElapsedElementM.innerHTML = m.toString() + ":";
         }
-        if(s < 10){
+        if (s < 10) {
             timeElapsedElementS.innerHTML = "0" + s.toString();
-        }else{
+        } else {
             timeElapsedElementS.innerHTML = s.toString();
         }
     }
@@ -355,7 +392,8 @@ function updateAlltimeClicks(): void {
 function updateAlltimeMoney(): void {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeMoneyElement != null) {
-        alltimeMoneyElement.innerHTML = "Argent gagné total : " + alltimeMoney + " $";
+        alltimeMoneyElement.innerHTML =
+            "Argent gagné total : " + alltimeMoney + " $";
     }
 }
 
@@ -364,7 +402,8 @@ function updateAlltimeSpent(price: number): void {
     alltimeSpent += price;
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeSpentElement != null) {
-        alltimeSpentElement.innerHTML = "Argent depensé total : " + alltimeSpent + " $";
+        alltimeSpentElement.innerHTML =
+            "Argent depensé total : " + alltimeSpent + " $";
     }
 }
 
@@ -378,32 +417,85 @@ function updateAlltimeHighscore(newHighscore: number): void {
     }
 }
 
-//Fonction qui définit quel est le nouveau highscore, et en informe le serveur.
-function updateHighscore(newHighscore: number): void {
-    highscore = newHighscore;
-    //On envoie le score sur le serveur
-    //On est obligé de mettre un //@ts-ignore pour ignorer l'erreur de Typescript, car la fonction sendScoreToDatabase n'est pas définie dans ce fichier mais dans le fichier sendData.js
-    //@ts-ignore
-    sendScoreToDatabase(username, newHighscore);
-}
-
 //Fonction qui actualise le nombre de clics/s sur l'interface
 function updateClicksPerSecond(): void {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (clicksPerSecondElement != null) {
         //Pour déterminer le nombre de clics/s, on compare notre nombre de cicls total avec le nombre de clics total lors de la dernière mise à jour
         clicksPerSecondElement.innerHTML =
-            "Clics par seconde : " + (alltimeClicks - clicksPerSecondLatest) + " cps";
-            clicksPerSecondLatest = alltimeClicks;
+            "Clics par seconde : " +
+            (alltimeClicks - clicksPerSecondLatest) +
+            " cps";
+        clicksPerSecondLatest = alltimeClicks;
     }
 }
 
 //Fonction qui actualise le nombre de $/s sur l'interface
-function updateMoneyPerSecond():void{
+function updateMoneyPerSecond(): void {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
-    if(moneyPerSecondElement != null){
+    if (moneyPerSecondElement != null) {
         //Pour déterminer le nombre de $/s, on compare notre nombre de $ total avec le nombre de $ total lors de la dernière mise à jour
-        moneyPerSecondElement.innerHTML = "Dollars par seconde : " + (alltimeMoney - moneyPerSecondLatest) + " $/s";
+        moneyPerSecondElement.innerHTML =
+            "Dollars par seconde : " +
+            (alltimeMoney - moneyPerSecondLatest) +
+            " $/s";
         moneyPerSecondLatest = alltimeMoney;
     }
+}
+
+function manualSave() {
+    if (manualSaveElement != null) {
+        manualSaveElement.innerHTML = "Sauvegarde en cours...";
+    }
+
+    fetch("https://sae-301.azurewebsites.net/save-score.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username: username,
+            score: highscore,
+            force: true,
+        }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log("Sauvegarde manuelle réussie");
+            if (manualSaveElement != null) {
+                manualSaveElement.innerHTML = "Sauvegarde réussie !";
+                setTimeout(() => {
+                    manualSaveElement.innerHTML = "Sauvegarder";
+                }, 2000);
+            }
+        })
+        .catch((error) => {
+            console.error("Erreur sauvegarde manuelle: " + error);
+            if (manualSaveElement != null) {
+                manualSaveElement.innerHTML = "Sauvegarde échouée !";
+                setTimeout(() => {
+                    manualSaveElement.innerHTML = "Sauvegarder";
+                }, 2000);
+            }
+        });
+}
+
+function automaticSave() {
+    fetch("https://sae-301.azurewebsites.net/save-score.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username: username,
+            score: money,
+        }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.debug("Sauvegarde automatique réussie");
+        })
+        .catch((error) => {
+            console.debug("Erreur sauvegarde automatique: " + error);
+        });
 }

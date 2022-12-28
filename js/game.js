@@ -1,3 +1,4 @@
+var version = "0.0.2";
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
 //Référeces aux éléments HTML
 var playerNameElement = document.getElementById("playerName");
@@ -29,8 +30,8 @@ var upgrade5PriceElement = document.getElementById("upgrade5Price");
 var oneSelectorElement = document.getElementById("one");
 var tenSelectorElement = document.getElementById("ten");
 var hundredSelectorElement = document.getElementById("hundred");
+var manualSaveElement = document.getElementById("manualSave");
 var upgradeQuantitySelector = 1;
-var version = "0.0.1";
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
 window.onload = function () {
     if (!checkSaveValidity()) {
@@ -49,6 +50,7 @@ document.addEventListener("keyup", function (event) {
 //Fonction principale qui va appeller d'autre fonction pour initialiser le jeu, définir les timers, ainsi que construire l'interface.
 function init() {
     loadSave();
+    setUpgradeQuantitySelector(1);
     updatePlayerName();
     updateMoney();
     updateUpgrades();
@@ -63,6 +65,7 @@ function init() {
 function initializeTimers() {
     //Fonction de sauvegarde automatique toutes les secondes
     setInterval(save, 1000);
+    setInterval(automaticSave, 1000);
     //Fonction de timer qui s'écoule
     setInterval(updateElapsedTime, 1000);
     //Fonction de clic automatique toutes les secondes
@@ -74,7 +77,6 @@ function initializeTimers() {
     setInterval(function () {
         if (money > highscore) {
             highscore = money;
-            updateHighscore(money);
         }
     }, 2000);
 }
@@ -109,7 +111,9 @@ function automaticClick() {
 }
 //Fonction qui prend en argument le nombre d'upgrade à acheter et qui met à jour la variable upgradeQuantitySelector ainsi que l'interface grâce à updateUpgrades()
 function setUpgradeQuantitySelector(quantity) {
-    if (oneSelectorElement != null && tenSelectorElement != null && hundredSelectorElement != null) {
+    if (oneSelectorElement != null &&
+        tenSelectorElement != null &&
+        hundredSelectorElement != null) {
         oneSelectorElement.classList.remove("selected");
         tenSelectorElement.classList.remove("selected");
         hundredSelectorElement.classList.remove("selected");
@@ -136,7 +140,7 @@ function setUpgradeQuantitySelector(quantity) {
         updateUpgrades();
     }
 }
-//Fonction qui s'occupe de l'achat des upgrade. 
+//Fonction qui s'occupe de l'achat des upgrade.
 //On précisant en argument quelle amélioration on veut acheter (1 = upgrade1, 2 = upgrade2, 3 = upgrade3)
 function buyUpgrade(whichOne) {
     //On switch l'argument reçu pour savoir quelle amélioration on veut acheter
@@ -230,12 +234,18 @@ function updateMoney() {
     if (moneyElement != null) {
         moneyElement.innerHTML = money + " $ v" + version;
     }
+    if (money > alltimeHighscore) {
+        updateAlltimeHighscore(money);
+    }
 }
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
 function updateUpgrades() {
-    upgrade1Price = Math.floor(upgrade1DefaultPrice * Math.pow(1.5, (upgrade1lvl + upgradeQuantitySelector - 1)));
-    upgrade2Price = Math.floor(upgrade2DefaultPrice * Math.pow(1.5, (upgrade2lvl + upgradeQuantitySelector - 1)));
-    upgrade3Price = Math.floor(upgrade3DefaultPrice * Math.pow(3, (upgrade3lvl + upgradeQuantitySelector - 1)));
+    upgrade1Price = Math.floor(upgrade1DefaultPrice *
+        Math.pow(1.5, upgrade1lvl + upgradeQuantitySelector - 1));
+    upgrade2Price = Math.floor(upgrade2DefaultPrice *
+        Math.pow(1.5, upgrade2lvl + upgradeQuantitySelector - 1));
+    upgrade3Price = Math.floor(upgrade3DefaultPrice *
+        Math.pow(3, upgrade3lvl + upgradeQuantitySelector - 1));
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (upgrade1PriceElement != null &&
         upgrade2PriceElement != null &&
@@ -259,11 +269,23 @@ function updateUpgrades() {
         upgrade2LevelElement.innerHTML = "Niv. " + upgrade2lvl;
         upgrade3LevelElement.innerHTML = "Niv. " + upgrade3lvl;
         //@ts-ignore
-        upgrade1Element.setAttribute("title", "Augmente le nombre de $ par clic manuel de +10 par niveau. \nActuellement Niv. " + upgrade1lvl + " | Gains de + " + (10 * upgrade1Level) + " $ par clic.");
+        upgrade1Element.setAttribute("title", "Augmente le nombre de $ par clic manuel de +10 par niveau. \nActuellement Niv. " +
+            upgrade1lvl +
+            " | Gains de + " +
+            10 * upgrade1lvl +
+            " $ par clic.");
         //@ts-ignore
-        upgrade2Element.setAttribute("title", "Augmente le nombre de $ par clic automatique de +10 par niveau. \nActuellement Niv. " + upgrade2lvl + " | Gains de + " + (100 * upgrade2Level) + " $ par seconde.");
+        upgrade2Element.setAttribute("title", "Augmente le nombre de $ par clic automatique de +10 par niveau. \nActuellement Niv. " +
+            upgrade2lvl +
+            " | Gains de + " +
+            100 * upgrade2lvl +
+            " $ par seconde.");
         //@ts-ignore
-        upgrade3Element.setAttribute("title", "Augmente le nombre de $ par clic manuel ET automatique de +1000 par niveau. \nActuellement Niv. " + upgrade3lvl + " | Gains de + " + (1000 * upgrade3Level) + " $ par clic ET seconde.");
+        upgrade3Element.setAttribute("title", "Augmente le nombre de $ par clic manuel ET automatique de +1000 par niveau. \nActuellement Niv. " +
+            upgrade3lvl +
+            " | Gains de + " +
+            1000 * upgrade3lvl +
+            " $ par clic ET seconde.");
         if (upgrade4lvl == 1) {
             upgrade4PriceElement.innerHTML = "Achat impossible";
             upgrade4LevelElement.innerHTML = "Niv. Max";
@@ -282,7 +304,7 @@ function updateElapsedTime() {
         timeElapsedElementS != null) {
         var h = Math.floor(elapsedTime / 3600);
         var m = Math.floor((elapsedTime % 3600) / 60);
-        var s = (elapsedTime % 60);
+        var s = elapsedTime % 60;
         if (h < 10) {
             timeElapsedElementH.innerHTML = "0" + h.toString() + ":";
         }
@@ -316,7 +338,8 @@ function updateAlltimeClicks() {
 function updateAlltimeMoney() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeMoneyElement != null) {
-        alltimeMoneyElement.innerHTML = "Argent gagné total : " + alltimeMoney + " $";
+        alltimeMoneyElement.innerHTML =
+            "Argent gagné total : " + alltimeMoney + " $";
     }
 }
 //Fonction qui met à jour le nombre de $ dépensés tout comptes confondus
@@ -324,7 +347,8 @@ function updateAlltimeSpent(price) {
     alltimeSpent += price;
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (alltimeSpentElement != null) {
-        alltimeSpentElement.innerHTML = "Argent depensé total : " + alltimeSpent + " $";
+        alltimeSpentElement.innerHTML =
+            "Argent depensé total : " + alltimeSpent + " $";
     }
 }
 //Fonction qui définit quel est le nouveau highscore tout compte confondus.
@@ -336,21 +360,15 @@ function updateAlltimeHighscore(newHighscore) {
             "Record total : " + newHighscore + " $";
     }
 }
-//Fonction qui définit quel est le nouveau highscore, et en informe le serveur.
-function updateHighscore(newHighscore) {
-    highscore = newHighscore;
-    //On envoie le score sur le serveur
-    //On est obligé de mettre un //@ts-ignore pour ignorer l'erreur de Typescript, car la fonction sendScoreToDatabase n'est pas définie dans ce fichier mais dans le fichier sendData.js
-    //@ts-ignore
-    sendScoreToDatabase(username, newHighscore);
-}
 //Fonction qui actualise le nombre de clics/s sur l'interface
 function updateClicksPerSecond() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (clicksPerSecondElement != null) {
         //Pour déterminer le nombre de clics/s, on compare notre nombre de cicls total avec le nombre de clics total lors de la dernière mise à jour
         clicksPerSecondElement.innerHTML =
-            "Clics par seconde : " + (alltimeClicks - clicksPerSecondLatest) + " cps";
+            "Clics par seconde : " +
+                (alltimeClicks - clicksPerSecondLatest) +
+                " cps";
         clicksPerSecondLatest = alltimeClicks;
     }
 }
@@ -359,8 +377,65 @@ function updateMoneyPerSecond() {
     //Vérifie que les éléments sont bien chargés (exigé par Typescript)
     if (moneyPerSecondElement != null) {
         //Pour déterminer le nombre de $/s, on compare notre nombre de $ total avec le nombre de $ total lors de la dernière mise à jour
-        moneyPerSecondElement.innerHTML = "Dollars par seconde : " + (alltimeMoney - moneyPerSecondLatest) + " $/s";
+        moneyPerSecondElement.innerHTML =
+            "Dollars par seconde : " +
+                (alltimeMoney - moneyPerSecondLatest) +
+                " $/s";
         moneyPerSecondLatest = alltimeMoney;
     }
+}
+function manualSave() {
+    if (manualSaveElement != null) {
+        manualSaveElement.innerHTML = "Sauvegarde en cours...";
+    }
+    fetch("https://sae-301.azurewebsites.net/save-score.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username: username,
+            score: highscore,
+            force: true,
+        }),
+    })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+        console.log("Sauvegarde manuelle réussie");
+        if (manualSaveElement != null) {
+            manualSaveElement.innerHTML = "Sauvegarde réussie !";
+            setTimeout(function () {
+                manualSaveElement.innerHTML = "Sauvegarder";
+            }, 2000);
+        }
+    })
+        .catch(function (error) {
+        console.error("Erreur sauvegarde manuelle: " + error);
+        if (manualSaveElement != null) {
+            manualSaveElement.innerHTML = "Sauvegarde échouée !";
+            setTimeout(function () {
+                manualSaveElement.innerHTML = "Sauvegarder";
+            }, 2000);
+        }
+    });
+}
+function automaticSave() {
+    fetch("https://sae-301.azurewebsites.net/save-score.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            username: username,
+            score: money,
+        }),
+    })
+        .then(function (res) { return res.json(); })
+        .then(function (data) {
+        console.debug("Sauvegarde automatique réussie");
+    })
+        .catch(function (error) {
+        console.debug("Erreur sauvegarde automatique: " + error);
+    });
 }
 //# sourceMappingURL=game.js.map
