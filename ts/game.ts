@@ -1,6 +1,5 @@
 let version = "0.0.2";
 
-
 // ################### FICHIER DE LA LOGIQUE PRINCIPALE DU JEU ###################
 
 //Référeces aux éléments HTML
@@ -33,13 +32,13 @@ let upgrade5LevelElement = document.getElementById("upgrade5Level");
 let upgrade5PriceElement = document.getElementById("upgrade5Price");
 
 let oneSelectorElement = document.getElementById("one");
+let fiveSelectorElement = document.getElementById("five");
 let tenSelectorElement = document.getElementById("ten");
-let hundredSelectorElement = document.getElementById("hundred");
 
 let manualSaveElement = document.getElementById("manualSave");
 
 //Variable pour choisir la quantité d'upgrade à acheter
-type upgradeQuantitySelector = 1 | 10 | 100;
+type upgradeQuantitySelector = 1 | 5 | 10;
 let upgradeQuantitySelector: upgradeQuantitySelector = 1;
 
 
@@ -136,11 +135,11 @@ function setUpgradeQuantitySelector(quantity): void {
     if (
         oneSelectorElement != null &&
         tenSelectorElement != null &&
-        hundredSelectorElement != null
+        fiveSelectorElement != null
     ) {
         oneSelectorElement.classList.remove("selected");
         tenSelectorElement.classList.remove("selected");
-        hundredSelectorElement.classList.remove("selected");
+        fiveSelectorElement.classList.remove("selected");
     }
 
     if (quantity == 1) {
@@ -149,18 +148,19 @@ function setUpgradeQuantitySelector(quantity): void {
             oneSelectorElement.classList.add("selected");
         }
         updateUpgrades();
+    } else if (quantity == 5) {
+        upgradeQuantitySelector = 5;
+        if (fiveSelectorElement != null) {
+            fiveSelectorElement.classList.add("selected");
+        }
+        updateUpgrades();
     } else if (quantity == 10) {
         upgradeQuantitySelector = 10;
         if (tenSelectorElement != null) {
             tenSelectorElement.classList.add("selected");
         }
         updateUpgrades();
-    } else if (quantity == 100) {
-        upgradeQuantitySelector = 100;
-        if (hundredSelectorElement != null) {
-            hundredSelectorElement.classList.add("selected");
-        }
-        updateUpgrades();
+        
     }
 }
 
@@ -205,19 +205,19 @@ function buyUpgrade(whichOne): void {
                 }
             }
             break;
-
-        //Amélioration n°4
-        case 4:
-            if (upgrade4lvl == 0) {
-                if (canBuyUpgrade(upgrade4DefaultPrice)) {
-                    upgrade4lvl = 1;
-                    if (upgrade4Unlocked == false) {
-                        //TODO : Succès débloqué
-                        upgrade4Unlocked = true;
+            
+            //Amélioration n°4
+            case 4:
+                if (upgrade4lvl == 0) {
+                    if (canBuyUpgrade(upgrade4DefaultPrice)) {
+                        upgrade4lvl = 1;
+                        if (upgrade4Unlocked == false) {
+                            //TODO : Succès débloqué
+                            upgrade4Unlocked = true;
+                        }
                     }
                 }
-            }
-            break;
+                break;
 
         //Amélioration n°5
         case 5:
@@ -226,6 +226,7 @@ function buyUpgrade(whichOne): void {
                     upgrade5lvl = 1;
                     if (upgrade5Unlocked == false) {
                         //TODO : Succès débloqué
+                        document.getElementById('clicker').style.backgroundImage = "url('../img/log3.png')";
                         upgrade5Unlocked = true;
                     }
                 }
@@ -245,6 +246,58 @@ function canBuyUpgrade(price): boolean {
         return true;
     } else {
         return false;
+    }
+}
+
+function updateBuyables(): void{
+    if (money >= upgrade1Price) {
+        if (upgrade1Element != null) {
+            upgrade1Element.classList.remove("disabled");
+        }
+    } else {
+        if (upgrade1Element != null) {
+            upgrade1Element.classList.add("disabled");
+        }
+    }
+
+    if (money >= upgrade2Price) {
+        if (upgrade2Element != null) {
+            upgrade2Element.classList.remove("disabled");
+        }
+    } else {
+        if (upgrade2Element != null) {
+            upgrade2Element.classList.add("disabled");
+        }
+    }
+
+    if (money >= upgrade3Price) {
+        if (upgrade3Element != null) {
+            upgrade3Element.classList.remove("disabled");
+        }
+    } else {
+        if (upgrade3Element != null) {
+            upgrade3Element.classList.add("disabled");
+        }
+    }
+
+    if (money >= upgrade4DefaultPrice && upgrade4lvl == 0) {
+        if (upgrade4Element != null) {
+            upgrade4Element.classList.remove("disabled");
+        }
+    } else {
+        if (upgrade4Element != null) {
+            upgrade4Element.classList.add("disabled");
+        }
+    }
+
+    if (money >= upgrade5DefaultPrice && upgrade5lvl == 0) {
+        if (upgrade5Element != null) {
+            upgrade5Element.classList.remove("disabled");
+        }
+    } else {
+        if (upgrade5Element != null) {
+            upgrade5Element.classList.add("disabled");
+        }
     }
 }
 
@@ -269,6 +322,7 @@ function updateMoney(): void {
     if (money > alltimeHighscore) {
         updateAlltimeHighscore(money);
     }
+    updateBuyables();
 }
 
 //Fonction qui actualise les prix et le niveau actuel de chaque amélioration.
@@ -347,6 +401,7 @@ function updateUpgrades(): void {
             upgrade5LevelElement.innerHTML = "Niv. Max";
         }
     }
+    updateBuyables();
 }
 
 //Fonction qui actualise le temps écoulé depuis le début de la partie.

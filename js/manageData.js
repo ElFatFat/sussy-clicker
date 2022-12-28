@@ -140,6 +140,9 @@ function loadSave() {
     upgrade3lvl = parseInt(localStorage.getItem("upgrade3lvl"));
     upgrade4lvl = parseInt(localStorage.getItem("upgrade4lvl"));
     upgrade5lvl = parseInt(localStorage.getItem("upgrade5lvl"));
+    if (upgrade5lvl > 0) {
+        document.getElementById('clicker').style.backgroundImage = "url('../img/log3.png')";
+    }
     elapsedTime = parseInt(localStorage.getItem("elapsedTime"));
     alltimeClicks = parseInt(localStorage.getItem("alltimeClicks"));
     alltimeMoney = parseInt(localStorage.getItem("alltimeMoney"));
@@ -161,8 +164,7 @@ function checkSaveValidity() {
         localStorage.getItem("upgrade2lvl") == undefined ||
         localStorage.getItem("upgrade3lvl") == undefined ||
         localStorage.getItem("upgrade4lvl") == undefined ||
-        localStorage.getItem("upgrade5lvl") == undefined ||
-        localStorage.getItem("elapsedTime") == undefined) {
+        localStorage.getItem("upgrade5lvl") == undefined) {
         return false;
     }
     else {
