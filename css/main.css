@@ -51,6 +51,11 @@ body {
     border-radius: 10px;
     transition: width 0.5s ease-in-out;
 }
+#loadingText{
+    color: #fff;
+    font-size: 2rem;
+    margin-top: 2rem;
+}
 
 #gameContainer {
     display: flex;
