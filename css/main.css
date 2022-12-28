@@ -75,9 +75,7 @@ body {
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
 }
-#manualSave{
-    cursor: pointer;
-}
+
 #clicker p {
     font-size: 5rem;
     color: #fff;
@@ -122,15 +120,22 @@ body {
 #nameAndTimer>*{
     width: 30%;
 }
-#manualSave{
-    text-align: center;
-    overflow: visible;
+
+#manualSave {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 0;
+    cursor: pointer;
+    margin-left: 2vw;
+    margin-bottom: 4vh;
 }
+
 #manualSaveImg{
     background-color: var(--bg_main);
     border-radius: 8%;
-    width: 50%;
-    padding: 10%;
+    width: 10%;
+    padding: 2%;
     transition: all 0.12s ease-in-out;
 }
 #timer {
