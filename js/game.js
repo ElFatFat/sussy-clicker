@@ -414,6 +414,24 @@ function updateAlltimeClicks() {
         alltimeClicksElement.innerHTML =
             "Nombre de clics totaux  : " + alltimeClicks;
     }
+    if (alltimeClicks == 10) {
+        popup("img/achievement.png", "10 clics", "C'est déjà pas mal ! Allez, on continue de couper du bois !");
+    }
+    if (alltimeClicks == 100) {
+        popup("img/achievement.png", "100 clics", "Okay, on a un bon rythme là ! Continue comme ça !");
+    }
+    if (alltimeClicks == 1000) {
+        popup("img/achievement.png", "1000 clics", "Ah bah enfin ! J'ai cru que tu n'allais jamais y arriver !");
+    }
+    if (alltimeClicks == 10000) {
+        popup("img/achievement.png", "10k clics", "Pauvre sapin, tu as vraiment massacré ce pauvre arbre !");
+    }
+    if (alltimeClicks == 100000) {
+        popup("img/achievement.png", "100k clics", "Si j'étais toi, j'irai jouer à un autre jeu...");
+    }
+    if (alltimeClicks == 1000000) {
+        popup("img/achievement.png", "1M clics", "Spectaculaire ! Mais obtenu en trichant :)");
+    }
 }
 //Fonction qui met à jour le nombre de $ gagnés tout comptes confondus
 function updateAlltimeMoney() {
@@ -421,6 +439,22 @@ function updateAlltimeMoney() {
     if (alltimeMoneyElement != null) {
         alltimeMoneyElement.innerHTML =
             "Argent gagné total : " + alltimeMoney + " $";
+    }
+    if (alltimeMoney >= 1000 && achievementMoney100 == false) {
+        achievementMoney100 = true;
+        popup("img/achievement.png", "1000 $", "Le début de la richesse !");
+    }
+    if (alltimeMoney >= 10000 && achievementMoney1000 == false) {
+        achievementMoney1000 = true;
+        popup("img/achievement.png", "10k $", "Si seulement être riche était aussi simple !");
+    }
+    if (alltimeMoney >= 100000 && achievementMoney10000 == false) {
+        achievementMoney10000 = true;
+        popup("img/achievement.png", "100k $", "Bûcheron bientôt millionnaire ?");
+    }
+    if (alltimeMoney >= 1000000 && achievementMoney100000 == false) {
+        achievementMoney100000 = true;
+        popup("img/achievement.png", "1M $", "LE BUCHERON MILLIONNAIRE !!!!!!");
     }
 }
 //Fonction qui met à jour le nombre de $ dépensés tout comptes confondus
@@ -566,7 +600,7 @@ function popup(img, title, text) {
     setTimeout(function () { popup.classList.add("show"); }, 100);
     setTimeout(function () {
         dismissPopup(popup);
-    }, 5000);
+    }, 4000);
 }
 function dismissPopup(element) {
     element.classList.remove("show");
