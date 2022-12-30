@@ -18,7 +18,7 @@
         </div>
         <p id="loadingText"> 0% - Chargement...</p>
     </div>
-    <div id="gameContainer">
+    <div id="gameContainer" class="close">
         <div id="achievementAndLeaderboardContainer">
             <a href="scoreboard.html"><img id="gameIcon"src="" alt=""></a>
         </div>
@@ -31,8 +31,12 @@
         <div id="manualSave">
             <img id="manualSaveImg" src="img/save.svg" alt="" onclick="manualSave()">
         </div>
+        <div id="openPanel" onclick="openPanel()">
+            <button>OUVRIR</button>
+        </div>
         <div id="panel">
             <div id="nameAndTimer">
+                <button id="closePanel" onclick="closePanel()">FERMER</button>
                 <p id="playerName"></p>
                 <div id="timer">
                     <p id="timeElapsedH">00:</p>
@@ -49,42 +53,41 @@
                 <p id="alltimeSpent">Argent depensé total : 0 $</p>
                 <p id="alltimeHighscore">Record total : 0 $</p>
             </div>
-                <div id="quantitySelectorContainer">
-                    <button id="one" class="upgradeQuantitySelector" class="selected" onclick="setUpgradeQuantitySelector(1)">x1</button>
-                    <button id="five" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(5)">x5</button>
-                    <button id="ten" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(10)">x10</button>
-                </div>
-                <div id="scrollUpgrade">
-                  <div id="upgrade1" class="upgrade" onclick="buyUpgrade(1)">
-                      <p id="upgrade1Level" class="upgradeLevel">Niv. 0</p>
-                      <p id="upgrade1Title" class="upgradeTitle">Hache</p>
-                     <p id="upgrade1Price" class="upgradePrice">100 $</p>
-                 </div>
-                  <div id="upgrade2" class="upgrade" onclick="buyUpgrade(2)">
-                      <p id="upgrade2Level" class="upgradeLevel">Niv. 0</p>
-                      <p id="upgrade2Title" class="upgradeTitle">Tronconneuse</p>
-                      <p id="upgrade2Price" class="upgradePrice">100 $</p>
-                  </div>
-                  <div id="upgrade3" class="upgrade" onclick="buyUpgrade(3)">
-                      <p id="upgrade3Level" class="upgradeLevel">Niv. 0</p>
-                      <p id="upgrade3Title" class="upgradeTitle">Scierie</p>
-                      <p id="upgrade3Price" class="upgradePrice">10000 $</p>
-                  </div>
-                  <div id="upgrade4" class="upgrade" onclick="buyUpgrade(4)" title="Marre de cliquer à la souris ? Débloquez le clavier plutôt !">
-                      <p id="upgrade4Level" class="upgradeLevel">Niv. 0</p>
-                      <p id="upgrade4Title" class="upgradeTitle">Clavier</p>
-                      <p id="upgrade4Price" class="upgradePrice">500000 $</p>
-                  </div>
-                  <div id="upgrade5" class="upgrade" onclick="buyUpgrade(5)" title="Dechaînez le pouvoir de Stormbreaker !!!">
-                      <p id="upgrade5Level" class="upgradeLevel">Niv. 0</p>
-                      <p id="upgrade5Title" class="upgradeTitle">Stormbreaker</p>
-                      <p id="upgrade5Price" class="upgradePrice">1000000 $</p>
-                    </div>
-                  </div>
-                
-                
+            <div id="quantitySelectorContainer">
+                <button id="one" class="upgradeQuantitySelector" class="selected"
+                    onclick="setUpgradeQuantitySelector(1)">x1</button>
+                <button id="five" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(5)">x5</button>
+                <button id="ten" class="upgradeQuantitySelector" onclick="setUpgradeQuantitySelector(10)">x10</button>
             </div>
-
+            <div id="scrollUpgrade">
+                <div id="upgrade1" class="upgrade" onclick="buyUpgrade(1)">
+                    <p id="upgrade1Level" class="upgradeLevel">Niv. 0</p>
+                    <p id="upgrade1Title" class="upgradeTitle">Hache</p>
+                    <p id="upgrade1Price" class="upgradePrice">100 $</p>
+                </div>
+                <div id="upgrade2" class="upgrade" onclick="buyUpgrade(2)">
+                    <p id="upgrade2Level" class="upgradeLevel">Niv. 0</p>
+                    <p id="upgrade2Title" class="upgradeTitle">Tronconneuse</p>
+                    <p id="upgrade2Price" class="upgradePrice">100 $</p>
+                </div>
+                <div id="upgrade3" class="upgrade" onclick="buyUpgrade(3)">
+                    <p id="upgrade3Level" class="upgradeLevel">Niv. 0</p>
+                    <p id="upgrade3Title" class="upgradeTitle">Scierie</p>
+                    <p id="upgrade3Price" class="upgradePrice">10000 $</p>
+                </div>
+                <div id="upgrade4" class="upgrade" onclick="buyUpgrade(4)"
+                    title="Marre de cliquer à la souris ? Débloquez le clavier plutôt !">
+                    <p id="upgrade4Level" class="upgradeLevel">Niv. 0</p>
+                    <p id="upgrade4Title" class="upgradeTitle">Clavier</p>
+                    <p id="upgrade4Price" class="upgradePrice">500000 $</p>
+                </div>
+                <div id="upgrade5" class="upgrade" onclick="buyUpgrade(5)" title="Dechaînez le pouvoir de Stormbreaker !!!">
+                    <p id="upgrade5Level" class="upgradeLevel">Niv. 0</p>
+                    <p id="upgrade5Title" class="upgradeTitle">Stormbreaker</p>
+                    <p id="upgrade5Price" class="upgradePrice">1000000 $</p>
+                </div>
+            </div>
+        </div>
         </div>
     <script src="js/loading.js"></script>
     <script src="js/manageData.js"></script>
