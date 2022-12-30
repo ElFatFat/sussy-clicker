@@ -144,7 +144,7 @@ body {
     border-radius: 8%;
     width: 10%;
     padding: 2%;
-    transition: all 0.12s ease-in-out;
+    transition: all 0.12s ease-in-out, box-shadow 0.08s ease-in-out, transform 0.08s ease-in-out;
     box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
 }
 #manualSaveImg:hover{
@@ -152,7 +152,7 @@ body {
     box-shadow: 0rem 0rem 0rem 0rem #2b2b2b85;
 }
 
-.upgrade, #manualSaveImg, .upgradeQuantitySelector{
+.upgrade, .upgradeQuantitySelector{
     transition: box-shadow 0.08s ease-in-out, transform 0.08s ease-in-out;
 }
 #timer {
