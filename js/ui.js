@@ -19,6 +19,7 @@ function changeImage() {
     if (logActive == false) {
         if (upgrade5lvl == 1) {
             logImage.style.backgroundImage = "url('../img/log4.png')";
+            shakeScreen();
         }
         else {
             logImage.style.backgroundImage = "url('../img/log2.png')";
