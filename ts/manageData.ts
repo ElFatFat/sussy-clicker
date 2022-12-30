@@ -31,8 +31,12 @@ let upgrade5Price: number;
 let upgrade1Unlocked: boolean = false;
 let upgrade2Unlocked: boolean = false;
 let upgrade3Unlocked: boolean = false;
-let upgrade4Unlocked: boolean = false;
-let upgrade5Unlocked: boolean = false;
+
+let achievementMoney100: boolean = false;
+let achievementMoney1000: boolean = false;
+let achievementMoney10000: boolean = false;
+let achievementMoney100000: boolean = false;
+let achievementMoney1000000: boolean = false;
 
 //Nom de la page actuelle
 let currentWebpage = window.location.pathname;
@@ -96,8 +100,11 @@ function createSave(username) {
     localStorage.setItem("upgrade1Unlocked", 'false');
     localStorage.setItem("upgrade2Unlocked", 'false');
     localStorage.setItem("upgrade3Unlocked", 'false');
-    localStorage.setItem("upgrade4Unlocked", 'false');
-    localStorage.setItem("upgrade5Unlocked", 'false');
+    localStorage.setItem("achievementMoney100", 'false');
+    localStorage.setItem("achievementMoney1000", 'false');
+    localStorage.setItem("achievementMoney10000", 'false');
+    localStorage.setItem("achievementMoney100000", 'false');
+    localStorage.setItem("achievementMoney1000000", 'false');
 
     if (localStorage.getItem("alltimeClicks") == null) {
         localStorage.setItem("alltimeClicks", '0');
@@ -126,8 +133,11 @@ function deleteSave():void {
     localStorage.removeItem("upgrade1Unlocked");
     localStorage.removeItem("upgrade2Unlocked");
     localStorage.removeItem("upgrade3Unlocked");
-    localStorage.removeItem("upgrade4Unlocked");
-    localStorage.removeItem("upgrade5Unlocked");
+    localStorage.removeItem("achievementMoney100");
+    localStorage.removeItem("achievementMoney1000");
+    localStorage.removeItem("achievementMoney10000");
+    localStorage.removeItem("achievementMoney100000");
+    localStorage.removeItem("achievementMoney1000000");
     window.location.href = "index.html";
 }
 function deleteStatistics():void {
@@ -154,8 +164,11 @@ function save():void {
     localStorage.setItem("upgrade1Unlocked", upgrade1Unlocked.toString());
     localStorage.setItem("upgrade2Unlocked", upgrade2Unlocked.toString());
     localStorage.setItem("upgrade3Unlocked", upgrade3Unlocked.toString());
-    localStorage.setItem("upgrade4Unlocked", upgrade4Unlocked.toString());
-    localStorage.setItem("upgrade5Unlocked", upgrade5Unlocked.toString());
+    localStorage.setItem("achievementMoney100", achievementMoney100.toString());
+    localStorage.setItem("achievementMoney1000", achievementMoney1000.toString());
+    localStorage.setItem("achievementMoney10000", achievementMoney10000.toString());
+    localStorage.setItem("achievementMoney100000", achievementMoney100000.toString());
+    localStorage.setItem("achievementMoney1000000", achievementMoney1000000.toString());
 }
 
 function loadSave():void {
@@ -182,9 +195,12 @@ function loadSave():void {
     upgrade1Unlocked = (localStorage.getItem("upgrade1Unlocked") as string == 'true') ? true : false;
     upgrade2Unlocked = (localStorage.getItem("upgrade2Unlocked") as string == 'true') ? true : false;
     upgrade3Unlocked = (localStorage.getItem("upgrade3Unlocked") as string == 'true') ? true : false;
-    upgrade4Unlocked = (localStorage.getItem("upgrade4Unlocked") as string == 'true') ? true : false;
-    upgrade5Unlocked = (localStorage.getItem("upgrade5Unlocked") as string == 'true') ? true : false;
 
+    achievementMoney100 = (localStorage.getItem("achievementMoney100") as string == 'true') ? true : false;
+    achievementMoney1000 = (localStorage.getItem("achievementMoney1000") as string == 'true') ? true : false;
+    achievementMoney10000 = (localStorage.getItem("achievementMoney10000") as string == 'true') ? true : false;
+    achievementMoney100000 = (localStorage.getItem("achievementMoney100000") as string == 'true') ? true : false;
+    achievementMoney1000000 = (localStorage.getItem("achievementMoney1000000") as string == 'true') ? true : false;
 }
 
 function checkSaveValidity():boolean {

@@ -28,8 +28,11 @@ var upgrade5Price;
 var upgrade1Unlocked = false;
 var upgrade2Unlocked = false;
 var upgrade3Unlocked = false;
-var upgrade4Unlocked = false;
-var upgrade5Unlocked = false;
+var achievementMoney100 = false;
+var achievementMoney1000 = false;
+var achievementMoney10000 = false;
+var achievementMoney100000 = false;
+var achievementMoney1000000 = false;
 //Nom de la page actuelle
 var currentWebpage = window.location.pathname;
 //Référence pour afficher le popup sur la page index.html lorsque qu'une sauvegarde est trouvée
@@ -85,8 +88,11 @@ function createSave(username) {
     localStorage.setItem("upgrade1Unlocked", 'false');
     localStorage.setItem("upgrade2Unlocked", 'false');
     localStorage.setItem("upgrade3Unlocked", 'false');
-    localStorage.setItem("upgrade4Unlocked", 'false');
-    localStorage.setItem("upgrade5Unlocked", 'false');
+    localStorage.setItem("achievementMoney100", 'false');
+    localStorage.setItem("achievementMoney1000", 'false');
+    localStorage.setItem("achievementMoney10000", 'false');
+    localStorage.setItem("achievementMoney100000", 'false');
+    localStorage.setItem("achievementMoney1000000", 'false');
     if (localStorage.getItem("alltimeClicks") == null) {
         localStorage.setItem("alltimeClicks", '0');
     }
@@ -112,8 +118,11 @@ function deleteSave() {
     localStorage.removeItem("upgrade1Unlocked");
     localStorage.removeItem("upgrade2Unlocked");
     localStorage.removeItem("upgrade3Unlocked");
-    localStorage.removeItem("upgrade4Unlocked");
-    localStorage.removeItem("upgrade5Unlocked");
+    localStorage.removeItem("achievementMoney100");
+    localStorage.removeItem("achievementMoney1000");
+    localStorage.removeItem("achievementMoney10000");
+    localStorage.removeItem("achievementMoney100000");
+    localStorage.removeItem("achievementMoney1000000");
     window.location.href = "index.html";
 }
 function deleteStatistics() {
@@ -139,8 +148,11 @@ function save() {
     localStorage.setItem("upgrade1Unlocked", upgrade1Unlocked.toString());
     localStorage.setItem("upgrade2Unlocked", upgrade2Unlocked.toString());
     localStorage.setItem("upgrade3Unlocked", upgrade3Unlocked.toString());
-    localStorage.setItem("upgrade4Unlocked", upgrade4Unlocked.toString());
-    localStorage.setItem("upgrade5Unlocked", upgrade5Unlocked.toString());
+    localStorage.setItem("achievementMoney100", achievementMoney100.toString());
+    localStorage.setItem("achievementMoney1000", achievementMoney1000.toString());
+    localStorage.setItem("achievementMoney10000", achievementMoney10000.toString());
+    localStorage.setItem("achievementMoney100000", achievementMoney100000.toString());
+    localStorage.setItem("achievementMoney1000000", achievementMoney1000000.toString());
 }
 function loadSave() {
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
@@ -165,8 +177,11 @@ function loadSave() {
     upgrade1Unlocked = (localStorage.getItem("upgrade1Unlocked") == 'true') ? true : false;
     upgrade2Unlocked = (localStorage.getItem("upgrade2Unlocked") == 'true') ? true : false;
     upgrade3Unlocked = (localStorage.getItem("upgrade3Unlocked") == 'true') ? true : false;
-    upgrade4Unlocked = (localStorage.getItem("upgrade4Unlocked") == 'true') ? true : false;
-    upgrade5Unlocked = (localStorage.getItem("upgrade5Unlocked") == 'true') ? true : false;
+    achievementMoney100 = (localStorage.getItem("achievementMoney100") == 'true') ? true : false;
+    achievementMoney1000 = (localStorage.getItem("achievementMoney1000") == 'true') ? true : false;
+    achievementMoney10000 = (localStorage.getItem("achievementMoney10000") == 'true') ? true : false;
+    achievementMoney100000 = (localStorage.getItem("achievementMoney100000") == 'true') ? true : false;
+    achievementMoney1000000 = (localStorage.getItem("achievementMoney1000000") == 'true') ? true : false;
 }
 function checkSaveValidity() {
     //Condition élargie sur plusieurs lignes pour plus de lisibilité
