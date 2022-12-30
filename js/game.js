@@ -30,7 +30,6 @@ var oneSelectorElement = document.getElementById("one");
 var fiveSelectorElement = document.getElementById("five");
 var tenSelectorElement = document.getElementById("ten");
 var manualSaveElement = document.getElementById("manualSaveImg");
-;
 var upgradeQuantitySelector = 1;
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
 window.onload = function () {
@@ -577,6 +576,17 @@ function automaticSave() {
         console.error("Erreur sauvegarde automatique : " + err);
     });
 }
+
+function openPanel() {
+    document.getElementById("gameContainer").classList.remove("close");
+    document.getElementById("gameContainer").classList.add("open");
+}
+
+function closePanel() {
+    document.getElementById("gameContainer").classList.remove("open");
+    document.getElementById("gameContainer").classList.add("close");
+}
+
 function popup(img, title, text) {
     var popup = document.createElement("div");
     popup.className = "popup";

@@ -24,6 +24,79 @@ body {
     background-position: center;
     overflow: hidden;
 }
+
+@media only screen and (max-width: 576px) {
+    body {
+        overflow: hidden;
+    }
+
+    .close #panel {
+        width: 0vw!important;
+        padding: 0!important;
+        position: absolute;
+        right: 0;
+    } 
+
+    .close #panel > * {
+        opacity: 0!important;
+    }
+
+    #gameContainer {
+        justify-content: center!important;
+    }
+    #openPanel {
+        display: block!important;
+    }
+    #clicker {
+        width: 170vw!important;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    body {
+        overflow: hidden;
+    }
+
+    .open #panel {
+        width: 100vw!important;
+        padding: 10!important;
+        position: absolute;
+        right: 0;
+    } 
+
+    .open #panel > * {
+        opacity: 1!important;
+    }
+
+    #gameContainer {
+        justify-content: center!important;
+    }
+    #closePanel {
+        display: block!important;
+    }
+    #clicker {
+        width: 170vw!important;
+    }
+}
+
+.open {
+    z-index: 100;
+}
+
+.close {
+    z-index: 100;
+}
+
+#openPanel {
+    position: absolute;
+    right: 0;
+    display: none;
+}
+
+#closePanel {
+    display: none;
+}
+
 #loading{
     width: 100vw;
     height: 100vh;
@@ -113,7 +186,12 @@ body {
     justify-content: space-between;
     padding: 1rem;
     gap: 1rem;
+    transition: width 1 s ease-in-out;
 }
+
+/* #panel > * {
+    transition: opacity 3s ease;
+} */
 
 
 #nameAndTimer {
@@ -123,7 +201,7 @@ body {
     height: 6%;
     width: 100%;
 }
-#nameAndTimer>*{
+#nameAndTimer > * {
     width: 30%;
 }
 
@@ -384,3 +462,4 @@ body {
         transform: translate(1px, -2px) rotate(-1deg);
     }
 }
+
