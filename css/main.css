@@ -22,6 +22,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    overflow: hidden;
 }
 #loading{
     width: 100vw;
@@ -50,6 +51,11 @@ body {
     background-color: #DEB887;
     border-radius: 10px;
     transition: width 0.5s ease-in-out;
+}
+#loadingText{
+    color: #fff;
+    font-size: 2rem;
+    margin-top: 2rem;
 }
 
 #gameContainer {
@@ -132,11 +138,22 @@ body {
 }
 
 #manualSaveImg{
+    cursor: pointer;
+
     background-color: var(--bg_main);
     border-radius: 8%;
     width: 10%;
     padding: 2%;
     transition: all 0.12s ease-in-out;
+    box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
+}
+#manualSaveImg:hover{
+    transform: translateY(0.2rem);
+    box-shadow: 0rem 0rem 0rem 0rem #2b2b2b85;
+}
+
+.upgrade, #manualSaveImg, .upgradeQuantitySelector{
+    transition: box-shadow 0.08s ease-in-out, transform 0.08s ease-in-out;
 }
 #timer {
     display: flex;
@@ -150,6 +167,7 @@ body {
     height: 40%;
     background-color: var(--bg_main);
     border-radius: 0.5rem;
+    box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
 }
 
 #statsName {
@@ -175,6 +193,12 @@ body {
     width: 100%;
     flex-grow: 1;
     padding-inline: 1.5rem;
+    box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
+}
+
+.upgrade:hover {
+    box-shadow: 0rem 0rem 0rem 0rem #2b2b2b85;
+    transform: translateY(0.2rem);
 }
 
 .upgradeLevel{
@@ -211,7 +235,12 @@ body {
     cursor: pointer;
     background-color: var(--bg_secondary);
     color: white;
+    box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
+}
 
+.upgradeQuantitySelector:hover {
+    box-shadow: 0rem 0rem 0rem 0rem #2b2b2b85;
+    transform: translateY(0.2rem);
 }
 
 #achievementAndLeaderboardContainer {
@@ -243,6 +272,11 @@ body {
 
 .disabled {
     background-color: var(--bg_secondary)!important;
+    cursor: default!important;
+}
+.disabled:hover {
+    box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85!important;
+    transform: translateY(0rem)!important;
 }
 
 .example::-webkit-scrollbar {
@@ -253,4 +287,100 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
+.popup{
+    position: fixed;
+    width: clamp(120px, 75%, 600px);
+    height: 150px;
+    top: 0;
+    left: calc(50% - clamp(120px, 75%, 600px)/2);
+    background-color: white;
+    transition: all 0.5s ease-in-out;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(-100%);
+    opacity: 0;
+    pointer-events: none;
+    border-radius: 20px;
+    z-index: 100;
+    background-color: #A58760;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.5);
+    border: #745D44 2px solid;
+    color: white;
+    padding-right: 1rem;
+    cursor: pointer;
+}
+
+.popup.show{
+    transform: translateY(15%);
+    opacity: 1;
+    pointer-events: all;
+}
+
+.popup img{
+    height: 100%;
+    object-fit: contain;
+    width: 35%;
+}
+
+.popup > .popup_content{
+    width: 65%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    gap: 5%;
+}
+
+.popup > .popup_content > .popup_title{
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.popup > .popup_content > .popup_text{
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.shake {
+    animation: shake 0.3s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
+}

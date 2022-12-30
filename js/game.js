@@ -152,10 +152,20 @@ function buyUpgrade(whichOne) {
             if (canBuyUpgrade(upgrade1Price)) {
                 //On incrémente le level selon la quantité d'amélioration achetée
                 upgrade1lvl += upgradeQuantitySelector;
-                //Si l'amélioration n'était pas débloquée, on débloque l'amélioration et on débloque le succès associé
-                if (upgrade1Unlocked == false) {
-                    //TODO : Succès débloqué
-                    upgrade1Unlocked = true;
+                if (upgrade1lvl == 1) {
+                    popup('img/achievement.png', 'Hache Niv. 1', 'Une hache c\'est bien, mais une hache affutée c\'est mieux !');
+                }
+                if (upgrade1lvl == 10) {
+                    popup('img/achievement.png', 'Hache Niv. 10', 'Cette hache est vraiment bien affutée ! Autant prendre un scalpel à ce niveau là...');
+                }
+                if (upgrade1lvl == 30) {
+                    popup('img/achievement.png', 'Hache Niv. 30', 'Ca fait beaucoup là, non ?');
+                }
+                if (upgrade1lvl == 50) {
+                    popup('img/achievement.png', 'Hache Niv. 50', 'Vous aimez VRAIMENT les haches, non ?');
+                }
+                if (upgrade1lvl == 100) {
+                    popup('img/achievement.png', 'Hache Niv. 100', 'Ce n\'est pas réellement possible d\atteindre ce niveau. La triche c\est mal.');
                 }
             }
             break;
@@ -163,9 +173,20 @@ function buyUpgrade(whichOne) {
         case 2:
             if (canBuyUpgrade(upgrade2Price)) {
                 upgrade2lvl += upgradeQuantitySelector;
-                if (upgrade2Unlocked == false) {
-                    //TODO : Succès débloqué
-                    upgrade2Unlocked = true;
+                if (upgrade2lvl == 1) {
+                    popup('img/achievement.png', 'Tronçonneuse Niv. 1', 'Les tronçonneuses, c\'est bien, mais les tronçonneuses affutées c\'est mieux ! (et plus dangereux)');
+                }
+                if (upgrade2lvl == 10) {
+                    popup('img/achievement.png', 'Tronçonneuse Niv. 10', 'VROUM VROUM !!! (et encore plus d\'arbres coupés)');
+                }
+                if (upgrade2lvl == 30) {
+                    popup('img/achievement.png', 'Tronçonneuse Niv. 30', 'Encore plus de tronçonneuses ? BIEN SÛR !!!');
+                }
+                if (upgrade2lvl == 50) {
+                    popup('img/achievement.png', 'Tronçonneuse Niv. 50', 'Honnêtement, je n\'ai plus aucune idée de quoi mettre comme succès. Bravo ?');
+                }
+                if (upgrade2lvl == 100) {
+                    popup('img/achievement.png', 'Tronçonneuse Niv. 100', 'Toujours plus, oui...');
                 }
             }
             break;
@@ -173,9 +194,20 @@ function buyUpgrade(whichOne) {
         case 3:
             if (canBuyUpgrade(upgrade3Price)) {
                 upgrade3lvl += upgradeQuantitySelector;
-                if (upgrade3Unlocked == false) {
-                    //TODO : Succès débloqué
-                    upgrade3Unlocked = true;
+                if (upgrade3lvl == 1) {
+                    popup('img/achievement.png', 'Scierie Niv. 1', 'On augmente la production de bois !');
+                }
+                if (upgrade3lvl == 5) {
+                    popup('img/achievement.png', 'Scierie Niv. 5', 'A mort les forêts !!!');
+                }
+                if (upgrade3lvl == 10) {
+                    popup('img/achievement.png', 'Scierie Niv. 10', 'ENCORE PLUS DE SCIERIES !!!');
+                }
+                if (upgrade3lvl == 20) {
+                    popup('img/achievement.png', 'Scierie Niv. 20', 'Je suis pas certain qu\'il y ait assez de bois dans le monde pour autant de scieries...');
+                }
+                if (upgrade3lvl == 50) {
+                    popup('img/achievement.png', 'Scierie Niv. 50', 'Décidément, on triche encore ?');
                 }
             }
             break;
@@ -184,10 +216,7 @@ function buyUpgrade(whichOne) {
             if (upgrade4lvl == 0) {
                 if (canBuyUpgrade(upgrade4DefaultPrice)) {
                     upgrade4lvl = 1;
-                    if (upgrade4Unlocked == false) {
-                        //TODO : Succès débloqué
-                        upgrade4Unlocked = true;
-                    }
+                    popup('img/achievement.png', 'Clavier >>>> Souris', 'Hop hop hop, on appuie sur la touche espace !');
                 }
             }
             break;
@@ -196,11 +225,8 @@ function buyUpgrade(whichOne) {
             if (upgrade5lvl == 0) {
                 if (canBuyUpgrade(upgrade5DefaultPrice)) {
                     upgrade5lvl = 1;
-                    if (upgrade5Unlocked == false) {
-                        //TODO : Succès débloqué
-                        document.getElementById('clicker').style.backgroundImage = "url('../img/log3.png')";
-                        upgrade5Unlocked = true;
-                    }
+                    document.getElementById('clicker').style.backgroundImage = "url('../img/log3.png')";
+                    popup('img/achievement.png', 'PAR LA PUISSANCE DE STORMBREAKER', 'Que les dieux vous bénissent (et que les arbres meurent) !!!');
                 }
             }
             break;
@@ -516,5 +542,38 @@ function automaticSave() {
         .catch(function (err) {
         console.error("Erreur sauvegarde automatique : " + err);
     });
+}
+function popup(img, title, text) {
+    var popup = document.createElement("div");
+    popup.className = "popup";
+    popup.attributes.setNamedItem(document.createAttribute("onclick"));
+    popup.attributes.getNamedItem("onclick").value = "dismissPopup(this)";
+    var popupImage = document.createElement("img");
+    popupImage.src = img;
+    var popupContent = document.createElement("div");
+    popupContent.className = "popup_content";
+    var popupTitle = document.createElement("h2");
+    popupTitle.className = "popup_title";
+    popupTitle.innerText = title;
+    var popupText = document.createElement("p");
+    popupText.className = "popup_text";
+    popupText.innerText = text;
+    popupContent.appendChild(popupTitle);
+    popupContent.appendChild(popupText);
+    popup.appendChild(popupImage);
+    popup.appendChild(popupContent);
+    document.getElementById("body").appendChild(popup);
+    setTimeout(function () { popup.classList.add("show"); }, 100);
+    setTimeout(function () {
+        dismissPopup(popup);
+    }, 5000);
+}
+function dismissPopup(element) {
+    element.classList.remove("show");
+    setTimeout(function () { element.remove(); }, 1000);
+}
+function shakeScreen() {
+    document.getElementById("body").classList.add("shake");
+    setTimeout(function () { document.getElementById("body").classList.remove("shake"); }, 100);
 }
 //# sourceMappingURL=game.js.map
