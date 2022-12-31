@@ -30,6 +30,7 @@ var oneSelectorElement = document.getElementById("one");
 var fiveSelectorElement = document.getElementById("five");
 var tenSelectorElement = document.getElementById("ten");
 var manualSaveElement = document.getElementById("manualSaveImg");
+;
 var upgradeQuantitySelector = 1;
 //Dès le chargement de la page, on vérifie l'intégrité des données, et si elles sont valides on appelle la fonction init().
 window.onload = function () {
@@ -95,6 +96,7 @@ function manualClick() {
     //Ignore error
     //@ts-ignore
     changeImage();
+    closePanel();
 }
 //Fonction qui va déterminer toute la logique lorsqu'un clic automatique est effectué.
 //Cette fonction est automatique appellée toutes les secondes par un setIterval défini plus haut.
@@ -576,17 +578,6 @@ function automaticSave() {
         console.error("Erreur sauvegarde automatique : " + err);
     });
 }
-
-function openPanel() {
-    document.getElementById("gameContainer").classList.remove("close");
-    document.getElementById("gameContainer").classList.add("open");
-}
-
-function closePanel() {
-    document.getElementById("gameContainer").classList.remove("open");
-    document.getElementById("gameContainer").classList.add("close");
-}
-
 function popup(img, title, text) {
     var popup = document.createElement("div");
     popup.className = "popup";
@@ -619,5 +610,13 @@ function dismissPopup(element) {
 function shakeScreen() {
     document.getElementById("body").classList.add("shake");
     setTimeout(function () { document.getElementById("body").classList.remove("shake"); }, 100);
+}
+function openPanel() {
+    document.getElementById("panel").classList.remove("close");
+    document.getElementById("panel").classList.add("open");
+}
+function closePanel() {
+    document.getElementById("panel").classList.remove("open");
+    document.getElementById("panel").classList.add("close");
 }
 //# sourceMappingURL=game.js.map
