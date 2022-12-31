@@ -25,77 +25,7 @@ body {
     overflow: hidden;
 }
 
-@media only screen and (max-width: 576px) {
-    body {
-        overflow: hidden;
-    }
 
-    .close #panel {
-        width: 0vw!important;
-        padding: 0!important;
-        position: absolute;
-        right: 0;
-    } 
-
-    .close #panel > * {
-        opacity: 0!important;
-    }
-
-    #gameContainer {
-        justify-content: center!important;
-    }
-    #openPanel {
-        display: block!important;
-    }
-    #clicker {
-        width: 170vw!important;
-    }
-}
-
-@media only screen and (max-width: 576px) {
-    body {
-        overflow: hidden;
-    }
-
-    .open #panel {
-        width: 100vw!important;
-        padding: 10!important;
-        position: absolute;
-        right: 0;
-    } 
-
-    .open #panel > * {
-        opacity: 1!important;
-    }
-
-    #gameContainer {
-        justify-content: center!important;
-    }
-    #closePanel {
-        display: block!important;
-    }
-    #clicker {
-        width: 170vw!important;
-    }
-}
-
-.open {
-    z-index: 100;
-}
-
-.close {
-    z-index: 100;
-}
-
-#openPanel {
-    position: absolute;
-    right: 0;
-    display: none;
-}
-
-#closePanel {
-    display: none;
-}
 
 #loading{
     width: 100vw;
@@ -140,7 +70,7 @@ body {
 
 #clicker {
     height: 100vh;
-    width: 70vw;
+    width: 75vw;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,7 +78,7 @@ body {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
-    background-size: 70%;
+    background-size: 80%;
     cursor: pointer;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
@@ -164,7 +94,7 @@ body {
 }
 
 #clicker button {
-    width: 30vw;
+    width: 75vw;
     height: 80vh;
     background-color: #fff;
     border: none;
@@ -177,7 +107,9 @@ body {
 
 #panel {
     height: 90vh;
-    width: 30vw;
+    width: clamp(350px,25vw,25vw);
+    min-width: 350px;
+
     background-color: var(--bg_menu);
     border-radius: 10px 0 0 10px;
     color: white;
@@ -189,9 +121,9 @@ body {
     transition: width 1 s ease-in-out;
 }
 
-/* #panel > * {
+#panel > * {
     transition: opacity 3s ease;
-} */
+}
 
 
 #nameAndTimer {
@@ -209,25 +141,37 @@ body {
     position: absolute;
     display: flex;
     flex-direction: column;
-    bottom: 0;
+    bottom: 15px;
     cursor: pointer;
-    margin-left: 2vw;
-    margin-bottom: 4vh;
+    left: 15px;
+    height: 5em;
+    width: 5em;
 }
 
-#manualSaveImg{
+#manualSaveImg, #openShopImg{
     cursor: pointer;
 
     background-color: var(--bg_main);
     border-radius: 8%;
-    width: 10%;
-    padding: 2%;
+    width: 100%;
+    padding: 20px;
     transition: all 0.12s ease-in-out, box-shadow 0.08s ease-in-out, transform 0.08s ease-in-out;
     box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
 }
-#manualSaveImg:hover{
+#manualSaveImg:hover,#openShopImg:hover{
     transform: translateY(0.2rem);
     box-shadow: 0rem 0rem 0rem 0rem #2b2b2b85;
+}
+
+#openShop {
+    position: absolute;
+    display: none;
+    flex-direction: column;
+    bottom: calc(15px + 5em + 15px);
+    cursor: pointer;
+    left: 15px;
+    height: 5em;
+    width: 5em;
 }
 
 .upgrade, .upgradeQuantitySelector{
@@ -329,11 +273,13 @@ body {
 }
 
 #gameIcon {
-    width: 4vw;
+    position: absolute;
+    width: 4em;
     height: auto;
-    margin-left: 1vw;
-    margin-top: 4vh;
+    left: 35px;
+    top: 35px;
 }
+
 
 #logImg {
     width: 50vw;
@@ -356,15 +302,6 @@ body {
     box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85!important;
     transform: translateY(0rem)!important;
 }
-
-.example::-webkit-scrollbar {
-    display: none;
-  }
-  
-.example {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
 
 .popup{
     position: fixed;
@@ -462,4 +399,45 @@ body {
         transform: translate(1px, -2px) rotate(-1deg);
     }
 }
+
+@media only screen and (max-width: 850px) {
+    #panel{
+        position: fixed;
+        border-radius: 8px;
+        right: -350px;
+        transition: right 0.5s ease-in-out;
+    }
+    #clicker {
+        width: 100vw;
+    }
+    #panel.open{
+        right: calc(50% - 175px);
+    }
+    #openShop{
+        display: flex;
+    }
+    #gameIcon {
+        z-index: 200;
+        position: absolute;
+        top: calc(100vh - 15em - 45px);
+        cursor: pointer;
+        left: 15px;
+        height: 5em;
+        width: 5em;
+        background-color: var(--bg_main);
+        transition: box-shadow 0.08s ease-in-out, transform 0.08s ease-in-out;
+        border-radius: 8%;
+        padding: 20px;
+        box-shadow: 0rem 0.2rem 0rem 0rem #2b2b2b85;
+    }
+
+    #gameIcon:hover{
+        transform: translateY(0.2rem);
+        box-shadow: 0rem 0rem 0rem 0rem #2b2b2b85;
+    }
+    #clicker{
+        background-size: 100%;
+    }
+}
+
 

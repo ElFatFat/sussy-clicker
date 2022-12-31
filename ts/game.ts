@@ -112,6 +112,8 @@ function manualClick(): void {
     //Ignore error
     //@ts-ignore
     changeImage();
+
+    closePanel();
 }
 
 //Fonction qui va déterminer toute la logique lorsqu'un clic automatique est effectué.
@@ -683,4 +685,14 @@ function dismissPopup(element){
 function shakeScreen(){
     document.getElementById("body").classList.add("shake");
     setTimeout(function(){ document.getElementById("body").classList.remove("shake"); }, 100);
+}
+
+function openPanel() {
+    document.getElementById("panel").classList.remove("close");
+    document.getElementById("panel").classList.add("open");
+}
+
+function closePanel() {
+    document.getElementById("panel").classList.remove("open");
+    document.getElementById("panel").classList.add("close");
 }
