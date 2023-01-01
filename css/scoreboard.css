@@ -12,6 +12,7 @@ body{
 
     scroll-behavior: smooth;
 
+    overflow: scroll;
     overflow-x: hidden;
 }
 
@@ -120,7 +121,7 @@ body{
 }
 
 #scrollToYou{
-    width: 30vw;
+    width: clamp(100px, 30vw, 500px);
     height: 100px;
     border-radius: 1rem;
     background-color: #d2aa77;
@@ -131,22 +132,23 @@ body{
     cursor: pointer;
     transition: 0.3s;
     color: white;
-    font-size: 1.7em;
+    font-size: 1.3em;
     font-weight: 900;
-    /* animation: WOOOOOOOO 2s ease-in-out infinite; */
+
 }
 
-/* @keyframes WOOOOOOOO {
-    0% {
-        transform: scale(1);
+@media screen and (max-width: 576px) {
+    #leaderboard{
+        width: 90vw;
     }
-    50% {
-        transform: scale(20);
-        background-color: red;
-        rotate: 1000000000000000deg;
-        transform: translateX(1000px);
+
+    #search_field{
+        width: 90vw;
     }
-    100% {
-        transform: scale(1);
+
+    #scrollToYou{
+        width: 60vw;
+        height: 80px;
+        font-size: 1.1em;
     }
-} */
+}
