@@ -24,6 +24,7 @@ body{
     #scrollToYou {
         width: 80vw!important;
         height: 10vh!important;
+        font-size: 1.5rem!important;
     }
     #scrollToTop{
         right: auto!important;
@@ -136,7 +137,7 @@ body{
     font-weight: 900;
 
 }
-
+/* 
 @media screen and (max-width: 576px) {
     #leaderboard{
         width: 90vw;
@@ -151,4 +152,4 @@ body{
         height: 80px;
         font-size: 1.1em;
     }
-}
+} */

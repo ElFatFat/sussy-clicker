@@ -415,7 +415,7 @@ body {
         display: flex;
     }
     #gameIcon {
-        z-index: 200;
+        z-index: 0;
         position: absolute;
         top: calc(100vh - 15em - 45px);
         cursor: pointer;
