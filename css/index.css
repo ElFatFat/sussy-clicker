@@ -6,6 +6,40 @@ body {
     
 }
 
+@media only screen and (max-width: 576px) {
+    #nameMoneyContainer {
+        display: block!important;
+    }
+    #popupSaveDataFoundYes {
+        width: 25vw!important;
+    }
+    #popupSaveDataFoundNo {
+        width: 25vw!important;
+    }
+    #popupSaveDataFoundDelete {
+        padding: 0 2rem 0 2rem!important;
+        height: 15vh!important;
+    }
+    #yesNoContainer {
+        justify-content: space-between!important;
+    }
+    #popupSaveDataFoundContent{
+        height: 55vh!important;
+    }
+    #popupSaveDataFoundContent > p {
+        text-align: center!important;
+    }
+    #nameMoneyContainer {
+        text-align: center!important;
+    }
+    #username_field {
+        width: 70vw!important;
+    }
+    #validation_Username {
+        width: 50vw!important;
+    }
+}
+
 #validation_Username{
     color: white;
     font-weight: bold;

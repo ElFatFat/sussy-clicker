@@ -15,6 +15,24 @@ body{
     overflow-x: hidden;
 }
 
+@media only screen and (max-width: 576px) {
+    #search_field {
+        width: 80vw!important;
+        height: 10vh!important;
+    }
+    #scrollToYou {
+        width: 80vw!important;
+        height: 10vh!important;
+    }
+    #scrollToTop{
+        right: auto!important;
+        background-color: #A52760!important;
+    }
+    #leaderboard {
+        width: 80vw!important;
+    }
+}
+
 #leaderboard{
     width: 60vw;
 
