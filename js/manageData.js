@@ -18,8 +18,8 @@ var moneyPerSecondLatest;
 var upgrade1DefaultPrice = 100;
 var upgrade2DefaultPrice = 100;
 var upgrade3DefaultPrice = 10000;
-var upgrade4DefaultPrice = 500000;
-var upgrade5DefaultPrice = 1000000;
+var upgrade4DefaultPrice = 1000;
+var upgrade5DefaultPrice = 1000;
 var upgrade1Price;
 var upgrade2Price;
 var upgrade3Price;
@@ -88,11 +88,6 @@ function createSave(username) {
     localStorage.setItem("upgrade1Unlocked", 'false');
     localStorage.setItem("upgrade2Unlocked", 'false');
     localStorage.setItem("upgrade3Unlocked", 'false');
-    localStorage.setItem("achievementMoney100", 'false');
-    localStorage.setItem("achievementMoney1000", 'false');
-    localStorage.setItem("achievementMoney10000", 'false');
-    localStorage.setItem("achievementMoney100000", 'false');
-    localStorage.setItem("achievementMoney1000000", 'false');
     if (localStorage.getItem("alltimeClicks") == null) {
         localStorage.setItem("alltimeClicks", '0');
     }
@@ -105,7 +100,23 @@ function createSave(username) {
     if (localStorage.getItem("alltimeHighscore") == null) {
         localStorage.setItem("alltimeHighscore", '0');
     }
+    if (localStorage.getItem("achievementMoney100") == null) {
+        localStorage.setItem("achievementMoney100", 'false');
+    }
+    if (localStorage.getItem("achievementMoney1000") == null) {
+        localStorage.setItem("achievementMoney1000", 'false');
+    }
+    if (localStorage.getItem("achievementMoney10000") == null) {
+        localStorage.setItem("achievementMoney10000", 'false');
+    }
+    if (localStorage.getItem("achievementMoney100000") == null) {
+        localStorage.setItem("achievementMoney100000", 'false');
+    }
+    if (localStorage.getItem("achievementMoney1000000") == null) {
+        localStorage.setItem("achievementMoney1000000", 'false');
+    }
 }
+//Fonction qui supprime les données de base de la sauvegarde et redirige vers la page d'accueil
 function deleteSave() {
     localStorage.removeItem("username");
     localStorage.removeItem("money");
@@ -118,20 +129,23 @@ function deleteSave() {
     localStorage.removeItem("upgrade1Unlocked");
     localStorage.removeItem("upgrade2Unlocked");
     localStorage.removeItem("upgrade3Unlocked");
-    localStorage.removeItem("achievementMoney100");
-    localStorage.removeItem("achievementMoney1000");
-    localStorage.removeItem("achievementMoney10000");
-    localStorage.removeItem("achievementMoney100000");
-    localStorage.removeItem("achievementMoney1000000");
     window.location.href = "index.html";
 }
+//Fonction qui supprime les données de statistiques et de sauvegarde
 function deleteStatistics() {
     localStorage.removeItem("alltimeClicks");
     localStorage.removeItem("alltimeMoney");
     localStorage.removeItem("alltimeSpent");
     localStorage.removeItem("alltimeHighscore");
+    localStorage.removeItem("achievementMoney100");
+    localStorage.removeItem("achievementMoney1000");
+    localStorage.removeItem("achievementMoney10000");
+    localStorage.removeItem("achievementMoney100000");
+    localStorage.removeItem("achievementMoney1000000");
     deleteSave();
 }
+//Fonction qui sauvegarde les données de la partie en cours
+//On récupère les valeurs de chaque variable, on les convertit en string et on les enregistre dans le localStorage
 function save() {
     localStorage.setItem("username", username);
     localStorage.setItem("money", money.toString());
@@ -154,6 +168,8 @@ function save() {
     localStorage.setItem("achievementMoney100000", achievementMoney100000.toString());
     localStorage.setItem("achievementMoney1000000", achievementMoney1000000.toString());
 }
+//Fonction qui charge les données de la partie en cours
+//On récupère les valeurs de chaque variable dans le localStorage, on les convertitau type nécessaire et on les affecte aux variables
 function loadSave() {
     //Le 'as string' est nécessaire car Typescript alerte d'une erreur de type string||null. Or on sait que la valeur ne sera jamais null. On peut donc forcer le type.
     username = localStorage.getItem("username");
@@ -183,8 +199,8 @@ function loadSave() {
     achievementMoney100000 = (localStorage.getItem("achievementMoney100000") == 'true') ? true : false;
     achievementMoney1000000 = (localStorage.getItem("achievementMoney1000000") == 'true') ? true : false;
 }
+//Fonction qui vérifie rapidement si certaines valeurs de sauvegarde sont présentes
 function checkSaveValidity() {
-    //Condition élargie sur plusieurs lignes pour plus de lisibilité
     if (localStorage.getItem("username") == undefined ||
         localStorage.getItem("money") == undefined ||
         localStorage.getItem("upgrade1lvl") == undefined ||
@@ -198,6 +214,8 @@ function checkSaveValidity() {
         return true;
     }
 }
+//Fonction qui converti un nombre en notation plus lisible
+//Ex : 1000 -> 1 K ; 1000000 -> 1 M ; 1000000000 -> 1 Md
 function convertNumber(string) {
     var input = string.toString();
     if (input.length > 3 && input.length <= 6) {

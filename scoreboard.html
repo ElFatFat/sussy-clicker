@@ -3,9 +3,11 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Simulateur de bûcheron</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" sizes="180x180" href="img/logo.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="img/logo.png">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="css/scoreboard.css">
     </head>
@@ -14,20 +16,12 @@
         <input type="text" id="search_field" placeholder="Cherchez un nom...">
         <div id="scrollToYou" onclick="scrollToYouClass()" style="display: none;">Afficher mon score</div>
         <div id="leaderboard"> 
-            
-            <!--Le leaderboard est implementé directement en JS. Elles ont toute la classe "leaderboardLine". La ligne de l'utilisateur posséde la classe "you". -->
-            <!--Exemple du format avec réponse JS-->
-            <!-- <div class="leaderboardItem you">
-                <div class="leaderboardPosition">1</div>
-                <div class="leaderboardUsername">Username</div>
-                <div class="leaderboardScore">Score</div>
-            </div> -->
-
-        
+            <!--
+                Les scores sont générés par le script scoreboard.js
+            -->
         </div>
         <div id="scrollToTop" onclick="scrollToTop()">^</div>
         
         <script src="js/scoreboard.js"></script>
-        <script src="js/sendData.js"></script>
     </body>
 </html>
